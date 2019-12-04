@@ -1,8 +1,9 @@
 DOCKER_NAME:=openmpidocker
 DOCKER_TAG:=latest
 
+NODE_ID:=0
+HOSTS_FILE:=hosts
 NETWORK_SUBNET:=192.168.1.0/24
-NETWORK_IP:=192.168.1.101
 HOST_INTERFACE:=eth0
 NETWORK_GW:=192.168.1.1
 NETWORK_NAME:=mpinet
@@ -12,8 +13,6 @@ DESTINATION_PORT:=22
 SSH_PROTECTION=dsa
 SSH_KEY:=id_dsa.mpi
 SSH_PASSPHRASE:=mpiuser
-
-HOSTS_FILE:=hosts
 
 MPI_USER:=mpiuser
 MPI_USER_ID:=1002
@@ -55,12 +54,12 @@ endif
 run:
 	# TODO
 	
-runnet:
+runnet: ${HOSTS_FILE}
 	-make build
 	-make makenet
 	docker run --name=niapyorg-server \
 		--network=${NETWORK_NAME} \
-		--ip=${NETWORK_IP} \
+		--ip=$(cat ${HOSTS_FILE} | tr ' ' '\t' | tr -d ' ' | cut -d$'\t' -f1 | head -${NODE_ID} | tail -1) \
 		-p ${SORCE_PORT}:${DESTINATION_PORT} \
 		-d niapyorg:${NIAORG_TAG}
 

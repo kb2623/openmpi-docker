@@ -31,5 +31,5 @@ WORKDIR $AHOME
 # NFS client setup
 RUN mkdir -p ${WORD_DIR} && mount $(cat /root/hosts | tr ' ' '\t' | tr -d ' ' | cut -d$'\t' -f1 | head -1)${NFS_DATA_DIR} ${WORD_DIR}
 
-CMD /bin/bash
+CMD ["/usr/sbin/sshd", "-D"]
 
