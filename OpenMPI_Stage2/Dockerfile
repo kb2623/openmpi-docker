@@ -4,11 +4,14 @@ FROM $BASE_CONTAINER
 LABEL maintainer="Klemen Berkovic <roxor@gmail.com>"
 LABEL description="Final OpenMPI image"
 
+ARG NODE_ID=0
+ARG NFS_DATA_DIR=/mnt/nfs/nfs-data
 ARG AUSER=mpiuser
 ARG AUSER_ID=1002
 ARG AGROUP=mpisers
 ARG AGROUP_ID=1002
 ARG AHOME=/home/mpiuser
+ARG WORD_DIR=${AHOME}/mpidir
 
 USER root
 WORKDIR /root
@@ -25,7 +28,8 @@ RUN printf "AllowUsers %s" >> /etc/ssh/sshd_config ${AUSER} && systemctl restart
 USER $AUSER_ID
 WORKDIR $AHOME
 
-# TODO NFS client setup
+# NFS client setup
+RUN mkdir -p ${WORD_DIR} && mount $(cat /root/hosts | tr ' ' '\t' | tr -d ' ' | cut -d$'\t' -f1 | head -1)${NFS_DATA_DIR} ${WORD_DIR}
 
 CMD /bin/bash
 
