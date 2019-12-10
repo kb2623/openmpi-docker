@@ -28,7 +28,7 @@ ADD .basic.tmuxtheme /etc/skel
 ADD .profile /etc/skel
 ADD daemon.zsh /root
 
-ENTRYPOINT ["./daemon.zsh"]
+ENTRYPOINT ["/root/daemon.zsh"]
 
 # Fix file privilages
 RUN chmod a+rx hosts && \

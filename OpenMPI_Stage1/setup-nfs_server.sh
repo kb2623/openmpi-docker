@@ -10,3 +10,6 @@ printf "\n# NFS server\n" >> /etc/exports
 for e in $(cat /root/hosts | tr ' ' '\t' | tr -d ' ' | cut -d$'\t' -f1); do
    printf "%s %s(rw,sync,no_subtree_check)\n" ${NFS_DATA_DIR} ${e} >> /etc/exports
 done
+mkdir -p /var/lib/nfs/rpc_pipefs /var/lib/nfs/v4recovery
+echo "rpc_pipefs    /var/lib/nfs/rpc_pipefs rpc_pipefs      defaults        0       0" >> /etc/fstab
+echo "nfsd  /proc/fs/nfsd   nfsd    defaults        0       0" >> /etc/fstab

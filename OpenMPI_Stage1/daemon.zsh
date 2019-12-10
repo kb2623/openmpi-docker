@@ -4,6 +4,7 @@
 if [ ! ${NODE_ID} -eq "0" ]; then exit 0; fi
 
 /sbin/rpcbind -w
+/sbin/rpcinfo
 /usr/sbin/rpc.nfsd --debug 8 --no-udp --no-nfs-version 2 --no-nfs-version 3
 if /usr/sbin/exportfs -rv; then
 	/usr/sbin/exportfs
