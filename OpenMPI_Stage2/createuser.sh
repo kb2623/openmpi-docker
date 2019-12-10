@@ -22,9 +22,9 @@ if id -g "$aGID" >/dev/null 2>&1; then delgroup $aGID; fi
 addgroup -g $aGID $aGROUP
 adduser -D -u $aUID -G $aGROUP -s /bin/zsh -h $aHOME -k /etc/skel $aUSER 
 
-cp -n /etc/skel/.bashrc $aHOME/.bashrc
-cp -n /etc/skel/.zshrc $aHOME/.zshrc
-cp -n /etc/skel/.profile $aHOME/.profile
-cp -n /etc/skel/.tmux.config $aHOME/.tmux.config
-cp -n /etc/skel/.basic.tmuxtheme $aHOME
+cp -f /etc/skel/.bashrc $aHOME/.bashrc
+cp -f /etc/skel/.zshrc $aHOME/.zshrc
+cp -f /etc/skel/.profile $aHOME/.profile
+cp -f /etc/skel/.tmux.config $aHOME/.tmux.config
+cp -f /etc/skel/.basic.tmuxtheme $aHOME
 chown -R $aUSER:$aGROUP $aHOME

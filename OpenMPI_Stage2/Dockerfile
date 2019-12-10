@@ -16,7 +16,7 @@ ARG WORD_DIR=${AHOME}/mpidir
 USER root
 WORKDIR /root
 
-ADD createuser.sh .
+ADD createuser.sh /root
 
 RUN chmod a+rx createuser.sh && \
 	chmod g+w /etc/passwd

@@ -19,16 +19,16 @@ EXPOSE 22
 EXPOSE 2049
 
 ADD sshd_config /etc/ssh/
-ADD hosts . 
-ADD setup-nfs_server.sh .
+ADD hosts /root 
+ADD setup-nfs_server.sh /root
 ADD .bashrc /etc/skel
 ADD .zshrc /etc/skel
 ADD .tmux.conf /etc/skel
 ADD .basic.tmuxtheme /etc/skel
 ADD .profile /etc/skel
-ADD daemon.zsh .
+ADD daemon.zsh /root
 
-ENTRYPOINT ["daemon.zsh"]
+ENTRYPOINT ["./daemon.zsh"]
 
 # Fix file privilages
 RUN chmod a+r hosts && \
