@@ -1,55 +1,17 @@
-ARG BASE_CONTAINER=debian:latest
+ARG BASE_CONTAINER=alpine:3.10
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Klemen Berkovic <roxor@gmail.com>"
-LABEL description="Base image with pipenv and jupyterlab"
+LABEL description="Alpine computing Node for OpenMPI"
 
 ARG NODE_ID=1
 ARG NFS_DATA_DIR=/mnt/nfs/nfs-data
+ARG OPENMPI_VERSION=4.0.2
 
-USER root
-WORKDIR /root
+ENV DEBCONF_NOWARNINGS=yes
 
-# Update the system
-RUN apt update -y && apt install -y apt-utils 
-# Install NFS client
-RUN apt install -y nfs-common
-# Install SSH server
-RUN apt install -y openssh-server
-# Install OpenMPI
-RUN apt install -y openmpi-bin
-# Install C++ compiler
-RUN apt install -y g++
-# Install user programs
-RUN apt install -y git make vim vifm tmux
-
-# Add hosts
-ADD hosts . 
-RUN chmod a+r hosts
-RUN printf "\n# MPI cluster hosts\n" >> /etc/hosts
-RUN cat hosts >> /etc/hosts
-
-# Setup SSH servcie
-ADD sshd_config /etc/ssh/
-RUN printf "\nAllowUsers $s\n" ${AUSER} >> /etc/ssh/sshd_config
-RUN mkdir /var/run/sshd
-
-# NFS server
-ADD setup-nfs_server.sh .
-RUN chmod a+rx setup-nfs_server.sh
-RUN if [ ${NODE_ID} -eq "0" ]; then ./setup-nfs_server.sh ${NFS_DATA_DIR} ${NFS_NETWORK} ${NFS_NETWORK_MASK}; fi
-
-# Enable prompt color in the skeleton .bashrc
-RUN [ -e /etc/skel/.bashrc ] && rm /etc/skel/.bashrc
-ADD .bashrc /etc/skel
-ADD .tmux.conf /etc/skel
-ADD .basic.tmuxtheme /etc/skel
-RUN [ -e /etc/skel/.profile ] && rm /etc/skel/.profile
-ADD .profile /etc/skel
-
-# Add ssh keys for users
-RUN if [ -d /etc/skel/.ssh ]; then rm -rf /etc/skel/.ssh; fi
-COPY .ssh /etc/skel
+ENV USPACE_LIBS=/usr/local/lib
+ENV USPACE_APPS=/usr/local
 
 USER root
 WORKDIR /root
@@ -57,4 +19,39 @@ WORKDIR /root
 EXPOSE 22
 EXPOSE 2049
 
-CMD ["/usr/sbin/sshd", "-D"]
+ADD sshd_config /etc/ssh/
+ADD hosts . 
+ADD setup-nfs_server.sh .
+ADD .bashrc /etc/skel
+ADD .zshrc /etc/skel
+ADD .tmux.conf /etc/skel
+ADD .basic.tmuxtheme /etc/skel
+ADD .profile /etc/skel
+ADD daemon.zsh .
+
+ENTRYPOINT ["daemon.zsh"]
+
+# Update the system and install programs
+RUN apk update && apk add zsh bash tmux git build-base perl linux-headers nfs-utils openssh && ssh-keygen -A
+
+# Install OpenMPI
+RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-${OPENMPI_VERSION}.tar.bz2 && \
+	tar -xvf openmpi-${OPENMPI_VERSION}.tar.bz2 && \
+	cd openmpi-${OPENMPI_VERSION} && \
+	./configure --prefix=${USPACE_APPS} && \
+	make && make install
+
+# Add hosts
+RUN chmod a+r hosts
+RUN printf "\n# MPI cluster hosts\n" >> /etc/hosts
+RUN cat hosts >> /etc/hosts
+
+# Setup SSH servcie
+RUN printf "\nAllowUsers $s\n" ${AUSER} >> /etc/ssh/sshd_config
+
+# NFS server
+RUN chmod a+rx setup-nfs_server.sh
+RUN ./setup-nfs_server.sh ${NFS_DATA_DIR}
+
+# Fix file privilages
+RUN chmod a+x daemon.zsh

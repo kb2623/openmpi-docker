@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 # set permissions on a directory
 # after any installation, if a directory needs to be (human) user-writable,
 # run this script on it.

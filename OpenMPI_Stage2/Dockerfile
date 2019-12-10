@@ -19,8 +19,7 @@ WORKDIR /root
 # Create user
 COPY createuser.sh .
 RUN chmod a+rx createuser.sh
-RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
-    ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME && \
+RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME && \
     chmod g+w /etc/passwd && \
     fix-permissions $AHOME
 RUN printf "AllowUsers %s" >> /etc/ssh/sshd_config ${AUSER} && systemctl restart sshd.service
@@ -28,8 +27,9 @@ RUN printf "AllowUsers %s" >> /etc/ssh/sshd_config ${AUSER} && systemctl restart
 USER $AUSER_ID
 WORKDIR $AHOME
 
+ADD .ssh .
+
 # NFS client setup
 RUN mkdir -p ${WORD_DIR} && mount $(cat /root/hosts | tr ' ' '\t' | tr -d ' ' | cut -d$'\t' -f1 | head -1)${NFS_DATA_DIR} ${WORD_DIR}
-
-CMD ["/usr/sbin/sshd", "-D"]
+RUN chmod -R 755 .ssh
 

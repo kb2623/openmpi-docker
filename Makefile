@@ -10,9 +10,9 @@ NETWORK_NAME:=mpinet
 SORCE_PORT:=22
 DESTINATION_PORT:=22
 
-SSH_PROTECTION=dsa
-SSH_KEY:=id_dsa.mpi
-SSH_PASSPHRASE:=mpiuser
+SSL_PROTECTION=dsa
+SSL_KEY:=id_dsa.mpi
+SSL_PASSPHRASE:=mpiuser
 
 MPI_USER:=mpiuser
 MPI_USER_ID:=1002
@@ -21,10 +21,13 @@ MPI_GROUP_ID:=1002
 
 all: build run
 
-sshkey:
-	ssh-keygen -t ${SSH_PROTECTION} -N ${SSH_PASSPHRASE} -f ${SSH_KEY}
-	
+sslkey:
+	echo "creting ${SSL_KEY} key"
+	ssh-keygen -t ${SSL_PROTECTION} -N ${SSL_PASSPHRASE} -f ${SSL_KEY}
+	chmod -R 757 ${SSL_KEY} ${SSL_KEY}.pub
+
 createnet:
+	echo "creating network"
 	docker network create \
 		-d macvlan \
 		--subnet=${NETWORK_SUBNET} \
@@ -32,19 +35,24 @@ createnet:
 		-o parent=${HOST_INTERFACE} \
 		${NETWORK_NAME}
 
-buildS1: ${SSH_KEY} ${SSH_KEY}.pub ${HOSTS_FILE}
-	-cp ${SSH_KEY} OpenMPI_Stage1/.ssh
-	-cp ${SSH_KEY}.pub OpenMPI_Stage1/.ssh
-	-cp ${SSH_KEY}.pub OpenMPI_Stage1/.ssh/authorized_keys
-	-cp ${HOSTS_FILE} OpenMPI_Stage1/hosts
+buildS1:
+	echo "Build node"
+	cp ${HOSTS_FILE} OpenMPI_Stage1/hosts
 ifdef MASTER
-		docker build -t ${DOCKER_NAME}_s1:${DOCKER_TAG} --build-arg MASTER_NODE=true OpenMPI_Stage1
+	docker build -t ${DOCKER_NAME}_s1:${DOCKER_TAG} --build-arg MASTER_NODE=true OpenMPI_Stage1
 else
-		docker build -t ${DOCKER_NAME}_s1:${DOCKER_TAG} OpenMPI_Stage1
+	docker build -t ${DOCKER_NAME}_s1:${DOCKER_TAG} OpenMPI_Stage1
 endif
 
-build:
+build: ${HOSTS_FILE} ${SSL_KEY} ${SSL_KEY}.pub
+	echo "BUILDING"
 	-make buildS1
+	-chmod -R 755 /OpenMPI_Stage1
+	-rm -rf OpenMPI_Stage1/.ssh
+	mkdir -p OpenMPI_Stage1/.ssh
+	cp ${SSL_KEY} OpenMPI_Stage1/.ssh/${SSL_KEY}
+	cp ${SSL_KEY}.pub OpenMPI_Stage1/.ssh/${SSL_KEY}.pub
+	cp ${SSL_KEY}.pub OpenMPI_Stage1/.ssh/authorized_keys
 ifdef MASTER
 	docker build -t ${DOCKER_NAME}:${DOCKER_TAG} --build-arg BASE_CONTAINER=${DOCKER_NAME}_s1:${DOCKER_TAG} --build-arg MASTER_NODE=true OpenMPI_Stage2
 else
@@ -63,16 +71,10 @@ runnet: ${HOSTS_FILE}
 		-p ${SORCE_PORT}:${DESTINATION_PORT} \
 		-d niapyorg:${NIAORG_TAG}
 
-cleansslkey: ${SSH_KEY} ${SSH_KEY}.pub
-	rm ${SSH_KEY}
-	rm ${SSH_KEY}.pub
+clean_sslkey: ${SSL_KEY} ${SSL_KEY}.pub
+	rm ${SSL_KEY} ${SSL_KEY}.pub
 
-cleanM:
-	# TODO
-	
-cleanN:
-	# TODO
-	
-clean:
-	-make cleanM
-	-make cleanN
+clean: 
+	-docker image rm ${DOCKER_NAME}_s1:${DOCKER_TAG}
+	-rm OpenMPI_Stage1/hosts
+	-rm -rf OpenMPI_Stage2/.ssh/
