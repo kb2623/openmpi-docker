@@ -19,12 +19,11 @@ WORKDIR /root
 ADD createuser.sh .
 
 RUN chmod a+rx createuser.sh && \
-	chmod g+w /etc/apsswd
+	chmod g+w /etc/passwd
 
 # Create user
 RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME && \
-	fix-permissions $AHOME && \
-	echo "AllowUsers %s" >> /etc/ssh/sshd_config ${AUSER} && systemctl restart sshd.service
+	echo "AllowUsers %s" >> /etc/ssh/sshd_config ${AUSER}
 
 USER $AUSER_ID
 WORKDIR $AHOME

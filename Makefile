@@ -48,11 +48,11 @@ build: ${HOSTS_FILE} ${SSL_KEY} ${SSL_KEY}.pub
 	echo "BUILDING"
 	-make buildS1
 	-chmod -R 755 /OpenMPI_Stage1
-	-rm -rf OpenMPI_Stage1/.ssh
-	mkdir -p OpenMPI_Stage1/.ssh
-	cp ${SSL_KEY} OpenMPI_Stage1/.ssh/${SSL_KEY}
-	cp ${SSL_KEY}.pub OpenMPI_Stage1/.ssh/${SSL_KEY}.pub
-	cp ${SSL_KEY}.pub OpenMPI_Stage1/.ssh/authorized_keys
+	-rm -rf OpenMPI_Stage2/.ssh
+	mkdir -p OpenMPI_Stage2/.ssh
+	cp ${SSL_KEY} OpenMPI_Stage2/.ssh/${SSL_KEY}
+	cp ${SSL_KEY}.pub OpenMPI_Stage2/.ssh/${SSL_KEY}.pub
+	cp ${SSL_KEY}.pub OpenMPI_Stage2/.ssh/authorized_keys
 ifdef MASTER
 	docker build -t ${DOCKER_NAME}:${DOCKER_TAG} --build-arg BASE_CONTAINER=${DOCKER_NAME}_s1:${DOCKER_TAG} --build-arg MASTER_NODE=true OpenMPI_Stage2
 else
