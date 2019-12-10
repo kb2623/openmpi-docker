@@ -31,7 +31,7 @@ ADD daemon.zsh /root
 ENTRYPOINT ["./daemon.zsh"]
 
 # Fix file privilages
-RUN chmod a+r hosts && \
+RUN chmod a+rx hosts && \
 	chmod a+rx setup-nfs_server.sh && \
 	chmod a+x daemon.zsh
 

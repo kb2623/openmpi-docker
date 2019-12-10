@@ -28,7 +28,7 @@ RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME && \
 USER $AUSER_ID
 WORKDIR $AHOME
 
-ADD .ssh .
+ADD .ssh $AHOME
 
 RUN chmod -R 755 .ssh
 
