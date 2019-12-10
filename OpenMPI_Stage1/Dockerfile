@@ -23,7 +23,7 @@ ADD hosts /root
 ADD setup-nfs_server.sh /root
 ADD .bashrc /etc/skel
 ADD .zshrc /etc/skel
-ADD .tmux.conf /etc/skel
+ADD .tmux.config /etc/skel
 ADD .basic.tmuxtheme /etc/skel
 ADD .profile /etc/skel
 ADD daemon.zsh /root
