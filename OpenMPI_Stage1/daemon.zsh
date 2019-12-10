@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 /usr/sbin/sshd -D -e -f /etc/ssh/sshd_config &
-if [ ! ${NODE_ID} -ed "0" ]; then exit 0; fi
+if [ ! ${NODE_ID} -eq "0" ]; then exit 0; fi
 
 /sbin/rpcbind -w
 /usr/sbin/rpc.nfsd --debug 8 --no-udp --no-nfs-version 2 --no-nfs-version 3

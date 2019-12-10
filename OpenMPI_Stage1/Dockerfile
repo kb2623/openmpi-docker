@@ -9,7 +9,6 @@ ARG NFS_DATA_DIR=/mnt/nfs/nfs-data
 ARG OPENMPI_VERSION=4.0.2
 
 ENV DEBCONF_NOWARNINGS=yes
-
 ENV USPACE_LIBS=/usr/local/lib
 ENV USPACE_APPS=/usr/local
 
@@ -31,6 +30,11 @@ ADD daemon.zsh .
 
 ENTRYPOINT ["daemon.zsh"]
 
+# Fix file privilages
+RUN chmod a+r hosts && \
+	chmod a+rx setup-nfs_server.sh && \
+	chmod a+x daemon.zsh
+
 # Update the system and install programs
 RUN apk update && apk add zsh bash tmux git build-base perl linux-headers nfs-utils openssh && ssh-keygen -A
 
@@ -42,16 +46,12 @@ RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-${OPENMPI_V
 	make && make install
 
 # Add hosts
-RUN chmod a+r hosts
-RUN printf "\n# MPI cluster hosts\n" >> /etc/hosts
-RUN cat hosts >> /etc/hosts
+RUN echo -e "\n# MPI cluster hosts\n" >> /etc/hosts && \
+	cat hosts >> /etc/hosts
 
 # Setup SSH servcie
 RUN printf "\nAllowUsers $s\n" ${AUSER} >> /etc/ssh/sshd_config
 
 # NFS server
-RUN chmod a+rx setup-nfs_server.sh
 RUN ./setup-nfs_server.sh ${NFS_DATA_DIR}
 
-# Fix file privilages
-RUN chmod a+x daemon.zsh

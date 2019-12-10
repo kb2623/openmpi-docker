@@ -16,20 +16,22 @@ ARG WORD_DIR=${AHOME}/mpidir
 USER root
 WORKDIR /root
 
+ADD createuser.sh .
+
+RUN chmod a+rx createuser.sh && \
+	chmod g+w /etc/apsswd
+
 # Create user
-COPY createuser.sh .
-RUN chmod a+rx createuser.sh
 RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME && \
-    chmod g+w /etc/passwd && \
-    fix-permissions $AHOME
-RUN printf "AllowUsers %s" >> /etc/ssh/sshd_config ${AUSER} && systemctl restart sshd.service
+	fix-permissions $AHOME && \
+	echo "AllowUsers %s" >> /etc/ssh/sshd_config ${AUSER} && systemctl restart sshd.service
 
 USER $AUSER_ID
 WORKDIR $AHOME
 
 ADD .ssh .
 
-# NFS client setup
-RUN mkdir -p ${WORD_DIR} && mount $(cat /root/hosts | tr ' ' '\t' | tr -d ' ' | cut -d$'\t' -f1 | head -1)${NFS_DATA_DIR} ${WORD_DIR}
 RUN chmod -R 755 .ssh
 
+# NFS client setup
+RUN mkdir -p ${WORD_DIR} && mount $(cat /root/hosts | tr ' ' '\t' | tr -d ' ' | cut -d$'\t' -f1 | head -1)${NFS_DATA_DIR} ${WORD_DIR}
