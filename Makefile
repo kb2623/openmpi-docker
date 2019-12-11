@@ -21,6 +21,8 @@ MPI_USER_ID:=1002
 MPI_GROUP:=mpiusers
 MPI_GROUP_ID:=1002
 
+EXEC_UESR:=${MPI_USER}
+
 ## Network ############################################################################
 
 net:
@@ -75,7 +77,7 @@ runnet_s1:
 
 exec_zsh_s1:
 	echo -e "\nDocker exec->/bin/zsh@${DOCKER_NAME}_s1:${DOCKER_TAG}\n"
-	docker exec -it node${NODE_ID}_mpi_s1 /bin/zsh
+	docker exec -it -u ${EXEC_UESR} node${NODE_ID}_mpi_s1 /bin/zsh
 
 stop_s1:
 	echo -e "\nDocker stop ${DOCKER_NAME}_s1:${DOCKER_TAG}\n"
@@ -120,7 +122,7 @@ runnet:
 
 exec_zsh:
 	echo -e "\nDocker exec->/bin/zsh@${DOCKER_NAME}:${DOCKER_TAG}\n"
-	docker exec -it node${NODE_ID}_mpi /bin/zsh
+	docker exec -it -u ${EXEC_UESR} node${NODE_ID}_mpi /bin/zsh
 
 stop:
 	echo -e "\nDocker stop ${DOCKER_NAME}_s1:${DOCKER_TAG}\n"

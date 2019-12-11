@@ -16,11 +16,15 @@ ARG WORD_DIR=${AHOME}/mpidir
 
 USER root
 WORKDIR /root
+CMD [${AUSER}, ${AGROUP}, ${WORD_DIR}]
 
 ADD createuser.sh /root
+RUN mkdir -p ${AHOME}/.ssh
+ADD .ssh ${AHOME}
 
 RUN chmod a+rx createuser.sh && \
-	chmod g+w /etc/passwd
+	chmod g+w /etc/passwd && \
+	chmod -R 755 .ssh
 
 # Create user
 RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME && \
@@ -28,14 +32,3 @@ RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME && \
 	cp /root/hosts ${AHOME}/hosts && \
 	chown ${AUSER}:${AGROUP} ${AHOME}/hosts && \
 	chmod a+r ${AHOME}/hosts
-
-USER $AUSER
-WORKDIR $AHOME
-
-RUN mkdir -p ${AHOME}/.ssh
-ADD .ssh ${AHOME}
-
-CMD [${AUSER}, ${AGROUP}, ${WORD_DIR}]
-
-# Fix premissions
-RUN chmod -R 755 .ssh
