@@ -49,9 +49,6 @@ RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-${OPENMPI_V
 RUN echo -e "\n# MPI cluster hosts\n" >> /etc/hosts && \
 	cat hosts >> /etc/hosts
 
-# Setup SSH servcie
-RUN printf "\nAllowUsers $s\n" ${AUSER} >> /etc/ssh/sshd_config
-
 # NFS server
 RUN ./setup-nfs_server.sh ${NFS_DATA_DIR}
 
