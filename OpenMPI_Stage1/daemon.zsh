@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 /usr/sbin/sshd -D -e -f /etc/ssh/sshd_config &
-if [ ! ${NODE_ID} -eq "0" ]; then exit 0; fi
+if [ ! ${NODE_ID} = "0" ]; then exit 0; fi
 
 /sbin/rpcbind -w
 /sbin/rpcinfo

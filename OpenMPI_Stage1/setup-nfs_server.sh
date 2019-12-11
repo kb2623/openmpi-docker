@@ -2,7 +2,7 @@
 
 NFS_DATA_DIR=$1
 
-if [ ! ${NODE_ID} -eq "0" ]; then exit 0; fi
+if [ ! ${NODE_ID} = "0" ]; then exit 0; fi
 
 # Create NFS Server
 mkdir -p ${NFS_DATA_DIR} && chown -R nobody:nogroup ${NFS_DATA_DIR} && chmod -R 755 ${NFS_DATA_DIR}

@@ -35,7 +35,7 @@ createnet:
 		-o parent=${HOST_INTERFACE} \
 		${NETWORK_NAME}
 
-buildS1:
+build_s1:
 	echo "Build node"
 	cp ${HOSTS_FILE} OpenMPI_Stage1/hosts
 ifdef MASTER
@@ -46,22 +46,30 @@ endif
 
 build: ${HOSTS_FILE} ${SSL_KEY} ${SSL_KEY}.pub
 	echo "BUILDING"
-	-make buildS1
+	-make build_s1
 	-chmod -R 755 /OpenMPI_Stage1
 	-rm -rf OpenMPI_Stage2/.ssh
 	mkdir -p OpenMPI_Stage2/.ssh
 	cp ${SSL_KEY} OpenMPI_Stage2/.ssh/${SSL_KEY}
 	cp ${SSL_KEY}.pub OpenMPI_Stage2/.ssh/${SSL_KEY}.pub
 	cp ${SSL_KEY}.pub OpenMPI_Stage2/.ssh/authorized_keys
-ifdef MASTER
-	docker build -t ${DOCKER_NAME}:${DOCKER_TAG} --build-arg BASE_CONTAINER=${DOCKER_NAME}_s1:${DOCKER_TAG} --build-arg MASTER_NODE=true OpenMPI_Stage2
-else
-	docker build -t ${DOCKER_NAME}:${DOCKER_TAG} --build-arg BASE_CONTAINER=${DOCKER_NAME}_s1:${DOCKER_TAG} --build-arg MASTER_NODE=false OpenMPI_Stage2
-endif
+	docker build -t ${DOCKER_NAME}:${DOCKER_TAG} --build-arg BASE_CONTAINER=${DOCKER_NAME}_s1:${DOCKER_TAG} --build-arg NODE_ID=${NODE_ID} OpenMPI_Stage2
 		
 run:
 	# TODO
+	docker run ..
 	
+clean_sslkey: ${SSL_KEY} ${SSL_KEY}.pub
+	rm ${SSL_KEY} ${SSL_KEY}.pub
+
+clean_s1:
+	docker image rm ${DOCKER_NAME}_s1:${DOCKER_TAG}
+
+clean: 
+	-make clean_s1
+	-rm OpenMPI_Stage1/hosts
+	-rm -rf OpenMPI_Stage2/.ssh/
+
 runnet: ${HOSTS_FILE}
 	-make build
 	-make makenet
@@ -71,10 +79,3 @@ runnet: ${HOSTS_FILE}
 		-p ${SORCE_PORT}:${DESTINATION_PORT} \
 		-d niapyorg:${NIAORG_TAG}
 
-clean_sslkey: ${SSL_KEY} ${SSL_KEY}.pub
-	rm ${SSL_KEY} ${SSL_KEY}.pub
-
-clean: 
-	-docker image rm ${DOCKER_NAME}_s1:${DOCKER_TAG}
-	-rm OpenMPI_Stage1/hosts
-	-rm -rf OpenMPI_Stage2/.ssh/

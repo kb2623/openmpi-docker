@@ -4,7 +4,7 @@ FROM $BASE_CONTAINER
 LABEL maintainer="Klemen Berkovic <roxor@gmail.com>"
 LABEL description="Alpine computing Node for OpenMPI"
 
-ARG NODE_ID=1
+ARG NODE_ID=0
 ARG NFS_DATA_DIR=/mnt/nfs/nfs-data
 ARG OPENMPI_VERSION=4.0.2
 
