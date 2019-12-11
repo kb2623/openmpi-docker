@@ -12,7 +12,7 @@ ARG AUSER=mpiuser
 ARG AUSER_ID=1002
 ARG AGROUP=mpisers
 ARG AGROUP_ID=1002
-ARG AHOME=/home/mpiuser
+ARG AHOME=/home/${AUSER}
 ARG WORD_DIR=${AHOME}/mpidir
 
 ENV DEBCONF_NOWARNINGS=yes
@@ -21,15 +21,15 @@ ENV USPACE_APPS=/usr/local
 
 USER root
 WORKDIR /root
-
+VOLUME ${AHOME}/data
 EXPOSE 22
 EXPOSE 2049
-
 CMD [${NODE_ID}, ${AUSER}, ${AGROUP}, ${WORD_DIR}]
 ENTRYPOINT ["/root/daemon.zsh"]
 
 RUN mkdir -p ${AHOME} && \
     mkdir -p ${AHOME}/.ssh && \
+    mkdir -p ${AHOME}/data && \
 	mkdir -p /etc/skel
 ADD sshd_config /etc/ssh/
 ADD daemon.zsh /root

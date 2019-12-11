@@ -20,6 +20,7 @@ MPI_USER:=mpiuser
 MPI_USER_ID:=1002
 MPI_GROUP:=mpiusers
 MPI_GROUP_ID:=1002
+MPI_DATA_VOLUME:=$(echo ${HOME})
 
 # User
 EXEC_UESR:=${MPI_USER}
@@ -71,6 +72,7 @@ run:
 	docker run --name=node${NODE_ID}_mpi \
 		-p ${SSH_SOURCE_PORT}:22 \
 		-p ${NFS_SOURCE_PORT}:2049 \
+		-v ${MPI_DATA_VOLUME}:/home/${MPI_USER} \
 		-d ${DOCKER_NAME}:${DOCKER_TAG}
 
 runnet:
