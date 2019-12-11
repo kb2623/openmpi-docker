@@ -22,5 +22,7 @@ else
 	echo "Export validation failed, exiting..."
 	exit 1
 fi
-$BMOUNTD --debug all --no-udp --no-nfs-version 2 --no-nfs-version 3
-$BNFSD --debug 8 --no-udp --no-nfs-version 2 --no-nfs-version 3
+$BMOUNTD
+$BIDMAPD -S -v -f &
+$BNFSD 8 --udp --tcp -no-nfs-version 2 --no-nfs-version 3
+$BRPC_SVCGSSD -f &
