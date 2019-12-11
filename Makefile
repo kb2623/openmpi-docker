@@ -1,7 +1,7 @@
 DOCKER_NAME:=nfs_mpi_alpine
 DOCKER_TAG:=latest
 
-NODE_ID:=1
+NODE_ID:=0
 
 HOSTS_FILE:=hosts
 NETWORK_SUBNET:=164.8.230.0/24
@@ -9,8 +9,8 @@ HOST_INTERFACE:=eth0
 NETWORK_GW:=164.8.230.1
 NETWORK_NAME:=mpinet
 
-SSH_SOURCE_PORT:=22
-NFS_SOURCE_PORT:=2049
+SSH_PORT:=22
+NFS_PORT:=2049
 
 SSL_PROTECTION=dsa
 SSL_KEY:=id_dsa.mpi
@@ -69,8 +69,8 @@ runnet_s1:
 	docker run --name=node${NODE_ID}_mpi_s1 \
 		--network=${NETWORK_NAME} \
 		--ip=$(cat ${HOSTS_FILE} | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f1 | head -${NODE_ID} | tail -1) \
-		-p ${SSH_SOURCE_PORT}:22 \
-		-p ${NFS_SOURCE_PORT}:2049 \
+		-p ${SSH_PORT}:22 \
+		-p ${NFS_PORT}:2049 \
 		-d ${DOCKER_NAME}_s1:${DOCKER_TAG}
 
 exec_zsh_s1:
@@ -114,8 +114,8 @@ runnet:
 	docker run --name=node${NODE_ID}_mpi \
 		--network=${NETWORK_NAME} \
 		--ip=$(cat ${HOSTS_FILE} | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f1 | head -${NODE_ID} | tail -1) \
-		-p ${SSH_SOURCE_PORT}:22 \
-		-p ${NFS_SOURCE_PORT}:2049 \
+		-p ${SSH_PORT}:22 \
+		-p ${NFS_PORT}:2049 \
 		-d ${DOCKER_NAME}:${DOCKER_TAG}
 
 exec_zsh:
