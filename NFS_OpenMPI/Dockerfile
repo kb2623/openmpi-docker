@@ -28,7 +28,9 @@ EXPOSE 2049
 CMD [${NODE_ID}, ${AUSER}, ${AGROUP}, ${WORD_DIR}]
 ENTRYPOINT ["/root/daemon.zsh"]
 
-RUN mkdir -p ${AHOME}/.ssh && mkdir -p /etc/skel
+RUN mkdir -p ${AHOME} && \
+    mkdir -p ${AHOME}/.ssh && \
+	mkdir -p /etc/skel
 ADD sshd_config /etc/ssh/
 ADD daemon.zsh /root
 ADD hosts /root 
@@ -47,7 +49,7 @@ RUN chmod a+rx hosts && \
 	chmod a+x daemon.zsh && \
 	chmod a+rx createuser.sh && \
 	chmod g+w /etc/passwd && \
-	chmod -R 755 .ssh
+	chmod -R 755 ${AHOME}/.ssh
 
 # Add configurations to root user
 RUN cp -f /etc/skel/.bashrc /root/.bashrc && \
