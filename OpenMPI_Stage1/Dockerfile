@@ -3,6 +3,7 @@ FROM $BASE_CONTAINER
 
 LABEL maintainer="Klemen Berkovic <roxor@gmail.com>"
 LABEL description="Alpine computing Node for OpenMPI"
+LABEL source="https://github.com/kb2623/openmpi-docker"
 
 ARG NODE_ID=0
 ARG NFS_DATA_DIR=/mnt/nfs/nfs-data
@@ -19,21 +20,32 @@ EXPOSE 22
 EXPOSE 2049
 
 ADD sshd_config /etc/ssh/
+ADD daemon.zsh /root
 ADD hosts /root 
 ADD setup-nfs_server.sh /root
+
+RUN mkdir -p /etc/skel
 ADD .bashrc /etc/skel
 ADD .zshrc /etc/skel
 ADD .tmux.config /etc/skel
 ADD .basic.tmuxtheme /etc/skel
 ADD .profile /etc/skel
-ADD daemon.zsh /root
 
+CMD [${NODE_ID}]
 ENTRYPOINT ["/root/daemon.zsh"]
 
 # Fix file privilages
 RUN chmod a+rx hosts && \
 	chmod a+rx setup-nfs_server.sh && \
 	chmod a+x daemon.zsh
+
+# Add configurations to root user
+RUN cp -f /etc/skel/.bashrc /root/.bashrc && \
+	cp -f /etc/skel/.zshrc /root/.zshrc && \
+	cp -f /etc/skel/.profile /root/.profile && \
+	cp -f /etc/skel/.tmux.config /root/.tmux.config && \
+	cp -f /etc/skel/.basic.tmuxtheme /root/.basic.tmuxtheme && \
+	chown -R root:root /root
 
 # Update the system and install programs
 RUN apk update && apk add zsh bash tmux git build-base perl linux-headers nfs-utils openssh && ssh-keygen -A

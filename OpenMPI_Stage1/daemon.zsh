@@ -1,5 +1,12 @@
 #!/bin/zsh
 
+# Arguments -----------------------------------------------------------------------------------------------------
+NODE_ID=$1
+AUSER=$2
+AGROUP=$3
+WORD_DIR=$4
+
+# Constants -----------------------------------------------------------------------------------------------------
 readonly BEXPORTFS='/usr/sbin/exportfs'
 readonly BIDMAPD='/usr/sbin/rpc.idmapd'
 readonly BMOUNTD='/usr/sbin/rpc.mountd'
@@ -9,20 +16,51 @@ readonly BRPCINFO='/sbin/rpcinfo'
 readonly BRPC_SVCGSSD='/usr/sbin/rpc.svcgssd'
 readonly BSTATD='/sbin/rpc.statd'
 
-/usr/sbin/sshd -D -e -f /etc/ssh/sshd_config &
-if [ ! ${NODE_ID} = "0" ]; then exit 0; fi
+# Mount NFS ------------------------------------------------------------------------------------------------------
+function run_mound_nfs () {
+	mkdir -p ${WORD_DIR}
+	mount -v -o nolock $(cat ${AHOME}/hosts | tr ' ' '\t' | tr -d ' ' | cut -d$'\t' -f1 | head -1):/ ${WORD_DIR}
+	chown -R ${AUSER}:${AGROUP} ${WORD_DIR}
+}
 
-# TODO https://github.com/ehough/docker-nfs-server/blob/develop/entrypoint.sh
+# Services -------------------------------------------------------------------------------------------------------
+function run_sshd () {
+	nohup /usr/sbin/sshd -D -e -f /etc/ssh/sshd_config &
+	return $!
+}
 
-$BRPCBIND -w
-$BRPCINFO
-if $BEXPORTFS -rv; then
-	$BEXPORTFS
+function run_nfsd () {
+	$BRPCBIND -w
+	$BRPCINFO
+	if $BEXPORTFS -rv; then
+		$BEXPORTFS
+	else
+		echo "Export validation failed, exiting..."
+		exit 1
+	fi
+	$BNFSD -u -t -V 4 -N 2 -N 3 8
+	nohup $BMOUNTD -F -V 4 -N 2 -N 3 &
+	return $!
+}
+
+# Type of Nodes ---------------------------------------------------------------------------------------------------
+function run_master () {
+	sshd_pid=run_sshd
+	nfsd_pid=run_nfsd
+	run_mound_nfs
+	wait $nfsd_pid
+	wait $sshd_pid
+}
+
+function run_node () {
+	sshd_pid=run_sshd
+	run_mound_nfs
+	wait $sshd_pid
+}
+
+# Main ------------------------------------------------------------------------------------------------------------
+if [ ! ${NODE_ID} = "0" ]; then
+	run_node
 else
-	echo "Export validation failed, exiting..."
-	exit 1
+	run_master
 fi
-$BMOUNTD
-$BIDMAPD -S -v -f &
-$BNFSD 8 --udp --tcp -no-nfs-version 2 --no-nfs-version 3
-$BRPC_SVCGSSD -f &

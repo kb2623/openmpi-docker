@@ -3,6 +3,7 @@ FROM $BASE_CONTAINER
 
 LABEL maintainer="Klemen Berkovic <roxor@gmail.com>"
 LABEL description="Final OpenMPI image"
+LABEL source="https://github.com/kb2623/openmpi-docker"
 
 ARG NODE_ID=0
 ARG NFS_DATA_DIR=/mnt/nfs/nfs-data
@@ -23,14 +24,18 @@ RUN chmod a+rx createuser.sh && \
 
 # Create user
 RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME && \
-	echo "AllowUsers %s" >> /etc/ssh/sshd_config ${AUSER}
+	echo "AllowUsers %s" >> /etc/ssh/sshd_config ${AUSER} && \
+	cp /root/hosts ${AHOME}/hosts && \
+	chown ${AUSER}:${AGROUP} ${AHOME}/hosts && \
+	chmod a+r ${AHOME}/hosts
 
-USER $AUSER_ID
+USER $AUSER
 WORKDIR $AHOME
 
-ADD .ssh $AHOME
+RUN mkdir -p ${AHOME}/.ssh
+ADD .ssh ${AHOME}
 
+CMD [${AUSER}, ${AGROUP}, ${WORD_DIR}]
+
+# Fix premissions
 RUN chmod -R 755 .ssh
-
-# NFS client setup
-RUN mkdir -p ${WORD_DIR} && mount $(cat /root/hosts | tr ' ' '\t' | tr -d ' ' | cut -d$'\t' -f1 | head -1)${NFS_DATA_DIR} ${WORD_DIR}

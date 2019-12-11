@@ -38,11 +38,7 @@ createnet:
 build_s1:
 	echo "Build node"
 	cp ${HOSTS_FILE} OpenMPI_Stage1/hosts
-ifdef MASTER
-	docker build -t ${DOCKER_NAME}_s1:${DOCKER_TAG} --build-arg MASTER_NODE=true OpenMPI_Stage1
-else
-	docker build -t ${DOCKER_NAME}_s1:${DOCKER_TAG} OpenMPI_Stage1
-endif
+	docker build -t ${DOCKER_NAME}_s1:${DOCKER_TAG} --build-arg NODE_ID=${NODE_ID} OpenMPI_Stage1
 
 build: ${HOSTS_FILE} ${SSL_KEY} ${SSL_KEY}.pub
 	echo "BUILDING"
@@ -57,7 +53,7 @@ build: ${HOSTS_FILE} ${SSL_KEY} ${SSL_KEY}.pub
 		
 run:
 	# TODO
-	docker run ..
+	docker run --privileged ..
 	
 clean_sslkey: ${SSL_KEY} ${SSL_KEY}.pub
 	rm ${SSL_KEY} ${SSL_KEY}.pub

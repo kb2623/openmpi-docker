@@ -32,4 +32,4 @@ else
 	export TERM='screen-256color'
 fi
 
-export SHELL=/bin/bash
+export SHELL=/bin/zsh
