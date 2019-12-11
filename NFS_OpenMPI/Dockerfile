@@ -79,7 +79,7 @@ RUN ./setup-nfs_server.sh ${NFS_DATA_DIR}
 # Create user
 RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME && \
 	echo "AllowUsers %s" >> /etc/ssh/sshd_config ${AUSER} && \
-	cp /root/hosts ${AHOME}/hosts && \
+	ln -s /root/hosts ${AHOME}/hosts && \
 	chown ${AUSER}:${AGROUP} ${AHOME}/hosts && \
 	chmod a+r ${AHOME}/hosts
 

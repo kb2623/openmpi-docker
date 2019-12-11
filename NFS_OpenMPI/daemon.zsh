@@ -19,7 +19,7 @@ readonly BSTATD='/sbin/rpc.statd'
 # Mount NFS ------------------------------------------------------------------------------------------------------
 function run_mound_nfs () {
 	mkdir -p ${WORD_DIR}
-	mount -v -o nolock $(cat ${AHOME}/hosts | tr ' ' '\t' | tr -d ' ' | cut -d$'\t' -f1 | head -1):/ ${WORD_DIR}
+	mount -v -o nolock $(cat /root/hosts | tr ' ' '\t' | tr -d ' ' | cut -d$'\t' -f1 | head -1):/ ${WORD_DIR}
 	chown -R ${AUSER}:${AGROUP} ${WORD_DIR}
 }
 
