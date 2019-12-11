@@ -2,12 +2,18 @@ ARG BASE_CONTAINER=alpine:3.10
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Klemen Berkovic <roxor@gmail.com>"
-LABEL description="Alpine computing Node for OpenMPI"
+LABEL description="Alpine computing Node for OpenMPI with NFS server"
 LABEL source="https://github.com/kb2623/openmpi-docker"
 
 ARG NODE_ID=0
 ARG NFS_DATA_DIR=/mnt/nfs/nfs-data
 ARG OPENMPI_VERSION=4.0.2
+ARG AUSER=mpiuser
+ARG AUSER_ID=1002
+ARG AGROUP=mpisers
+ARG AGROUP_ID=1002
+ARG AHOME=/home/mpiuser
+ARG WORD_DIR=${AHOME}/mpidir
 
 ENV DEBCONF_NOWARNINGS=yes
 ENV USPACE_LIBS=/usr/local/lib
@@ -19,20 +25,21 @@ WORKDIR /root
 EXPOSE 22
 EXPOSE 2049
 
+CMD [${NODE_ID}, ${AUSER}, ${AGROUP}, ${WORD_DIR}]
+ENTRYPOINT ["/root/daemon.zsh"]
+
+RUN mkdir -p ${AHOME}/.ssh && mkdir -p /etc/skel
 ADD sshd_config /etc/ssh/
 ADD daemon.zsh /root
 ADD hosts /root 
 ADD setup-nfs_server.sh /root
-
-RUN mkdir -p /etc/skel
-ADD .bashrc /etc/skel
+ADD createuser.sh /root
 ADD .zshrc /etc/skel
 ADD .tmux.config /etc/skel
 ADD .basic.tmuxtheme /etc/skel
 ADD .profile /etc/skel
-
-CMD [${NODE_ID}]
-ENTRYPOINT ["/root/daemon.zsh"]
+ADD .bashrc /etc/skel
+ADD .ssh ${AHOME}
 
 # Fix file privilages
 RUN chmod a+rx hosts && \
@@ -64,3 +71,15 @@ RUN echo -e "\n# MPI cluster hosts\n" >> /etc/hosts && \
 # NFS server
 RUN ./setup-nfs_server.sh ${NFS_DATA_DIR}
 
+
+
+RUN chmod a+rx createuser.sh && \
+	chmod g+w /etc/passwd && \
+	chmod -R 755 .ssh
+
+# Create user
+RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME && \
+	echo "AllowUsers %s" >> /etc/ssh/sshd_config ${AUSER} && \
+	cp /root/hosts ${AHOME}/hosts && \
+	chown ${AUSER}:${AGROUP} ${AHOME}/hosts && \
+	chmod a+r ${AHOME}/hosts
