@@ -7,6 +7,9 @@ AGROUP=$3
 WORD_DIR=$4
 
 # Constants -----------------------------------------------------------------------------------------------------
+readonly SSH_CONFIG='/etc/ssh/sshd_config'
+
+readonly BSSHD='/usr/sbin/sshd'
 readonly BEXPORTFS='/usr/sbin/exportfs'
 readonly BIDMAPD='/usr/sbin/rpc.idmapd'
 readonly BMOUNTD='/usr/sbin/rpc.mountd'
@@ -25,7 +28,7 @@ function run_mound_nfs () {
 
 # Services -------------------------------------------------------------------------------------------------------
 function run_sshd () {
-	nohup /usr/sbin/sshd -D -e -f /etc/ssh/sshd_config &
+	nohup $BSSHD -D -e -f $SSH_CONFIG &
 	return $!
 }
 
