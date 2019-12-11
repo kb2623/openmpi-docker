@@ -63,7 +63,7 @@ build: ${HOSTS_FILE} ${SSL_KEY} ${SSL_KEY}.pub
 	cp ${SSL_KEY} NFS_OpenMPI/.ssh/${SSL_KEY}
 	cp ${SSL_KEY}.pub NFS_OpenMPI/.ssh/${SSL_KEY}.pub
 	cp ${SSL_KEY}.pub NFS_OpenMPI/.ssh/authorized_keys
-	docker build -t ${DOCKER_NAME}:${DOCKER_TAG} --build-arg BASE_CONTAINER=${DOCKER_NAME}_s1:${DOCKER_TAG} --build-arg NODE_ID=${NODE_ID} NFS_OpenMPI
+	docker build -t ${DOCKER_NAME}:${DOCKER_TAG} --build-arg NODE_ID=${NODE_ID} NFS_OpenMPI
 	
 run:
 	echo -e "\nDocker run=>${DOCKER_NAME}:${DOCKER_TAG}\n"
