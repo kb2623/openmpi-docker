@@ -5,7 +5,7 @@ NODE_ID:=0
 
 HOSTS_FILE:=hosts
 NETWORK_SUBNET:=164.8.230.0/24
-HOST_INTERFACE:=eth0
+HOST_INTERFACE:=eho1
 NETWORK_GW:=164.8.230.1
 NETWORK_NAME:=mpinet
 
@@ -66,16 +66,7 @@ build: ${HOSTS_FILE} ${SSL_KEY} ${SSL_KEY}.pub
 	cp ${SSL_KEY}.pub NFS_OpenMPI/.ssh/authorized_keys
 	docker build -t ${DOCKER_NAME}:${DOCKER_TAG} --build-arg NODE_ID=${NODE_ID} NFS_OpenMPI
 	
-run:
-	echo -e "\nDocker run=>${DOCKER_NAME}:${DOCKER_TAG}\n"
-	-make build
-	docker run --name=node${NODE_ID}_mpi \
-		-p ${SSH_SOURCE_PORT}:22 \
-		-p ${NFS_SOURCE_PORT}:2049 \
-		-v ${MPI_DATA_VOLUME}:/home/${MPI_USER} \
-		-d ${DOCKER_NAME}:${DOCKER_TAG}
-
-runnet:
+run: net
 	echo -e "\nDocker run=>${DOCKER_NAME}:${DOCKER_TAG}@${NETWORK_NAME}\n"
 	-make net
 	-make build
@@ -84,6 +75,7 @@ runnet:
 		--ip=$(cat ${HOSTS_FILE} | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f1 | head -${NODE_ID} | tail -1) \
 		-p ${SSH_PORT}:22 \
 		-p ${NFS_PORT}:2049 \
+		-v ${MPI_DATA_VOLUME}:/home/${MPI_USER} \
 		-d ${DOCKER_NAME}:${DOCKER_TAG}
 
 exec:
