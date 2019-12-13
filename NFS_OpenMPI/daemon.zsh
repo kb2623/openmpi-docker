@@ -22,8 +22,9 @@ readonly BSTATD='/sbin/rpc.statd'
 # Mount NFS ------------------------------------------------------------------------------------------------------
 function run_mound_nfs () {
 	mkdir -p ${WORD_DIR}
-	mount -v -o nolock $(cat /root/hosts | tr ' ' '\t' | tr -d ' ' | cut -d$'\t' -f1 | head -1):/ ${WORD_DIR}
+	chmod a+wr ${WORD_DIR}
 	chown -R ${AUSER}:${AGROUP} ${WORD_DIR}
+	mount -v -o nolock $(cat /root/hosts | tr '\t' ' ' | tr -s ' ' | cut -d$' ' -f1 | head -1):/ ${WORD_DIR}
 }
 
 # Services -------------------------------------------------------------------------------------------------------
@@ -51,14 +52,11 @@ function run_master () {
 	sshd_pid=run_sshd
 	nfsd_pid=run_nfsd
 	run_mound_nfs
-	wait $nfsd_pid
-	wait $sshd_pid
 }
 
 function run_node () {
 	sshd_pid=run_sshd
 	run_mound_nfs
-	wait $sshd_pid
 }
 
 # Main ------------------------------------------------------------------------------------------------------------
