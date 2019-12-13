@@ -19,17 +19,7 @@ ENV DEBCONF_NOWARNINGS=yes
 ENV USPACE_LIBS=/usr/local/lib
 ENV USPACE_APPS=/usr/local
 
-USER root
-WORKDIR /root
-VOLUME ${AHOME}/data
-EXPOSE 22
-EXPOSE 2049
-CMD ["${NODE_ID}", "${AUSER}", "${AGROUP}", "${WORD_DIR}"]
-ENTRYPOINT ["/root/daemon.zsh"]
-
-RUN mkdir -p ${AHOME} && \
-    mkdir -p ${AHOME}/data && \
-	mkdir -p /etc/skel
+RUN mkdir -p /etc/skel
 ADD sshd_config /etc/ssh/
 ADD daemon.zsh /root
 ADD hosts /root 
@@ -40,15 +30,16 @@ ADD .tmux.config /etc/skel
 ADD .basic.tmuxtheme /etc/skel
 ADD .profile /etc/skel
 ADD .bashrc /etc/skel
-COPY .ssh ${AHOME}/.ssh
+
+USER root
+WORKDIR /root
 
 # Fix file privilages
 RUN chmod a+rx hosts && \
 	chmod a+rx setup-nfs_server.sh && \
 	chmod a+x daemon.zsh && \
 	chmod a+rx createuser.sh && \
-	chmod g+w /etc/passwd && \
-	chmod -R 755 ${AHOME}/.ssh
+	chmod g+w /etc/passwd
 
 # Add configurations to root user
 RUN cp -f /etc/skel/.bashrc /root/.bashrc && \
@@ -77,9 +68,21 @@ RUN ./setup-nfs_server.sh ${NFS_DATA_DIR}
 
 # Create user
 RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME && \
-	echo "AllowUsers %s" >> /etc/ssh/sshd_config ${AUSER} && \
-	ln -s /root/hosts ${AHOME}/hosts && \
+	echo "AllowUsers ${AUSER}" >> /etc/ssh/sshd_config  && \
+	ln /root/hosts ${AHOME}/hosts && \
 	chown ${AUSER}:${AGROUP} ${AHOME}/hosts && \
-	chmod a+r ${AHOME}/hosts
+	chmod a+r ${AHOME}/hosts && \
+	mkdir -p ${AHOME}/data
+COPY .ssh ${AHOME}/.ssh
+RUN chmod -R 755 ${AHOME}/.ssh
+
+## EntryPoint ########################################################################
+USER root
+WORKDIR /root
+VOLUME ${AHOME}/data
+EXPOSE 22
+EXPOSE 2049
+CMD ["${NODE_ID}", "${AUSER}", "${AGROUP}", "${WORD_DIR}"]
+ENTRYPOINT ["/root/daemon.zsh"]
 
 # vim: tabstop=4 noexpandtab shiftwidth=3 softtabstop=3

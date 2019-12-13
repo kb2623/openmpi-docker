@@ -64,7 +64,14 @@ build: ${HOSTS_FILE} ${SSL_KEY} ${SSL_KEY}.pub
 	cp ${SSL_KEY} NFS_OpenMPI/.ssh/${SSL_KEY}
 	cp ${SSL_KEY}.pub NFS_OpenMPI/.ssh/${SSL_KEY}.pub
 	cp ${SSL_KEY}.pub NFS_OpenMPI/.ssh/authorized_keys
-	docker build -t ${DOCKER_NAME}:${DOCKER_TAG} --build-arg NODE_ID=${NODE_ID} NFS_OpenMPI
+	docker build \
+		-t ${DOCKER_NAME}:${DOCKER_TAG} \
+		--build-arg NODE_ID=${NODE_ID} \
+		--build-arg AUSER=${MPI_USER} \
+		--build-arg AUSER_ID=${MPI_USER_ID} \
+		--build-arg AGROUP=${MPI_GROUP} \
+		--build-arg AGROUP_ID=${MPI_GROUP_ID} \
+		NFS_OpenMPI
 	
 run:
 	-make net
