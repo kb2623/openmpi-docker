@@ -20,12 +20,4 @@ if id -g "$aGROUP" >/dev/null 2>&1; then delgroup $aGROUP; fi
 if id -g "$aGID" >/dev/null 2>&1; then delgroup $aGID; fi
 
 addgroup -g $aGID $aGROUP
-adduser -D -H -u $aUID -G $aGROUP -s /bin/zsh -h $aHOME $aUSER 
-
-mkdir -p $aHOME
-cp -f /etc/skel/.bashrc $aHOME/.bashrc
-cp -f /etc/skel/.zshrc $aHOME/.zshrc
-cp -f /etc/skel/.profile $aHOME/.profile
-cp -f /etc/skel/.tmux.config $aHOME/.tmux.config
-cp -f /etc/skel/.basic.tmuxtheme $aHOME/.basic.tmuxtheme
-chown -R $aUSER:$aGROUP $aHOME
+adduser -D -u $aUID -G $aGROUP -s /bin/zsh -h $aHOME $aUSER 
