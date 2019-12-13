@@ -84,7 +84,7 @@ exec:
 	docker exec -it -u ${EXEC_UESR} node${NODE_ID}_mpi ${EXEC_SHELL}
 
 stop:
-	docker stop ${DOCKER_NAME}:${DOCKER_TAG}
+	docker stop node${NODE_ID}_mpi
 
 remove:
 	-make stop
