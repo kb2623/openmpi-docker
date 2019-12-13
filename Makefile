@@ -27,6 +27,11 @@ EXEC_UESR:=${MPI_USER}
 # Shell: /bin/zsh /bin/bash /bin/ash /bin/sh
 EXEC_SHELL:=/bin/zsh
 
+all:
+	-make net
+	-make build
+	-make run
+
 ## Network ############################################################################
 
 net:
