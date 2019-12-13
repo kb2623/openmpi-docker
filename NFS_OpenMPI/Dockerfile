@@ -40,7 +40,7 @@ ADD .tmux.config /etc/skel
 ADD .basic.tmuxtheme /etc/skel
 ADD .profile /etc/skel
 ADD .bashrc /etc/skel
-COPY .ssh ${AHOME}
+COPY .ssh ${AHOME}/.ssh
 
 # Fix file privilages
 RUN chmod a+rx hosts && \
