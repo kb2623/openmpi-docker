@@ -28,7 +28,6 @@ CMD ["${NODE_ID}", "${AUSER}", "${AGROUP}", "${WORD_DIR}"]
 ENTRYPOINT ["/root/daemon.zsh"]
 
 RUN mkdir -p ${AHOME} && \
-    mkdir -p ${AHOME}/.ssh && \
     mkdir -p ${AHOME}/data && \
 	mkdir -p /etc/skel
 ADD sshd_config /etc/ssh/
@@ -41,7 +40,7 @@ ADD .tmux.config /etc/skel
 ADD .basic.tmuxtheme /etc/skel
 ADD .profile /etc/skel
 ADD .bashrc /etc/skel
-ADD .ssh ${AHOME}
+COPY .ssh ${AHOME}
 
 # Fix file privilages
 RUN chmod a+rx hosts && \
