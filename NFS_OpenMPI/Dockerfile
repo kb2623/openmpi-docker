@@ -50,7 +50,9 @@ RUN cp -f /etc/skel/.bashrc /root/.bashrc && \
 	chown -R root:root /root
 
 # Update the system and install programs
-RUN apk update && apk add zsh bash tmux git build-base perl linux-headers nfs-utils openssh && ssh-keygen -A
+RUN apk update && \
+   apk add zsh bash tmux git build-base perl linux-headers nfs-utils openssh && \
+   ssh-keygen -A
 
 # Install OpenMPI
 RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-${OPENMPI_VERSION}.tar.bz2 && \
@@ -77,6 +79,7 @@ COPY .ssh ${AHOME}/.ssh
 RUN chmod -R 755 ${AHOME}/.ssh
 
 ## EntryPoint ########################################################################
+
 USER root
 WORKDIR /root
 VOLUME ${AHOME}/data
