@@ -42,7 +42,7 @@ function run_nfsd () {
 		exit 1
 	fi
 	$BNFSD -u -t -V 4 -N 2 -N 3 8
-	nohup $BMOUNTD -F -V 4 -N 2 -N 3 &
+	nohup $BMOUNTD -V 4 -N 2 -N 3 &
 	return $!
 }
 
@@ -68,4 +68,9 @@ else
 	run_master
 fi
 
-/bin/zsh
+# main loop
+while true; do
+	echo "Press [CTRL+C] to stop.."
+   sleep 1000
+done
+
