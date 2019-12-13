@@ -67,3 +67,5 @@ if [ ! ${NODE_ID} = "0" ]; then
 else
 	run_master
 fi
+
+/bin/zsh
