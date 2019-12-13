@@ -23,7 +23,7 @@ MPI_GROUP_ID:=1002
 MPI_DATA_VOLUME:=$(echo ${HOME})
 
 # User
-EXEC_UESR:=${MPI_USER}
+EXEC_USER:=${MPI_USER}
 # Shell: /bin/zsh /bin/bash /bin/ash /bin/sh
 EXEC_SHELL:=/bin/zsh
 
@@ -81,7 +81,7 @@ start:
 	docker start node${NODE_ID}_mpi
 
 exec:
-	docker exec -it -u ${EXEC_UESR} node${NODE_ID}_mpi ${EXEC_SHELL}
+	docker exec -it -u ${EXEC_USER} node${NODE_ID}_mpi ${EXEC_SHELL}
 
 stop:
 	docker stop node${NODE_ID}_mpi
