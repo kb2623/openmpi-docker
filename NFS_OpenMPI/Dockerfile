@@ -24,7 +24,7 @@ WORKDIR /root
 VOLUME ${AHOME}/data
 EXPOSE 22
 EXPOSE 2049
-CMD [${NODE_ID}, ${AUSER}, ${AGROUP}, ${WORD_DIR}]
+CMD ["${NODE_ID}", "${AUSER}", "${AGROUP}", "${WORD_DIR}"]
 ENTRYPOINT ["/root/daemon.zsh"]
 
 RUN mkdir -p ${AHOME} && \
