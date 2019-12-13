@@ -20,7 +20,7 @@ MPI_USER:=mpiuser
 MPI_USER_ID:=1002
 MPI_GROUP:=mpiusers
 MPI_GROUP_ID:=1002
-MPI_DATA_VOLUME:=$(echo ${HOME})
+MPI_DATA_VOLUME:=/home
 
 # User
 EXEC_USER:=${MPI_USER}
@@ -71,7 +71,7 @@ run:
 	-make build
 	docker run --name=node${NODE_ID}_mpi \
 		--network=${NETWORK_NAME} \
-		--ip=$(cat ${HOSTS_FILE} | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f1 | head -${NODE_ID} | tail -1) \
+		--ip=$(shell cat ${HOSTS_FILE} | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f1 | head -$$NODE_ID | tail -1) \
 		-p ${SSH_PORT}:22 \
 		-p ${NFS_PORT}:2049 \
 		-v ${MPI_DATA_VOLUME}:/home/${MPI_USER} \
