@@ -1,10 +1,11 @@
 #!/bin/zsh
 
 # Arguments -----------------------------------------------------------------------------------------------------
-NODE_ID=$1
-AUSER=$2
-AGROUP=$3
-WORD_DIR=$4
+HOST_FILE=$1
+NODE_ID=$2
+AUSER=$3
+AGROUP=$4
+WORD_DIR=$5
 
 # Constants -----------------------------------------------------------------------------------------------------
 readonly SSH_CONFIG='/etc/ssh/sshd_config'
@@ -21,10 +22,10 @@ readonly BSTATD='/sbin/rpc.statd'
 
 # Mount NFS ------------------------------------------------------------------------------------------------------
 function run_mound_nfs () {
-	mkdir -p ${WORD_DIR}
-	chmod a+wr ${WORD_DIR}
-	chown -R ${AUSER}:${AGROUP} ${WORD_DIR}
-	mount -v -o nolock $(cat /root/hosts | tr '\t' ' ' | tr -s ' ' | cut -d$' ' -f1 | head -1):/ ${WORD_DIR}
+	mkdir -p $WORD_DIR
+	chmod a+wrx $WORD_DIR
+	chown -R $AUSER:$AGROUP $WORD_DIR
+	mount -v -o nolock $(cat $HOST_FILE | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f1 | head -1 | tail -1):/ $WORD_DIR
 }
 
 # Services -------------------------------------------------------------------------------------------------------

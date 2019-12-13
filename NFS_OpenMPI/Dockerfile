@@ -12,8 +12,8 @@ ARG AUSER=mpiuser
 ARG AUSER_ID=1002
 ARG AGROUP=mpisers
 ARG AGROUP_ID=1002
-ARG AHOME=/home/${AUSER}
-ARG WORD_DIR=${AHOME}/mpidir
+ARG AHOME=/home/$AUSER
+ARG WORD_DIR=$AHOME/mpidir
 
 ENV DEBCONF_NOWARNINGS=yes
 ENV USPACE_LIBS=/usr/local/lib
@@ -36,7 +36,7 @@ WORKDIR /root
 
 # Fix file privilages
 RUN chmod a+rx hosts && \
-	chmod a+rx setup-nfs_server.sh && \
+	chmod a+x setup-nfs_server.sh && \
 	chmod a+x daemon.zsh && \
 	chmod a+rx createuser.sh && \
 	chmod g+w /etc/passwd
@@ -46,8 +46,7 @@ RUN cp -f /etc/skel/.bashrc /root/.bashrc && \
     cp -f /etc/skel/.zshrc /root/.zshrc && \
 	cp -f /etc/skel/.profile /root/.profile && \
 	cp -f /etc/skel/.tmux.config /root/.tmux.config && \
-	cp -f /etc/skel/.basic.tmuxtheme /root/.basic.tmuxtheme && \
-	chown -R root:root /root
+	cp -f /etc/skel/.basic.tmuxtheme /root/.basic.tmuxtheme
 
 # Update the system and install programs
 RUN apk update && \
@@ -55,14 +54,14 @@ RUN apk update && \
    ssh-keygen -A
 
 # Install OpenMPI
-RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-${OPENMPI_VERSION}.tar.bz2 && \
-	tar -xvf openmpi-${OPENMPI_VERSION}.tar.bz2 && \
-	cd openmpi-${OPENMPI_VERSION} && \
-	./configure --prefix=${USPACE_APPS} && \
+RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OPENMPI_VERSION.tar.bz2 && \
+	tar -xvf openmpi-$OPENMPI_VERSION.tar.bz2 && \
+	cd openmpi-$OPENMPI_VERSION && \
+	./configure --prefix=$USPACE_APPS && \
 	make && make install
 
 # Add hosts
-RUN echo -e "\n# MPI cluster hosts\n" >> /etc/hosts && \
+RUN printf "\n# MPI cluster hosts\n" >> /etc/hosts && \
 	cat hosts >> /etc/hosts
 
 # NFS server
@@ -70,22 +69,23 @@ RUN ./setup-nfs_server.sh ${NFS_DATA_DIR}
 
 # Create user
 RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME && \
-	echo "AllowUsers ${AUSER}" >> /etc/ssh/sshd_config  && \
-	ln /root/hosts ${AHOME}/hosts && \
-	chown ${AUSER}:${AGROUP} ${AHOME}/hosts && \
-	chmod a+r ${AHOME}/hosts && \
-	mkdir -p ${AHOME}/data
-COPY .ssh ${AHOME}/.ssh
-RUN chmod -R 755 ${AHOME}/.ssh
+	printf "AllowUsers %s" $AUSER >> /etc/ssh/sshd_config && \
+	ln /root/hosts $AHOME/hosts && \
+	chown $AUSER:$AGROUP $AHOME/hosts && \
+	chmod a+r $AHOME/hosts && \
+	mkdir -p $AHOME/data && \
+	chown $AUSER:$AGROUP $AHOME/data
+COPY .ssh $AHOME/.ssh
+RUN chmod -R 755 $AHOME/.ssh
 
 ## EntryPoint ########################################################################
 
 USER root
 WORKDIR /root
-VOLUME ${AHOME}/data
+VOLUME $AHOME/data
 EXPOSE 22
 EXPOSE 2049
-CMD ["${NODE_ID}", "${AUSER}", "${AGROUP}", "${WORD_DIR}"]
+CMD ["/root/hosts", "$NODE_ID", "$AUSER", "$AGROUP", "$WORD_DIR"]
 ENTRYPOINT ["/root/daemon.zsh"]
 
 # vim: tabstop=4 noexpandtab shiftwidth=3 softtabstop=3
