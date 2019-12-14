@@ -30,6 +30,9 @@ ADD ssh_host_ed25519_key /etc/ssh/
 ADD ssh_host_ed25519_key.pub /etc/ssh/
 ADD authorized_keys /etc/ssh/
 ADD known_hosts /etc/ssh/
+RUN chmod -R 644 /etc/ssh && \
+	chmod 600 /etc/ssh/ssh_host* && \
+	chmod 401 /etc/ssh/*.pub
 
 RUN mkdir -p /etc/skel
 ADD .zshrc /etc/skel
