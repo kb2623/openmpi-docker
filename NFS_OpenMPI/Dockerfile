@@ -84,7 +84,8 @@ RUN printf "\n# MPI cluster hosts\n" >> /etc/hosts && \
 	cat hosts >> /etc/hosts
 
 # NFS server
-RUN ./setup-nfs_server.sh $NODE_ID $NFS_DATA_DIR
+RUN ./setup-nfs_server.sh $NODE_ID $NFS_DATA_DIR && \
+	rm setup-nfs_server.sh
 
 # Create user
 RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME && \
@@ -92,11 +93,16 @@ RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME && \
 	ln /root/hosts $AHOME/hosts && \
 	chown $AUSER:$AGROUP $AHOME/hosts && \
 	chmod a+r $AHOME/hosts && \
-	mkdir -p /mnt/data && \
-	chown nobody:nogroup /mnt/data && \
-	chmod a+rw /mnt/data
+	rm createuser.sh
+
+# Setup SSH keys for User
 COPY .ssh $AHOME/.ssh
 RUN chmod -R 755 $AHOME/.ssh
+
+# Create volume
+RUN mkdir -p /mnt/data && \
+	chown nobody:nogroup /mnt/data && \
+	chmod a+rw /mnt/data
 
 ## EntryPoint ########################################################################
 
