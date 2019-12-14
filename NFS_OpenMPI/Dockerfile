@@ -8,7 +8,6 @@ LABEL description="Alpine computing Node for OpenMPI with NFS server base image"
 LABEL source="https://github.com/kb2623/openmpi-docker"
 
 ARG OPENMPI_VERSION=4.0.2
-ARG SSH_KEY_PREF=mpicluster
 
 ENV USPACE_APPS=/usr/local
 
@@ -68,7 +67,6 @@ LABEL description="Alpine computing Node for OpenMPI with NFS server final image
 LABEL source="https://github.com/kb2623/openmpi-docker"
 
 ARG NODE_ID=0
-ARG NFS_DATA_DIR=/mnt/nfs/nfs-data
 ARG AUSER=mpiuser
 ARG AUSER_ID=1000
 ARG AGROUP=mpisers
@@ -77,6 +75,7 @@ ARG AHOME=/home/$AUSER
 ARG WORD_DIR=$AHOME/mpidir
 
 ENV USPACE_APPS_BIN=/usr/local/bin
+ENV NFS_DATA_DIR=/mnt/nfs/nfs-data
 
 USER root
 WORKDIR /root
