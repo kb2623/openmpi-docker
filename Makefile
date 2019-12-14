@@ -9,12 +9,10 @@ HOST_INTERFACE:=eno1
 NETWORK_GW:=164.8.230.1
 NETWORK_NAME:=mpinet
 
-SSH_PORT:=22
 NFS_PORT:=2049
 
-SSL_PROTECTION=dsa
-SSL_KEY:=id_dsa.mpi
-SSL_PASSPHRASE:=mpiuser
+SSH_PORT:=22
+SSH_KEY:=mpicluster
 
 MPI_USER:=mpiuser
 MPI_USER_ID:=1001
@@ -47,24 +45,27 @@ clean_net:
 
 ## SSL ################################################################################
 
-sslkey:
-	ssh-keygen -t ${SSL_PROTECTION} -N ${SSL_PASSPHRASE} -f ${SSL_KEY}
-	chmod -R 757 ${SSL_KEY} ${SSL_KEY}.pub
+sshkey:
+	ssh-keygen -t rsa -N '' -f ${SSH_KEY}.rsa
+	ssh-keygen -t dsa -N '' -f ${SSH_KEY}.dsa
+	ssh-keygen -t ecdsa -N '' -f ${SSH_KEY}.ecdsa
+	ssh-keygen -t ed25519 -N '' -f ${SSH_KEY}.ed25519
+	chmod -R 755 ${SSH_KEY}*
 
-clean_sslkey: ${SSL_KEY} ${SSL_KEY}.pub
-	rm ${SSL_KEY} ${SSL_KEY}.pub
+clean_sshkey: ${SSH_KEY}
+	-rm ${SSH_KEY}.rsa*
+	-rm ${SSH_KEY}.dsa*
+	-rm ${SSH_KEY}.ecdsa*
+	-rm ${SSH_KEY}.ed25519*
 
 ## Final ##############################################################################
 
-build: ${HOSTS_FILE} ${SSL_KEY} ${SSL_KEY}.pub
+build: ${HOSTS_FILE} ${SSH_KEY}.rsa* ${SSH_KEY}.dsa* ${SSH_KEY}.ecdsa* ${SSH_KEY}.ed25519*
 	cp ${HOSTS_FILE} NFS_OpenMPI/hosts
-	-chmod -R 755 NFS_OpenMPI
-	-rm -rf NFS_OpenMPI/.ssh
-	mkdir -p NFS_OpenMPI/.ssh
-	# TODO fix hostname
 	-chmod a+x build_helper.sh
-	./build_helper.sh ${SSL_KEY} ${HOSTS_FILE}
-	docker build \
+	./build_helper.sh 1 ${NODE_ID} ${MPI_USER} ${SSH_KEY} ${HOSTS_FILE}
+	-chmod -R 755 NFS_OpenMPI
+	-docker build \
 		-t ${DOCKER_NAME}:${DOCKER_TAG} \
 		--build-arg NODE_ID=${NODE_ID} \
 		--build-arg AUSER=${MPI_USER} \
@@ -72,6 +73,7 @@ build: ${HOSTS_FILE} ${SSL_KEY} ${SSL_KEY}.pub
 		--build-arg AGROUP=${MPI_GROUP} \
 		--build-arg AGROUP_ID=${MPI_GROUP_ID} \
 		NFS_OpenMPI
+	./build_helper.sh 0
 	
 run: ${HOSTS_FILE}
 	-chmod a+x run_helper.sh

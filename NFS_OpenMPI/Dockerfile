@@ -8,21 +8,36 @@ LABEL description="Alpine computing Node for OpenMPI with NFS server base image"
 LABEL source="https://github.com/kb2623/openmpi-docker"
 
 ARG OPENMPI_VERSION=4.0.2
+ARG SSH_KEY_PREF=mpicluster
 
 ENV USPACE_APPS=/usr/local
 
 USER root
 WORKDIR /root
 
-RUN mkdir -p /etc/skel
+# Update the system and install programs
+RUN apk update && \
+	apk add zsh bash tmux git build-base perl linux-headers nfs-utils openssh && \
+	rm -rf /var/cache/apk/*
+
 ADD sshd_config /etc/ssh/
-ADD ssh_key /etc/ssh/
-ADD ssh_key.pub /etc/ssh/
+ADD ssh_host_rsa_key /etc/ssh/
+ADD ssh_host_rsa_key.pub /etc/ssh/
+ADD ssh_host_dsa_key /etc/ssh/
+ADD ssh_host_dsa_key.pub /etc/ssh/
+ADD ssh_host_ecdsa_key /etc/ssh/
+ADD ssh_host_ecdsa_key.pub /etc/ssh/
+ADD ssh_host_ed25519_key /etc/ssh/
+ADD ssh_host_ed25519_key.pub /etc/ssh/
 ADD authorized_keys /etc/ssh/
-ADD hosts /root 
+ADD known_hosts /etc/ssh/
+
+RUN mkdir -p /etc/skel
 ADD .zshrc /etc/skel
 ADD .profile /etc/skel
 ADD .bashrc /etc/skel
+
+ADD hosts /root 
 
 # Fix file privilages
 RUN chmod a+rx hosts && \
@@ -32,12 +47,6 @@ RUN chmod a+rx hosts && \
 RUN cp -f /etc/skel/.bashrc /root/.bashrc && \
 	cp -f /etc/skel/.zshrc /root/.zshrc && \
 	cp -f /etc/skel/.profile /root/.profile
-
-# Update the system and install programs
-RUN apk update && \
-	apk add zsh bash tmux git build-base perl linux-headers nfs-utils openssh && \
-	ssh-keygen -A && \
-	rm -rf /var/cache/apk/*
 
 # Install OpenMPI
 RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OPENMPI_VERSION.tar.bz2 && \

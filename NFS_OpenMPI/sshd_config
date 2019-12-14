@@ -1,8 +1,21 @@
 Port 22
 AddressFamily any
-HostKey /etc/ssh/ssh_key
-PasswordAuthentication no
+
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+AuthorizedKeysFile /etc/ssh/authorized_keys
+
+HostbasedAuthentication yes
+IgnoreUserKnownHosts yes
+IgnoreRhosts yes
+
+Banner none
+
+Subsystem sftp /usr/lib/ssh/sftp-server
 
 PubkeyAuthentication yes
-AuthorizedKeysFile /etc/ssh/authorized_keys
+PasswordAuthentication no
+
+DenyUsers root
 
