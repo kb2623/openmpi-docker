@@ -99,7 +99,7 @@ RUN chmod -R 755 $AHOME/.ssh
 
 # Create volume
 RUN mkdir -p /mnt/data && \
-	chown nobody:nogroup /mnt/data && \
+	chown $AUSER:$AGROUP /mnt/data && \
 	chmod a+rw /mnt/data
 
 # Set paramters for daemon.zsh sript
