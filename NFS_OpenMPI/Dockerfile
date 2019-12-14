@@ -99,7 +99,8 @@ RUN chmod -R 755 $AHOME/.ssh
 
 # Create volume
 RUN mkdir -p /mnt/data && \
-	chmod a+rw /mnt/data
+	chmod a+rw /mnt/data && \
+	ln -s /mnt/data ${AHOME}/data
 
 # Set paramters for daemon.zsh sript
 RUN echo "/root/hosts ${NODE_ID} ${AUSER} ${AGROUP} ${WORD_DIR}" > /root/params
