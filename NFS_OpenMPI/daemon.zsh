@@ -7,6 +7,8 @@ AUSER=$3
 AGROUP=$4
 WORD_DIR=$5
 
+echo $HOST_FILE $NODE_ID $AUSER $AGROUP $WORD_DIR
+
 # Constants -----------------------------------------------------------------------------------------------------
 readonly SSH_CONFIG='/etc/ssh/sshd_config'
 

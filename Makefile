@@ -20,7 +20,7 @@ MPI_USER:=mpiuser
 MPI_USER_ID:=1002
 MPI_GROUP:=mpiusers
 MPI_GROUP_ID:=1002
-MPI_DATA_VOLUME:=/home
+MPI_DATA_VOLUME:=/home/mpiuser
 
 # User
 EXEC_USER:=${MPI_USER}
@@ -74,15 +74,16 @@ build: ${HOSTS_FILE} ${SSL_KEY} ${SSL_KEY}.pub
 		NFS_OpenMPI
 	
 run:
-	-make net
-	-make build
 	docker run --name=node${NODE_ID}_mpi \
 		--network=${NETWORK_NAME} \
-		--ip=$(shell cat ${HOSTS_FILE} | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f1 | head -$$NODE_ID | tail -1) \
+		--ip=$(shell cat ${HOSTS_FILE} | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f1 | head -$(shell echo ${NODE_ID}+1 | bc) | tail -1) \
 		-p ${SSH_PORT}:22 \
 		-p ${NFS_PORT}:2049 \
 		-v ${MPI_DATA_VOLUME}:/home/${MPI_USER} \
 		-d ${DOCKER_NAME}:${DOCKER_TAG}
+
+logs:
+	docker logs node${NODE_ID}_mpi
 
 start:
 	docker start node${NODE_ID}_mpi
