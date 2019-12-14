@@ -1,11 +1,15 @@
 #!/bin/zsh
 
 # Arguments -----------------------------------------------------------------------------------------------------
-HOST_FILE=$1
-NODE_ID=$2
-AUSER=$3
-AGROUP=$4
-WORD_DIR=$5
+function param {
+	return $(cut -d' ' -f$1 /root/params)
+}
+
+HOST_FILE=$(param 1)
+NODE_ID=$(param 2)
+AUSER=$(param 3)
+AGROUP=$(param 4)
+WORD_DIR=$(param 5)
 
 echo $HOST_FILE $NODE_ID $AUSER $AGROUP $WORD_DIR
 
@@ -23,7 +27,7 @@ readonly BRPC_SVCGSSD='/usr/sbin/rpc.svcgssd'
 readonly BSTATD='/sbin/rpc.statd'
 
 # Mount NFS ------------------------------------------------------------------------------------------------------
-function run_mound_nfs () {
+function run_mound_nfs {
 	mkdir -p $WORD_DIR
 	chmod a+wrx $WORD_DIR
 	chown -R $AUSER:$AGROUP $WORD_DIR
@@ -31,12 +35,12 @@ function run_mound_nfs () {
 }
 
 # Services -------------------------------------------------------------------------------------------------------
-function run_sshd () {
+function run_sshd {
 	nohup $BSSHD -D -e -f $SSH_CONFIG &
 	return $!
 }
 
-function run_nfsd () {
+function run_nfsd {
 	$BRPCBIND -w
 	$BRPCINFO
 	if $BEXPORTFS -rv; then
@@ -51,13 +55,13 @@ function run_nfsd () {
 }
 
 # Type of Nodes ---------------------------------------------------------------------------------------------------
-function run_master () {
+function run_master {
 	run_sshd
 	run_nfsd
 	run_mound_nfs
 }
 
-function run_node () {
+function run_node {
 	run_sshd
 	run_mound_nfs
 }

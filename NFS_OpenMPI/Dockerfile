@@ -107,7 +107,9 @@ WORKDIR /root
 VOLUME mnt/data
 EXPOSE 22
 EXPOSE 2049
-CMD ["$(echo /root/hosts ${NODE_ID} ${AUSER} ${AGROUP} ${WORD_DIR})"]
+
+# Set paramters for daemon.zsh sript
+RUN echo "/root/hosts ${NODE_ID} ${AUSER} ${AGROUP} ${WORD_DIR})" > /root/params
 ENTRYPOINT ["/root/daemon.zsh"]
 
 # vim: tabstop=4 noexpandtab shiftwidth=4 softtabstop=4
