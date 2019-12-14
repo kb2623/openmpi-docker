@@ -16,6 +16,9 @@ WORKDIR /root
 
 RUN mkdir -p /etc/skel
 ADD sshd_config /etc/ssh/
+ADD ssh_key /etc/ssh/
+ADD ssh_key.pub /etc/ssh/
+ADD authorized_keys /etc/ssh/
 ADD hosts /root 
 ADD .zshrc /etc/skel
 ADD .profile /etc/skel
@@ -89,14 +92,11 @@ RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME && \
 	chmod a+r $AHOME/hosts && \
 	rm createuser.sh
 
-# Setup SSH keys for User
-COPY .ssh $AHOME/.ssh
-RUN chmod -R 755 $AHOME/.ssh
-
 # Create volume
 RUN mkdir -p /mnt/data && \
 	chmod a+rw /mnt/data && \
-	ln -s /mnt/data ${AHOME}/data
+	ln -s /mnt/data $AHOME/data && \
+	chown $AUSER:$AGROUP $AHOME/data
 
 # Set paramters for daemon.zsh sript
 RUN echo "/root/hosts ${NODE_ID} ${AUSER} ${AGROUP} ${WORD_DIR}" > /root/params

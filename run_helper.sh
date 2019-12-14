@@ -16,6 +16,10 @@ MPI_DATA_VOLUME=$6
 DOCKER_NAME=$7
 DOCKER_TAG=$8
 
+function funHosts {
+	cat ${HOSTS_FILE} | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f$2 | head -$(echo $1+1 | bc) | tail -1
+}
+
 hosts=""
 cat hosts | while read temp; do
 	hosts+="--add-host "$(echo $temp | cut -d' ' -f2)":"$(echo $temp | cut -d' ' -f1)" "
@@ -24,7 +28,8 @@ done
 command="
 docker run --name=node${NODE_ID}_mpi 
 	--network=${NETWORK_NAME} 
-	--ip=$(cat ${HOSTS_FILE} | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f1 | head -$(echo ${NODE_ID}+1 | bc) | tail -1) 
+	--ip=$(funHosts ${NODE_ID} 1)
+	--hostname=$(funHosts ${NODE_ID} 2)
 	${hosts} 
 	-p ${SSH_PORT}:22 
 	-p ${NFS_PORT}:2049 

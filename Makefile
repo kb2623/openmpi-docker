@@ -61,9 +61,9 @@ build: ${HOSTS_FILE} ${SSL_KEY} ${SSL_KEY}.pub
 	-chmod -R 755 NFS_OpenMPI
 	-rm -rf NFS_OpenMPI/.ssh
 	mkdir -p NFS_OpenMPI/.ssh
-	cp ${SSL_KEY} NFS_OpenMPI/.ssh/${SSL_KEY}
-	cp ${SSL_KEY}.pub NFS_OpenMPI/.ssh/${SSL_KEY}.pub
-	cp ${SSL_KEY}.pub NFS_OpenMPI/.ssh/authorized_keys
+	# TODO fix hostname
+	-chmod a+x build_helper.sh
+	./build_helper.sh ${SSL_KEY} ${HOSTS_FILE}
 	docker build \
 		-t ${DOCKER_NAME}:${DOCKER_TAG} \
 		--build-arg NODE_ID=${NODE_ID} \

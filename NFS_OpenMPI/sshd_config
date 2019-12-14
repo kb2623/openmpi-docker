@@ -1,8 +1,8 @@
 Port 22
 AddressFamily any
-
+HostKey /etc/ssh/ssh_key
 PasswordAuthentication no
 
 PubkeyAuthentication yes
-AuthorizedKeysFile	.ssh/authorized_keys
+AuthorizedKeysFile /etc/ssh/authorized_keys
 
