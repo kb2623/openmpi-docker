@@ -1,3 +1,5 @@
+## STAGE 0 ###########################################################################
+
 ARG BASE_CONTAINER=alpine:3.10
 FROM $BASE_CONTAINER AS nfs4_openmpi_node_base
 
@@ -44,6 +46,8 @@ RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OPENMPI_VE
 	./configure --prefix=$USPACE_APPS && \
 	make && \
 	make install
+
+## STAGE 1 ###########################################################################
 
 FROM nfs4_openmpi_node_base
 
