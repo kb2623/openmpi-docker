@@ -74,7 +74,7 @@ build: ${HOSTS_FILE} ${SSL_KEY} ${SSL_KEY}.pub
 		NFS_OpenMPI
 	
 run: ${HOSTS_FILE}
-	-chmod a+x helpter.sh
+	-chmod a+x run_helper.sh
 	./run_helper.sh ${NODE_ID} ${NETWORK_NAME} ${HOSTS_FILE} ${SSH_PORT} ${NFS_PORT} ${MPI_DATA_VOLUME} ${DOCKER_NAME} ${DOCKER_TAG}
 
 logs:
