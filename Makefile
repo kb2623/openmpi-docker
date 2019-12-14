@@ -17,9 +17,9 @@ SSL_KEY:=id_dsa.mpi
 SSL_PASSPHRASE:=mpiuser
 
 MPI_USER:=mpiuser
-MPI_USER_ID:=1002
+MPI_USER_ID:=1001
 MPI_GROUP:=mpiusers
-MPI_GROUP_ID:=1002
+MPI_GROUP_ID:=1001
 MPI_DATA_VOLUME:=/home/mpiuser
 
 # User
