@@ -1,8 +1,10 @@
 #!/bin/zsh
 
+PARAMS_FILE=$1
+
 # Arguments -----------------------------------------------------------------------------------------------------
 function param {
-	return $(cut -d' ' -f$1 /root/params)
+	cut -d' ' -f$1 $PARAMS_FILE
 }
 
 HOST_FILE=$(param 1)

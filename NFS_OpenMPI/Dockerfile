@@ -100,6 +100,9 @@ RUN mkdir -p /mnt/data && \
 	chown nobody:nogroup /mnt/data && \
 	chmod a+rw /mnt/data
 
+# Set paramters for daemon.zsh sript
+RUN echo "/root/hosts ${NODE_ID} ${AUSER} ${AGROUP} ${WORD_DIR}" > /root/params
+
 ## EntryPoint ########################################################################
 
 USER root
@@ -107,9 +110,7 @@ WORKDIR /root
 VOLUME mnt/data
 EXPOSE 22
 EXPOSE 2049
-
-# Set paramters for daemon.zsh sript
-RUN echo "/root/hosts ${NODE_ID} ${AUSER} ${AGROUP} ${WORD_DIR})" > /root/params
+CMD ["/root/params"]
 ENTRYPOINT ["/root/daemon.zsh"]
 
 # vim: tabstop=4 noexpandtab shiftwidth=4 softtabstop=4
