@@ -77,7 +77,6 @@ fi
 
 # main loop
 while true; do
-	/bin/zsh
 	echo "Press [CTRL+C] to stop.."
    sleep 1000
 done

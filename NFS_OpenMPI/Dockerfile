@@ -58,9 +58,9 @@ LABEL source="https://github.com/kb2623/openmpi-docker"
 ARG NODE_ID=0
 ARG NFS_DATA_DIR=/mnt/nfs/nfs-data
 ARG AUSER=mpiuser
-ARG AUSER_ID=1002
+ARG AUSER_ID=1000
 ARG AGROUP=mpisers
-ARG AGROUP_ID=1002
+ARG AGROUP_ID=1000
 ARG AHOME=/home/$AUSER
 ARG WORD_DIR=$AHOME/mpidir
 
@@ -99,7 +99,6 @@ RUN chmod -R 755 $AHOME/.ssh
 
 # Create volume
 RUN mkdir -p /mnt/data && \
-	chown $AUSER:$AGROUP /mnt/data && \
 	chmod a+rw /mnt/data
 
 # Set paramters for daemon.zsh sript
