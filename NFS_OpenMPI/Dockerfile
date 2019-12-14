@@ -64,15 +64,17 @@ ARG AGROUP_ID=1002
 ARG AHOME=/home/$AUSER
 ARG WORD_DIR=$AHOME/mpidir
 
+ENV USPACE_APPS_BIN=/usr/local/bin
+
 USER root
 WORKDIR /root
 
-ADD daemon.zsh /root
+ADD dinit.zsh $USPACE_APPS_BIN 
 ADD setup-nfs_server.sh /root
 ADD createuser.sh /root
 
-RUN chmod a+x setup-nfs_server.sh && \
-	chmod a+x daemon.zsh && \
+RUN chmod a+x $USPACE_APPS_BIN/dinit.zsh && \
+	chmod a+x setup-nfs_server.sh && \
 	chmod a+x createuser.sh
 
 # Add hosts
@@ -111,6 +113,6 @@ VOLUME mnt/data
 EXPOSE 22
 EXPOSE 2049
 CMD ["/root/params"]
-ENTRYPOINT ["/root/daemon.zsh"]
+ENTRYPOINT ["dinit.zsh"]
 
 # vim: tabstop=4 noexpandtab shiftwidth=4 softtabstop=4
