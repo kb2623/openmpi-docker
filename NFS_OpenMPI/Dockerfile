@@ -37,7 +37,8 @@ RUN cp -f /etc/skel/.bashrc /root/.bashrc && \
 # Update the system and install programs
 RUN apk update && \
 	apk add zsh bash tmux git build-base perl linux-headers nfs-utils openssh && \
-	ssh-keygen -A
+	ssh-keygen -A && \
+	rm -rf /var/cache/apk/*
 
 # Install OpenMPI
 RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OPENMPI_VERSION.tar.bz2 && \
@@ -45,7 +46,10 @@ RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OPENMPI_VE
 	cd openmpi-$OPENMPI_VERSION && \
 	./configure --prefix=$USPACE_APPS && \
 	make && \
-	make install
+	make install && \
+	cd .. && \
+	rm openmpi-$OPENMPI_VERSION.tar.bz2 && \
+	rm -rf openmpi-$OPENMPI_VERSION
 
 ## STAGE 1 ###########################################################################
 
