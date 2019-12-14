@@ -73,8 +73,8 @@ RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME && \
 	ln /root/hosts $AHOME/hosts && \
 	chown $AUSER:$AGROUP $AHOME/hosts && \
 	chmod a+r $AHOME/hosts && \
-	mkdir -p $AHOME/data && \
-	chown $AUSER:$AGROUP $AHOME/data
+	mkdir -p /mnt/data && \
+	chown nobody:nogroup /mnt/data
 COPY .ssh $AHOME/.ssh
 RUN chmod -R 755 $AHOME/.ssh
 
@@ -82,10 +82,10 @@ RUN chmod -R 755 $AHOME/.ssh
 
 USER root
 WORKDIR /root
-VOLUME $AHOME/data
+VOLUME mnt/data
 EXPOSE 22
 EXPOSE 2049
-CMD ["/root/hosts", "$NODE_ID", "$AUSER", "$AGROUP", "$WORD_DIR"]
+CMD ["/root/hosts", $NODE_ID, $AUSER, $AGROUP, $WORD_DIR]
 ENTRYPOINT ["/root/daemon.zsh"]
 
 # vim: tabstop=4 noexpandtab shiftwidth=3 softtabstop=3

@@ -79,7 +79,7 @@ run:
 		--ip=$(shell cat ${HOSTS_FILE} | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f1 | head -$(shell echo ${NODE_ID}+1 | bc) | tail -1) \
 		-p ${SSH_PORT}:22 \
 		-p ${NFS_PORT}:2049 \
-		-v ${MPI_DATA_VOLUME}:/home/${MPI_USER} \
+		-v ${MPI_DATA_VOLUME}:/mnt/data \
 		-d ${DOCKER_NAME}:${DOCKER_TAG}
 
 logs:
