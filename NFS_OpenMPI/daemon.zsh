@@ -7,6 +7,8 @@ AUSER=$3
 AGROUP=$4
 WORD_DIR=$5
 
+echo $HOST_FILE $NODE_ID $AUSER $AGROUP $WORD_DIR
+
 # Constants -----------------------------------------------------------------------------------------------------
 readonly SSH_CONFIG='/etc/ssh/sshd_config'
 
@@ -43,20 +45,20 @@ function run_nfsd () {
 		echo "Export validation failed, exiting..."
 		exit 1
 	fi
-	$BNFSD -u -t -V 4 -N 2 -N 3 8
-	nohup $BMOUNTD -V 4 -N 2 -N 3 &
+	$BNFSD -u -t -V 4 -p 2049 8
+	nohup $BMOUNTD -V 4 -p 2049 &
 	return $!
 }
 
 # Type of Nodes ---------------------------------------------------------------------------------------------------
 function run_master () {
-	sshd_pid=run_sshd
-	nfsd_pid=run_nfsd
+	run_sshd
+	run_nfsd
 	run_mound_nfs
 }
 
 function run_node () {
-	sshd_pid=run_sshd
+	run_sshd
 	run_mound_nfs
 }
 
