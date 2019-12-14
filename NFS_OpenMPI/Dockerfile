@@ -77,10 +77,6 @@ RUN chmod a+x $USPACE_APPS_BIN/dinit.zsh && \
 	chmod a+x setup-nfs_server.sh && \
 	chmod a+x createuser.sh
 
-# Add hosts
-RUN printf "\n# MPI cluster hosts\n" >> /etc/hosts && \
-	cat hosts >> /etc/hosts
-
 # NFS server
 RUN ./setup-nfs_server.sh $NODE_ID $NFS_DATA_DIR && \
 	rm setup-nfs_server.sh

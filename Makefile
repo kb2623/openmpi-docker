@@ -73,14 +73,9 @@ build: ${HOSTS_FILE} ${SSL_KEY} ${SSL_KEY}.pub
 		--build-arg AGROUP_ID=${MPI_GROUP_ID} \
 		NFS_OpenMPI
 	
-run:
-	docker run --name=node${NODE_ID}_mpi \
-		--network=${NETWORK_NAME} \
-		--ip=$(shell cat ${HOSTS_FILE} | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f1 | head -$(shell echo ${NODE_ID}+1 | bc) | tail -1) \
-		-p ${SSH_PORT}:22 \
-		-p ${NFS_PORT}:2049 \
-		-v ${MPI_DATA_VOLUME}:/mnt/data \
-		-d ${DOCKER_NAME}:${DOCKER_TAG}
+run: ${HOSTS_FILE}
+	-chmod a+x helpter.sh
+	./run_helper.sh ${NODE_ID} ${NETWORK_NAME} ${HOSTS_FILE} ${SSH_PORT} ${NFS_PORT} ${MPI_DATA_VOLUME} ${DOCKER_NAME} ${DOCKER_TAG}
 
 logs:
 	docker logs node${NODE_ID}_mpi
