@@ -18,8 +18,6 @@ RUN mkdir -p /etc/skel
 ADD sshd_config /etc/ssh/
 ADD hosts /root 
 ADD .zshrc /etc/skel
-ADD .tmux.config /etc/skel
-ADD .basic.tmuxtheme /etc/skel
 ADD .profile /etc/skel
 ADD .bashrc /etc/skel
 
@@ -30,9 +28,7 @@ RUN chmod a+rx hosts && \
 # Add configurations to root user
 RUN cp -f /etc/skel/.bashrc /root/.bashrc && \
 	cp -f /etc/skel/.zshrc /root/.zshrc && \
-	cp -f /etc/skel/.profile /root/.profile && \
-	cp -f /etc/skel/.tmux.config /root/.tmux.config && \
-	cp -f /etc/skel/.basic.tmuxtheme /root/.basic.tmuxtheme
+	cp -f /etc/skel/.profile /root/.profile
 
 # Update the system and install programs
 RUN apk update && \
