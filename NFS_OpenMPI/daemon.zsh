@@ -61,8 +61,6 @@ function run_node () {
 }
 
 # Main ------------------------------------------------------------------------------------------------------------
-echo $HOST_FILE $NODE_ID $AUSER $AGROUP $WORD_DIR
-
 if [ ! ${NODE_ID} = "0" ]; then
 	run_node
 else
