@@ -100,6 +100,7 @@ remove:
 	
 clean: 
 	-make remove
+	-docker image rm ${DOCKER_NAME}:${DOCKER_TAG}
 	-rm NFS_OpenMPI/hosts
 	-rm -rf NFS_OpenMPI/.ssh/
 
