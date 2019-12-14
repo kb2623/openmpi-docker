@@ -1,5 +1,6 @@
 DOCKER_NAME:=nfs_mpi_alpine
 DOCKER_TAG:=latest
+OPENMPI_VERSION:=4.0.2
 
 NODE_ID:=0
 
@@ -72,6 +73,7 @@ build: ${HOSTS_FILE} ${SSH_KEY}.rsa* ${SSH_KEY}.dsa* ${SSH_KEY}.ecdsa* ${SSH_KEY
 		--build-arg AUSER_ID=${MPI_USER_ID} \
 		--build-arg AGROUP=${MPI_GROUP} \
 		--build-arg AGROUP_ID=${MPI_GROUP_ID} \
+		--build-arg OPENMPI_VERSION=${OPENMPI_VERSION} \
 		NFS_OpenMPI
 	./build_helper.sh 0
 	
