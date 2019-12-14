@@ -26,13 +26,13 @@ function funHosts {
 }
 
 cp -f $SSH_KEY.rsa NFS_OpenMPI/ssh_host_rsa_key
-echo -e $(cut -d' ' -f1,2 $SSH_KEY.rsa.pub)$AUSER$(funHosts $NODE_ID 2)'\n' > NFS_OpenMPI/ssh_host_rsa_key.pub
+echo -e $(cut -d' ' -f1,2 $SSH_KEY.rsa.pub)$AUSER'@'$(funHosts $NODE_ID 2) > NFS_OpenMPI/ssh_host_rsa_key.pub
 cp -f $SSH_KEY.dsa NFS_OpenMPI/ssh_host_dsa_key
-echo -e $(cut -d' ' -f1,2 $SSH_KEY.dsa.pub)$AUSER$(funHosts $NODE_ID 2)'\n' > NFS_OpenMPI/ssh_host_dsa_key.pub
+echo -e $(cut -d' ' -f1,2 $SSH_KEY.dsa.pub)$AUSER'@'$(funHosts $NODE_ID 2) > NFS_OpenMPI/ssh_host_dsa_key.pub
 cp -f $SSH_KEY.ecdsa NFS_OpenMPI/ssh_host_ecdsa_key
-echo -e $(cut -d' ' -f1,2 $SSH_KEY.ecdsa.pub)$AUSER$(funHosts $NODE_ID 2)'\n' > NFS_OpenMPI/ssh_host_ecdsa_key.pub
+echo -e $(cut -d' ' -f1,2 $SSH_KEY.ecdsa.pub)$AUSER'@'$(funHosts $NODE_ID 2) > NFS_OpenMPI/ssh_host_ecdsa_key.pub
 cp -f $SSH_KEY.ed25519 NFS_OpenMPI/ssh_host_ed25519_key
-echo -e $(cut -d' ' -f1,2 $SSH_KEY.ed25519.pub)$AUSER$(funHosts $NODE_ID 2)'\n' > NFS_OpenMPI/ssh_host_ed25519_key.pub
+echo -e $(cut -d' ' -f1,2 $SSH_KEY.ed25519.pub)$AUSER'@'$(funHosts $NODE_ID 2) > NFS_OpenMPI/ssh_host_ed25519_key.pub
 
 knownHosts=""
 autorizedHosts=""
