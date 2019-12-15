@@ -24,3 +24,5 @@ if id -g "$aGID" >/dev/null 2>&1; then delgroup $aGID; fi
 addgroup -g $aGID $aGROUP
 # Create user
 adduser -D -u $aUID -G $aGROUP -s /bin/zsh -k /etc/skel -h $aHOME $aUSER 
+# Unlock user
+passwd -u $aUSER
