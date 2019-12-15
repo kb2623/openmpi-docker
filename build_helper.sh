@@ -12,7 +12,7 @@ if [ $OPERATION -eq 0 ]; then
 fi
 
 if [ $# -lt 5 ]; then 
-	echo Need 1 arguments
+	echo Need 5 arguments
 	exit 1
 fi
 
@@ -39,6 +39,7 @@ echo -e $(cut -d' ' -f1,2 $SSH_KEY.ed25519.pub)' root@'$(funHosts $NODE_ID 2)'\n
 cp -f $SSH_KEY.rsa NFS_OpenMPI/id_rsa
 echo -e $(cut -d' ' -f1,2 $SSH_KEY.rsa.pub)' '$AUSER'@'$(funHosts $NODE_ID 2)'\n' > NFS_OpenMPI/id_rsa.pub
 
+# Generate known_hosts and authorized_keys files
 knownHosts=""
 autorizedHosts=""
 cat hosts | while read temp; do

@@ -1,27 +1,34 @@
 DOCKER_NAME:=nfs_mpi_alpine
 DOCKER_TAG:=latest
-OPENMPI_VERSION:=4.0.2
 
 NODE_ID:=0
-
 HOSTS_FILE:=hosts
+
+# SSH key name prefix
+SSH_KEY:=mpicluster
+
+# Network data
 NETWORK_SUBNET:=164.8.230.0/24
 HOST_INTERFACE:=eno1
 NETWORK_GW:=164.8.230.1
 NETWORK_NAME:=mpinet
 
+# Used OpenMPI version
+OPENMPI_VERSION:=4.0.2
+
+# Used ports for container from outside
 NFS_PORT:=2049
-
 SSH_PORT:=22
-SSH_KEY:=mpicluster
 
+# User data
 MPI_USER:=mpiuser
 MPI_USER_ID:=1001
 MPI_GROUP:=mpiusers
 MPI_GROUP_ID:=1001
+# For NFS dir
 MPI_DATA_VOLUME:=/home/mpiuser
 
-# User
+# User for exec command
 EXEC_USER:=${MPI_USER}
 # Shell: /bin/zsh /bin/bash /bin/ash /bin/sh
 EXEC_SHELL:=/bin/zsh
@@ -101,6 +108,4 @@ clean:
 	-make remove
 	-docker image rm ${DOCKER_NAME}:${DOCKER_TAG}
 	-make clean_net
-	-rm NFS_OpenMPI/hosts
-	-rm -rf NFS_OpenMPI/.ssh/
 
