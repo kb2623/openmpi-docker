@@ -113,7 +113,7 @@ RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME \
  && cp /etc/ssh/known_hosts $AHOME/.ssh/known_hosts \
  && cp /etc/ssh/ssh_host_ecdsa_key $AHOME/.ssh/ssh_host_ecdsa_key \
  && cp /etc/ssh/ssh_host_ecdsa_key.pub $AHOME/.ssh/ssh_host_ecdsa_key.pub \
- && chown -R $AHOME:$AGROUP $AHOME/.ssh \
+ && chown -R $AUSER:$AGROUP $AHOME/.ssh \
  && rm createuser.sh
 
 # Create volume
