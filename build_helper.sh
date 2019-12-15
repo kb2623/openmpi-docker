@@ -44,7 +44,7 @@ knownHosts=""
 autorizedHosts=""
 cat hosts | while read temp; do
 	autorizedHosts+=$(cut -d' ' -f1,2 $SSH_KEY.rsa.pub)' '$AUSER'@'$(echo $temp | cut -d' ' -f2)'\n'
-	knownHosts+=$(echo $temp | cut -d' ' -f2),$(echo $temp | cut -d' ' -f1)' '$(cut -d' ' -f1,2 $SSH_KEY.ecdsa.pub)'\n'
+	knownHosts+=$(echo $temp | tr '\t' ' ' | cut -d' ' -f2),$(echo $temp | tr '\t' ' ' | cut -d' ' -f1)' '$(cut -d' ' -f1,2 $SSH_KEY.ecdsa.pub)'\n'
 done
 echo $autorizedHosts > NFS_OpenMPI/authorized_keys
 echo $knownHosts > NFS_OpenMPI/known_hosts
