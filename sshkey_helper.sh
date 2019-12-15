@@ -26,11 +26,11 @@ HOSTS_FILE=$6
 source helper.sh
 
 mkdir sshkeys
-cat ${HOSTS_FILE} | while read temp; do
+cat $HOSTS_FILE | while read temp; do
 	nname=$(fHCutLine $temp 2)
-	ssh-keygen -t rsa -N '' -C $(echo 'root@'$nname) -f sshkeys/${SSH_KEY}.rsa.$nname
-	ssh-keygen -t dsa -N '' -C $(echo 'root@'$nname) -f sshkeys/${SSH_KEY}.dsa.$nname
-	ssh-keygen -t ecdsa -N '' -C $(echo 'root@'$nname) -f sshkeys/${SSH_KEY}.ecdsa.$nname
-	ssh-keygen -t ed25519 -N '' -C $(echo 'root@'$nname) -f sshkeys/${SSH_KEY}.ed25519.$nname
-	ssh-keygen -t $SSH_ALGO -N '' -C $(echo $AUSER'@'$nname) -f sshkeys/${SSH_KEY}.$nname.$AUSER
+	ssh-keygen -t rsa -N '' -C $(echo 'root@'$nname) -f sshkeys/$SSH_KEY.rsa.$nname
+	ssh-keygen -t dsa -N '' -C $(echo 'root@'$nname) -f sshkeys/$SSH_KEY.dsa.$nname
+	ssh-keygen -t ecdsa -N '' -C $(echo 'root@'$nname) -f sshkeys/$SSH_KEY.ecdsa.$nname
+	ssh-keygen -t ed25519 -N '' -C $(echo 'root@'$nname) -f sshkeys/$SSH_KEY.ed25519.$nname
+	ssh-keygen -t $SSH_ALGO -N '' -C $(echo $AUSER'@'$nname) -f sshkeys/$SSH_KEY.$nname.$AUSER
 done

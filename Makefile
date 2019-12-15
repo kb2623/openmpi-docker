@@ -56,7 +56,7 @@ clean_net:
 
 sshkey: ${HOSTS_FILE}
 	-chmod a+x sshkey_helper.sh
-	./sshkey_helper.sh 1 ${NODE_ID} ${MPI_USER} ${SSH_KEY} ${HOSTS_FILE}
+	./sshkey_helper.sh 1 ${NODE_ID} ${MPI_USER} ${SSH_KEY} ${SSH_ALGO} ${HOSTS_FILE}
 	chmod -R 755 sshkeys
 
 clean_sshkey: sshkeys

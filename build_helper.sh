@@ -13,7 +13,7 @@ if [ $OPERATION -eq 0 ]; then
 fi
 
 if [ $# -lt 5 ]; then 
-	echo Need 5 arguments
+	echo Need 6 arguments
 	exit 1
 fi
 
@@ -24,7 +24,7 @@ HOSTS_FILE=$5
 
 source helper.sh
 
-$nname=$(fHCutFile $HOSTS_FILE $NODE_ID 2)
+nname=$(fHCutFile $HOSTS_FILE $NODE_ID 2)
 # Host SSH keys
 cp -f sshkeys/$SSH_KEY.rsa.$nname NFS_OpenMPI/ssh_host_rsa_key
 cp -f sshkeys/$SSH_KEY.rsa.$nname.pub NFS_OpenMPI/ssh_host_rsa_key.pub
@@ -45,8 +45,7 @@ autorizedHosts=""
 cat ${HOSTS_FILE} | while read temp; do
 	tnname=$(fHCutLine $temp 2)
 	autorizedHosts+=$(cut -d' ' -f1,2 sshkeys/$SSH_KEY.$tnname.$AUSER.pub)' '$AUSER'@'$tnname'\n'
-	# FIXME known_host builder needs fixing
-	knownHosts+=$(echo $temp | tr '\t' ' ' | cut -d' ' -f2),$(echo $temp | tr '\t' ' ' | cut -d' ' -f1)' '$(cut -d' ' -f1,2 $SSH_KEY.ecdsa.pub)'\n'
+	knownHosts+=$tnname,$(fHCutLine $temp 1)' '$(cut -d' ' -f1,2 sshkeys/$SSH_KEY.ecdsa.$tnname.pub)'\n'
 done
 echo $autorizedHosts > NFS_OpenMPI/authorized_keys
 echo $knownHosts > NFS_OpenMPI/known_hosts
