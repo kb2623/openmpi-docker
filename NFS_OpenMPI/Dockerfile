@@ -15,10 +15,11 @@ USER root
 WORKDIR /root
 
 # Update the system and install programs
-RUN apk update && \
-	apk add zsh bash tmux git build-base perl linux-headers nfs-utils openssh && \
-	rm -rf /var/cache/apk/*
+RUN apk update \
+ && apk add zsh bash tmux git build-base perl linux-headers nfs-utils openssh \
+ && rm -rf /var/cache/apk/*
 
+# SSH configuration and keys
 ADD sshd_config /etc/ssh/
 ADD ssh_host_rsa_key /etc/ssh/
 ADD ssh_host_rsa_key.pub /etc/ssh/
@@ -30,10 +31,14 @@ ADD ssh_host_ed25519_key /etc/ssh/
 ADD ssh_host_ed25519_key.pub /etc/ssh/
 ADD authorized_keys /etc/ssh/
 ADD known_hosts /etc/ssh/
-RUN chmod -R 644 /etc/ssh && \
-	chmod 600 /etc/ssh/ssh_host* && \
-	chmod 600 /etc/ssh/authorized_keys && \
-	chmod 401 /etc/ssh/*.pub
+
+# Fix SSH premissions
+RUN chmod 700 /etc/ssh \
+ && chmod 600 /etc/ssh/sshd_config \
+ && chmod 600 /etc/ssh/ssh_host* \
+ && chmod 644 /etc/ssh/authorized_keys \
+ && chmod 644 /etc/ssh/known_hosts \
+ && chmod 644 /etc/ssh/*.pub
 
 RUN mkdir -p /etc/skel
 ADD .zshrc /etc/skel
@@ -43,24 +48,24 @@ ADD .bashrc /etc/skel
 ADD hosts /root 
 
 # Fix file privilages
-RUN chmod a+rx hosts && \
-	chmod g+w /etc/passwd
+RUN chmod a+rx hosts \
+ && chmod g+w /etc/passwd
 
 # Add configurations to root user
-RUN cp -f /etc/skel/.bashrc /root/.bashrc && \
-	cp -f /etc/skel/.zshrc /root/.zshrc && \
-	cp -f /etc/skel/.profile /root/.profile
+RUN cp -f /etc/skel/.bashrc /root/.bashrc \
+ && cp -f /etc/skel/.zshrc /root/.zshrc \
+ && cp -f /etc/skel/.profile /root/.profile
 
 # Install OpenMPI
-RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OPENMPI_VERSION.tar.bz2 && \
-	tar -xvf openmpi-$OPENMPI_VERSION.tar.bz2 && \
-	cd openmpi-$OPENMPI_VERSION && \
-	./configure --prefix=$USPACE_APPS && \
-	make && \
-	make install && \
-	cd .. && \
-	rm openmpi-$OPENMPI_VERSION.tar.bz2 && \
-	rm -rf openmpi-$OPENMPI_VERSION
+RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OPENMPI_VERSION.tar.bz2 \
+ && tar -xvf openmpi-$OPENMPI_VERSION.tar.bz2 \
+ && cd openmpi-$OPENMPI_VERSION \
+ && ./configure --prefix=$USPACE_APPS \
+ && make \
+ && make install \
+ && cd .. \
+ && rm openmpi-$OPENMPI_VERSION.tar.bz2 \
+ && rm -rf openmpi-$OPENMPI_VERSION
 
 ## STAGE 1 ###########################################################################
 
@@ -88,27 +93,34 @@ ADD dinit.zsh $USPACE_APPS_BIN
 ADD setup-nfs_server.sh /root
 ADD createuser.sh /root
 
-RUN chmod a+x $USPACE_APPS_BIN/dinit.zsh && \
-	chmod a+x setup-nfs_server.sh && \
-	chmod a+x createuser.sh
+RUN chmod a+x $USPACE_APPS_BIN/dinit.zsh \
+ && chmod a+x setup-nfs_server.sh \
+ && chmod a+x createuser.sh
 
 # NFS server
-RUN ./setup-nfs_server.sh $NODE_ID $NFS_DATA_DIR && \
-	rm setup-nfs_server.sh
+RUN ./setup-nfs_server.sh $NODE_ID $NFS_DATA_DIR \
+ && rm setup-nfs_server.sh
 
 # Create user
-RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME && \
-	echo "AllowUsers ${AUSER}" >> /etc/ssh/sshd_config && \
-	ln /root/hosts $AHOME/hosts && \
-	chown $AUSER:$AGROUP $AHOME/hosts && \
-	chmod a+r $AHOME/hosts && \
-	rm createuser.sh
+RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME \
+ && echo "AllowUsers ${AUSER}" >> /etc/ssh/sshd_config \
+ && ln /root/hosts $AHOME/hosts \
+ && chown $AUSER:$AGROUP $AHOME/hosts \
+ && chmod a+r $AHOME/hosts \
+ && mkdir -p $AHOME/.ssh \
+ && chmod 700 $AHOME/.ssh \
+ && cp /etc/ssh/authorized_keys $AHOME/.ssh/authorized_keys \
+ && cp /etc/ssh/known_hosts $AHOME/.ssh/known_hosts \
+ && cp /etc/ssh/ssh_host_ecdsa_key $AHOME/.ssh/ssh_host_ecdsa_key \
+ && cp /etc/ssh/ssh_host_ecdsa_key.pub $AHOME/.ssh/ssh_host_ecdsa_key.pub \
+ && chown -R $AHOME:$AGROUP $AHOME/.ssh \
+ && rm createuser.sh
 
 # Create volume
-RUN mkdir -p /mnt/data && \
-	chmod a+rw /mnt/data && \
-	ln -s /mnt/data $AHOME/data && \
-	chown $AUSER:$AGROUP $AHOME/data
+RUN mkdir -p /mnt/data \
+ && chmod a+rw /mnt/data \
+ && ln -s /mnt/data $AHOME/data \
+ && chown $AUSER:$AGROUP $AHOME/data
 
 # Set paramters for daemon.zsh sript
 RUN echo "/root/hosts ${NODE_ID} ${AUSER} ${AGROUP} ${WORD_DIR}" > /root/params
@@ -123,4 +135,4 @@ EXPOSE 2049
 CMD ["/root/params"]
 ENTRYPOINT ["dinit.zsh"]
 
-# vim: tabstop=4 noexpandtab shiftwidth=4 softtabstop=4
+# vim: tabstop=1 expandtab shiftwidth=1 softtabstop=1

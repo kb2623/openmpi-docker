@@ -1,21 +1,25 @@
 Port 22
 AddressFamily any
+PidFile /run/sshd.pid
+
+PermitRootLogin no
+PubkeyAuthentication yes
+PasswordAuthentication no
 
 HostKey /etc/ssh/ssh_host_rsa_key
 HostKey /etc/ssh/ssh_host_ecdsa_key
 HostKey /etc/ssh/ssh_host_ed25519_key
 AuthorizedKeysFile /etc/ssh/authorized_keys
+HostCertificate /etc/ssh/ssh_host_ecdsa_key
 
-HostbasedAuthentication yes
-IgnoreUserKnownHosts yes
+HostbasedAuthentication no
+IgnoreUserKnownHosts no
 IgnoreRhosts yes
 
 Banner none
+PrintMotd no
 
 Subsystem sftp /usr/lib/ssh/sftp-server
 
-PubkeyAuthentication yes
-PasswordAuthentication no
-
-DenyUsers root
+# Allowed user for ssh
 
