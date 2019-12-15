@@ -29,15 +29,11 @@ ADD ssh_host_ecdsa_key /etc/ssh/
 ADD ssh_host_ecdsa_key.pub /etc/ssh/
 ADD ssh_host_ed25519_key /etc/ssh/
 ADD ssh_host_ed25519_key.pub /etc/ssh/
-ADD authorized_keys /etc/ssh/
-ADD known_hosts /etc/ssh/
 
 # Fix SSH premissions
 RUN chmod 700 /etc/ssh \
  && chmod 600 /etc/ssh/sshd_config \
  && chmod 600 /etc/ssh/ssh_host* \
- && chmod 644 /etc/ssh/authorized_keys \
- && chmod 644 /etc/ssh/known_hosts \
  && chmod 644 /etc/ssh/*.pub
 
 RUN mkdir -p /etc/skel
@@ -107,14 +103,25 @@ RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME \
  && ln /root/hosts $AHOME/hosts \
  && chown $AUSER:$AGROUP $AHOME/hosts \
  && chmod a+r $AHOME/hosts \
- && mkdir -p $AHOME/.ssh \
- && chmod 700 $AHOME/.ssh \
- && cp /etc/ssh/authorized_keys $AHOME/.ssh/authorized_keys \
- && cp /etc/ssh/known_hosts $AHOME/.ssh/known_hosts \
- && cp /etc/ssh/ssh_host_ecdsa_key $AHOME/.ssh/ssh_host_ecdsa_key \
- && cp /etc/ssh/ssh_host_ecdsa_key.pub $AHOME/.ssh/ssh_host_ecdsa_key.pub \
- && chown -R $AUSER:$AGROUP $AHOME/.ssh \
  && rm createuser.sh
+
+# Setup user SSH keys
+ADD id_rsa /tmp
+ADD id_rsa_.pub /tmp
+ADD authorized_keys /tmp
+ADD known_hosts /tmp
+
+RUN mkdir -p $AHOME/.ssh \
+ && chmod 700 $AHOME/.ssh \
+ && mv /tmp/id_rsa $AHOME/.ssh/ \
+ && chmod 600 $AHOME/.ssh/id_rsa \
+ && mv /tmp/id_rsa.pub $AHOME/.ssh/ \
+ && chmod 644 $AHOME/.ssh/id_rsa.pub \
+ && mv /tmp/authorized_keys $AHOME/.ssh/ \
+ && chmod 644 $AHOME/.ssh/authorized_keys \
+ && mv /tmp/known_hosts $AHOME/.ssh/ \
+ && chmod 644 $AHOME/.ssh/known_hosts \
+ && chown -R $AUSER:$AGROUP $AHOME/.ssh
 
 # Create volume
 RUN mkdir -p /mnt/data \
