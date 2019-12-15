@@ -2,16 +2,17 @@ Port 22
 AddressFamily any
 PidFile /run/sshd.pid
 
-PermitRootLogin no
+UsePAM yes
 PubkeyAuthentication yes
+PermitRootLogin no
 PasswordAuthentication no
+ChallengeResponseAuthentication no
 
 HostKey /etc/ssh/ssh_host_rsa_key
 HostKey /etc/ssh/ssh_host_ecdsa_key
 HostKey /etc/ssh/ssh_host_ed25519_key
 HostCertificate /etc/ssh/ssh_host_ecdsa_key
-
-AuthorizedKeysFile .ssh/authorized_keys
+AuthorizedKeysFile  %h/.ssh/authorized_keys
 
 HostbasedAuthentication no
 IgnoreUserKnownHosts no

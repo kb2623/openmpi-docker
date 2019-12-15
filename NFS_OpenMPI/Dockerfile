@@ -34,7 +34,9 @@ ADD ssh_host_ed25519_key.pub /etc/ssh/
 RUN chmod 700 /etc/ssh \
  && chmod 600 /etc/ssh/sshd_config \
  && chmod 600 /etc/ssh/ssh_host* \
- && chmod 644 /etc/ssh/*.pub
+ && chmod 644 /etc/ssh/*.pub \
+ && mkdir -p /root/.ssh \
+ && chmod 700 /root/.ssh \
 
 RUN mkdir -p /etc/skel
 ADD .zshrc /etc/skel
