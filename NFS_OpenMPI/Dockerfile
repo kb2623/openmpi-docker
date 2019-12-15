@@ -36,7 +36,8 @@ RUN chmod 700 /etc/ssh \
  && chmod 600 /etc/ssh/ssh_host* \
  && chmod 644 /etc/ssh/*.pub \
  && mkdir -p /root/.ssh \
- && chmod 700 /root/.ssh 
+ && chmod 700 /root/.ssh \
+ && chown root:root /root/.ssh
 
 RUN mkdir -p /etc/skel
 ADD .zshrc /etc/skel
@@ -108,16 +109,17 @@ RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME \
  && rm createuser.sh
 
 # Setup user SSH keys
-ADD id_rsa /tmp
-ADD id_rsa.pub /tmp
+ADD id_key /tmp
+ADD id_key.pub /tmp
 ADD authorized_keys /tmp
 ADD known_hosts /tmp
 RUN mkdir -p $AHOME/.ssh \
  && chmod 700 $AHOME/.ssh \
- && mv /tmp/id_rsa $AHOME/.ssh/ \
- && chmod 600 $AHOME/.ssh/id_rsa \
- && mv /tmp/id_rsa.pub $AHOME/.ssh/ \
- && chmod 644 $AHOME/.ssh/id_rsa.pub \
+ && echo "IdentityFile ${AHOME}/.ssh/id_key" > $AHOME/.ssh/config \
+ && mv /tmp/id_key $AHOME/.ssh/ \
+ && chmod 600 $AHOME/.ssh/id_key \
+ && mv /tmp/id_key.pub $AHOME/.ssh/ \
+ && chmod 644 $AHOME/.ssh/id_key.pub \
  && mv /tmp/authorized_keys $AHOME/.ssh/ \
  && chmod 644 $AHOME/.ssh/authorized_keys \
  && mv /tmp/known_hosts $AHOME/.ssh/ \

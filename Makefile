@@ -6,6 +6,7 @@ HOSTS_FILE:=hosts
 
 # SSH key name prefix
 SSH_KEY:=mpicluster
+SSH_ALGO:=rsa
 
 # Network data
 NETWORK_SUBNET:=164.8.230.0/24
@@ -53,22 +54,18 @@ clean_net:
 
 ## SSL ################################################################################
 
-sshkey:
-	ssh-keygen -t rsa -N '' -f ${SSH_KEY}.rsa
-	ssh-keygen -t dsa -N '' -f ${SSH_KEY}.dsa
-	ssh-keygen -t ecdsa -N '' -f ${SSH_KEY}.ecdsa
-	ssh-keygen -t ed25519 -N '' -f ${SSH_KEY}.ed25519
-	chmod -R 755 ${SSH_KEY}*
+sshkey: ${HOSTS_FILE}
+	-chmod a+x sshkey_helper.sh
+	./sshkey_helper.sh 1 ${NODE_ID} ${MPI_USER} ${SSH_KEY} ${HOSTS_FILE}
+	chmod -R 755 sshkeys
 
-clean_sshkey: ${SSH_KEY}*
-	-rm ${SSH_KEY}.rsa*
-	-rm ${SSH_KEY}.dsa*
-	-rm ${SSH_KEY}.ecdsa*
-	-rm ${SSH_KEY}.ed25519*
+clean_sshkey: sshkeys
+	-chmod a+x sshkey_helper.sh
+	./sshkey_helper.sh 0
 
 ## Final ##############################################################################
 
-build: ${HOSTS_FILE} ${SSH_KEY}.rsa* ${SSH_KEY}.dsa* ${SSH_KEY}.ecdsa* ${SSH_KEY}.ed25519*
+build: ${HOSTS_FILE} sshkeys
 	cp ${HOSTS_FILE} NFS_OpenMPI/hosts
 	-chmod a+x build_helper.sh
 	./build_helper.sh 1 ${NODE_ID} ${MPI_USER} ${SSH_KEY} ${HOSTS_FILE}

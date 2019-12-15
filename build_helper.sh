@@ -6,6 +6,7 @@ if [ $# -lt 1 ]; then
 fi
 
 OPERATION=$1
+
 if [ $OPERATION -eq 0 ]; then
 	rm -f NFS_OpenMPI/ssh_host_* NFS_OpenMPI/authorized_keys NFS_OpenMPI/known_hosts NFS_OpenMPI/hosts
 	exit 0
@@ -21,29 +22,30 @@ AUSER=$3
 SSH_KEY=$4
 HOSTS_FILE=$5
 
-function funHosts {
-	cat ${HOSTS_FILE} | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f$2 | head -$(echo $1+1 | bc) | tail -1
-}
+source helper.sh
 
+$nname=$(fHCutFile $HOSTS_FILE $NODE_ID 2)
 # Host SSH keys
-cp -f $SSH_KEY.rsa NFS_OpenMPI/ssh_host_rsa_key
-echo -e $(cut -d' ' -f1,2 $SSH_KEY.rsa.pub)' root@'$(funHosts $NODE_ID 2)'\n' > NFS_OpenMPI/ssh_host_rsa_key.pub
-cp -f $SSH_KEY.dsa NFS_OpenMPI/ssh_host_dsa_key
-echo -e $(cut -d' ' -f1,2 $SSH_KEY.dsa.pub)' root@'$(funHosts $NODE_ID 2)'\n' > NFS_OpenMPI/ssh_host_dsa_key.pub
-cp -f $SSH_KEY.ecdsa NFS_OpenMPI/ssh_host_ecdsa_key
-echo -e $(cut -d' ' -f1,2 $SSH_KEY.ecdsa.pub)' root@'$(funHosts $NODE_ID 2)'\n' > NFS_OpenMPI/ssh_host_ecdsa_key.pub
-cp -f $SSH_KEY.ed25519 NFS_OpenMPI/ssh_host_ed25519_key
-echo -e $(cut -d' ' -f1,2 $SSH_KEY.ed25519.pub)' root@'$(funHosts $NODE_ID 2)'\n' > NFS_OpenMPI/ssh_host_ed25519_key.pub
+cp -f sshkeys/$SSH_KEY.rsa.$nname NFS_OpenMPI/ssh_host_rsa_key
+cp -f sshkeys/$SSH_KEY.rsa.$nname.pub NFS_OpenMPI/ssh_host_rsa_key.pub
+cp -f sshkeys/$SSH_KEY.dsa.$nname NFS_OpenMPI/ssh_host_dsa_key
+cp -f sshkeys/$SSH_KEY.dsa.$nname.pub NFS_OpenMPI/ssh_host_dsa_key.pub
+cp -f sshkeys/$SSH_KEY.ecdsa.$nname NFS_OpenMPI/ssh_host_ecdsa_key
+cp -f sshkeys/$SSH_KEY.ecdsa.$nname.pub NFS_OpenMPI/ssh_host_ecdsa_key.pub
+cp -f sshkeys/$SSH_KEY.ed25519.$nname NFS_OpenMPI/ssh_host_ed25519_key
+cp -f sshkeys/$SSH_KEY.ed25519.$nname.pub NFS_OpenMPI/ssh_host_ed25519_key.pub
 
 # User SSH key
-cp -f $SSH_KEY.rsa NFS_OpenMPI/id_rsa
-echo -e $(cut -d' ' -f1,2 $SSH_KEY.rsa.pub)' '$AUSER'@'$(funHosts $NODE_ID 2)'\n' > NFS_OpenMPI/id_rsa.pub
+cp -f sshkeys/$SSH_KEY.$nname.$AUSER NFS_OpenMPI/id_key
+cp -f sshkeys/$SSH_KEY.$nname.$AUSER.pub NFS_OpenMPI/id_key.pub
 
 # Generate known_hosts and authorized_keys files
 knownHosts=""
 autorizedHosts=""
-cat hosts | while read temp; do
-	autorizedHosts+=$(cut -d' ' -f1,2 $SSH_KEY.rsa.pub)' '$AUSER'@'$(echo $temp | cut -d' ' -f2)'\n'
+cat ${HOSTS_FILE} | while read temp; do
+	tnname=$(fHCutLine $temp 2)
+	autorizedHosts+=$(cut -d' ' -f1,2 sshkeys/$SSH_KEY.$tnname.$AUSER.pub)' '$AUSER'@'$tnname'\n'
+	# FIXME known_host builder needs fixing
 	knownHosts+=$(echo $temp | tr '\t' ' ' | cut -d' ' -f2),$(echo $temp | tr '\t' ' ' | cut -d' ' -f1)' '$(cut -d' ' -f1,2 $SSH_KEY.ecdsa.pub)'\n'
 done
 echo $autorizedHosts > NFS_OpenMPI/authorized_keys
