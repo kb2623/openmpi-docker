@@ -9,8 +9,9 @@ PasswordAuthentication no
 HostKey /etc/ssh/ssh_host_rsa_key
 HostKey /etc/ssh/ssh_host_ecdsa_key
 HostKey /etc/ssh/ssh_host_ed25519_key
-AuthorizedKeysFile /etc/ssh/authorized_keys
 HostCertificate /etc/ssh/ssh_host_ecdsa_key
+
+AuthorizedKeysFile .ssh/authorized_keys
 
 HostbasedAuthentication no
 IgnoreUserKnownHosts no
