@@ -107,10 +107,9 @@ RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME \
 
 # Setup user SSH keys
 ADD id_rsa /tmp
-ADD id_rsa_.pub /tmp
+ADD id_rsa.pub /tmp
 ADD authorized_keys /tmp
 ADD known_hosts /tmp
-
 RUN mkdir -p $AHOME/.ssh \
  && chmod 700 $AHOME/.ssh \
  && mv /tmp/id_rsa $AHOME/.ssh/ \
