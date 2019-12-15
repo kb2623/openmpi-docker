@@ -53,7 +53,7 @@ sshkey:
 	ssh-keygen -t ed25519 -N '' -f ${SSH_KEY}.ed25519
 	chmod -R 755 ${SSH_KEY}*
 
-clean_sshkey: ${SSH_KEY}
+clean_sshkey: ${SSH_KEY}*
 	-rm ${SSH_KEY}.rsa*
 	-rm ${SSH_KEY}.dsa*
 	-rm ${SSH_KEY}.ecdsa*
