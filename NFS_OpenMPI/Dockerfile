@@ -36,7 +36,7 @@ RUN chmod 700 /etc/ssh \
  && chmod 600 /etc/ssh/ssh_host* \
  && chmod 644 /etc/ssh/*.pub \
  && mkdir -p /root/.ssh \
- && chmod 700 /root/.ssh \
+ && chmod 700 /root/.ssh 
 
 RUN mkdir -p /etc/skel
 ADD .zshrc /etc/skel
