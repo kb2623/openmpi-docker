@@ -18,7 +18,6 @@ WORKDIR /root
 # Update the system and install programs
 RUN apk update \
  && apk add zsh bash tmux git build-base perl linux-headers nfs-utils openssh \
- && rm -v /etc/idmapd.conf /etc/exports \
  && rm -rf /var/cache/apk/*
 
 # SSH configuration and keys
