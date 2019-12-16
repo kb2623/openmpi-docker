@@ -60,24 +60,24 @@ function run_nfsd_server {
 		echo "Export validation failed, exiting..."
 		exit 1
 	fi
-	$RPC_MOUNTD -V 4 
-	$RPC_IDMAPD
-	$RPC_SVCGSSD
-	$RPC_NFSD -u -t -V 4 -p 2049 8
+	nohup $RPC_MOUNTD -V 4 &
+	nohup $RPC_IDMAPD &
+	nohup $RPC_SVCGSSD &
+	nohup $RPC_NFSD -u -t -V 4 -p 2049 8 &
 }
 
 # Type of Nodes ---------------------------------------------------------------------------------------------------
 function run_master {
 	run_sshd
 	run_nfsd_server
-	$RPC_GSSD -M -D
+	nohup $RPC_GSSD -M -D &
 	run_mound_nfs
 }
 
 function run_node {
 	run_sshd
-	$RPC_IDMAPD
-	$RPC_GSSD -M -D
+	nohup $RPC_IDMAPD &
+	nohup $RPC_GSSD -M -D &
 	run_mound_nfs
 }
 
