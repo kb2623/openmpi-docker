@@ -26,16 +26,14 @@ cat hosts | while read temp; do
 	hosts+="--add-host "$(echo $temp | cut -d' ' -f2)":"$(echo $temp | cut -d' ' -f1)" "
 done
 
-command="
-docker run --name=node${NODE_ID}_mpi 
-	--network=${NETWORK_NAME} 
-	--ip=$(funHosts ${NODE_ID} 1)
-	--hostname=$(funHosts ${NODE_ID} 2)
-	${hosts} 
-	-p ${SSH_PORT}:22 
-	-p ${RPC_PORT}:111
-	-p ${NFS_PORT}:2049 
-	-v ${MPI_DATA_VOLUME}:/mnt/data 
-	-d ${DOCKER_NAME}:${DOCKER_TAG}
-"
-eval $(echo $command | tr -d '\t' | tr '\n' ' ')
+command="docker run --name=node${NODE_ID}_mpi"
+command+=" --network=${NETWORK_NAME}"
+command+=" --ip=$(funHosts ${NODE_ID} 1)"
+command+=" --hostname=$(funHosts ${NODE_ID} 2)"
+command+=" ${hosts}"
+command+=" -p ${SSH_PORT}:22 -p ${RPC_PORT}:111 -p ${NFS_PORT}:2049"
+command+=" -v ${MPI_DATA_VOLUME}:/mnt/data"
+if [ $NODE_ID -eq 0 ]; then command+=" --privileged"
+command+=" -d ${DOCKER_NAME}:${DOCKER_TAG}"
+
+eval $command
