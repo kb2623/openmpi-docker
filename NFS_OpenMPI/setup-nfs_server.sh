@@ -1,6 +1,7 @@
 #!/bin/zsh
 
 # This script creates nfs server
+# CHECK: http://wiki.linux-nfs.org/wiki/index.php/Nfsv4_configuration
 # CALL: setup-nfs_server.sh NODE_ID NFS_DATA_DIR
 
 NODE_ID=$1
