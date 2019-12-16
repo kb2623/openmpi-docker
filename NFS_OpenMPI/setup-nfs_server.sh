@@ -12,6 +12,8 @@ if [ ! $NODE_ID = "0" ]; then exit 0; fi
 mkdir -p $NFS_DATA_DIR 
 chown -R nobody:nogroup $NFS_DATA_DIR 
 chmod -R 755 $NFS_DATA_DIR
+
+rm -v /etc/idmapd.conf /etc/exports
 printf "\n# NFS server\n%s *(rw,fsid=0,async,no_subtree_check,no_auth_nlm,insecure,no_root_squash)\n" $NFS_DATA_DIR >> /etc/exports
 mkdir -p /var/lib/nfs/rpc_pipefs
 mkdir -p /var/lib/nfs/v4recovery

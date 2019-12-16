@@ -39,10 +39,9 @@ function run_mound_nfs {
 # Services -------------------------------------------------------------------------------------------------------
 function run_sshd {
 	nohup $BSSHD -D -e -f $SSH_CONFIG &
-	return $!
 }
 
-function run_nfsd {
+function run_nfsd_server {
 	$BRPCBIND -w
 	$BRPCINFO
 	if $BEXPORTFS -rv; then
@@ -51,20 +50,29 @@ function run_nfsd {
 		echo "Export validation failed, exiting..."
 		exit 1
 	fi
-	$BNFSD -u -t -V 4 -p 2049 2
-	nohup $BMOUNTD -V 4 -p 111 &
-	return $!
+	nohup $BMOUNTD -V 4 &
+	nohup $BIDMAPD &
+	nohup $BRPC_SVCGSSD &
+	nohup $BNFSD -u -t -V 4 -p 2049 8 &
+}
+
+function run_nfsd_client {
+	# FIXME najdi programe ter preveri ce delujejo
+	rpc.gssd -m
+	rpc.idmapd
 }
 
 # Type of Nodes ---------------------------------------------------------------------------------------------------
 function run_master {
 	run_sshd
-	run_nfsd
+	# run_nfsd_server
+	# run_nfsd_client
 	run_mound_nfs
 }
 
 function run_node {
 	run_sshd
+	# run_nfsd_client
 	run_mound_nfs
 }
 

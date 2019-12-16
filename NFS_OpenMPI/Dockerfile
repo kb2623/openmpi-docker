@@ -8,6 +8,7 @@ LABEL description="Alpine computing Node for OpenMPI with NFS server base image"
 LABEL source="https://github.com/kb2623/openmpi-docker"
 
 ARG OPENMPI_VERSION=4.0.2
+ARG NO_PROC_MAKE=2
 
 ENV USPACE_APPS=/usr/local
 
@@ -17,6 +18,7 @@ WORKDIR /root
 # Update the system and install programs
 RUN apk update \
  && apk add zsh bash tmux git build-base perl linux-headers nfs-utils openssh \
+ && rm -v /etc/idmapd.conf /etc/exports \
  && rm -rf /var/cache/apk/*
 
 # SSH configuration and keys
@@ -39,12 +41,12 @@ RUN chmod 700 /etc/ssh \
  && chmod 700 /root/.ssh \
  && chown root:root /root/.ssh
 
+ADD hosts /root 
+
 RUN mkdir -p /etc/skel
 ADD .zshrc /etc/skel
 ADD .profile /etc/skel
 ADD .bashrc /etc/skel
-
-ADD hosts /root 
 
 # Fix file privilages
 RUN chmod a+rx hosts \
@@ -60,7 +62,7 @@ RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OPENMPI_VE
  && tar -xvf openmpi-$OPENMPI_VERSION.tar.bz2 \
  && cd openmpi-$OPENMPI_VERSION \
  && ./configure --prefix=$USPACE_APPS \
- && make \
+ && make -j $NO_PROC_MAKE \
  && make install \
  && cd .. \
  && rm openmpi-$OPENMPI_VERSION.tar.bz2 \
@@ -141,7 +143,6 @@ USER root
 WORKDIR /root
 VOLUME mnt/data
 EXPOSE 22
-EXPOSE 111
 EXPOSE 2049
 CMD ["/root/params"]
 ENTRYPOINT ["dinit.zsh"]

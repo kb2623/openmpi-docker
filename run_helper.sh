@@ -33,7 +33,8 @@ command+=" --hostname=$(funHosts ${NODE_ID} 2)"
 command+=" ${hosts}"
 command+=" -p ${SSH_PORT}:22 -p ${RPC_PORT}:111 -p ${NFS_PORT}:2049"
 command+=" -v ${MPI_DATA_VOLUME}:/mnt/data"
-if [ $NODE_ID -eq 0 ]; then command+=" --privileged"; fi
+if [ $NODE_ID -eq 0 ]; then command+=" --cap-add SYS_ADMIN"; fi
+# if [ $NODE_ID -eq 0 ]; then command+=" --privileged"; fi # If upper does not work
 command+=" -d ${DOCKER_NAME}:${DOCKER_TAG}"
 
 eval $command
