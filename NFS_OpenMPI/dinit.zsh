@@ -51,8 +51,8 @@ function run_nfsd {
 		echo "Export validation failed, exiting..."
 		exit 1
 	fi
-	$BNFSD -u -t -V 4 -p 2049 8
-	nohup $BMOUNTD -V 4 -p 2049 &
+	$BNFSD -u -t -V 4 -p 2049 2
+	nohup $BMOUNTD -V 4 -p 111 &
 	return $!
 }
 

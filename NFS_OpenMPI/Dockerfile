@@ -141,6 +141,7 @@ USER root
 WORKDIR /root
 VOLUME mnt/data
 EXPOSE 22
+EXPOSE 111
 EXPOSE 2049
 CMD ["/root/params"]
 ENTRYPOINT ["dinit.zsh"]

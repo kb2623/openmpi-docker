@@ -18,8 +18,9 @@ NETWORK_NAME:=mpinet
 OPENMPI_VERSION:=4.0.2
 
 # Used ports for container from outside
-NFS_PORT:=2049
 SSH_PORT:=22
+RPC_PORT:=111
+NFS_PORT:=2049
 
 # User data
 MPI_USER:=mpiuser
@@ -83,7 +84,7 @@ build: ${HOSTS_FILE} sshkeys
 	
 run: ${HOSTS_FILE}
 	-chmod a+x run_helper.sh
-	./run_helper.sh ${NODE_ID} ${NETWORK_NAME} ${HOSTS_FILE} ${SSH_PORT} ${NFS_PORT} ${MPI_DATA_VOLUME} ${DOCKER_NAME} ${DOCKER_TAG}
+	./run_helper.sh ${NODE_ID} ${NETWORK_NAME} ${HOSTS_FILE} ${SSH_PORT} ${RPC_PORT} ${NFS_PORT} ${MPI_DATA_VOLUME} ${DOCKER_NAME} ${DOCKER_TAG}
 
 logs:
 	docker logs node${NODE_ID}_mpi
