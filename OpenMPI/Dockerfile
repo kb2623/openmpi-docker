@@ -47,8 +47,7 @@ ADD .zshrc /etc/skel
 ADD .profile /etc/skel
 ADD .bashrc /etc/skel
 # Fix file privilages
-RUN chmod a+rx hosts \
- && chmod g+w /etc/passwd
+RUN chmod g+w /etc/passwd
 
 # Add configurations to root user
 RUN cp -f /etc/skel/.bashrc /root/.bashrc \
