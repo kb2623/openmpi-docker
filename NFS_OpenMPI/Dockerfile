@@ -99,10 +99,6 @@ RUN mv /tmp/dinit $USPACE_APPS_BIN \
  && chmod a+x $USPACE_APPS_BIN/mpicopy \
  && chmod a+x createuser.sh
 
-# NFS server
-RUN ./setup-nfs_server.sh $NODE_ID $NFS_DATA_DIR \
- && rm setup-nfs_server.sh
-
 # Create user
 RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME \
  && echo "AllowUsers ${AUSER}" >> /etc/ssh/sshd_config \
