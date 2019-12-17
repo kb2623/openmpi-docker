@@ -21,7 +21,7 @@ source helper.sh
 
 # Main ----------------------------------------------------------------------------------
 hosts=""
-cat /root/hosts | while read temp; do
+cat $HOSTS_FILE | while read temp; do
 	hosts+="--add-host "$(fHCutLine $temp 2)":"$(fHCutLine $temp 1)" "
 done
 
