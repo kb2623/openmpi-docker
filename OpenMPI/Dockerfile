@@ -94,7 +94,7 @@ WORKDIR /root
 
 # Add hosts file
 ADD hosts /root 
-RUN chmod 444 /root/hosts
+RUN chmod 640 /root/hosts
 
 # Add aditional sripts
 ADD dinit /tmp 
@@ -107,7 +107,7 @@ RUN mv /tmp/dinit $USPACE_APPS_BIN \
 RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME \
  && echo "AllowUsers ${AUSER}" >> /etc/ssh/sshd_config \
  && ln -s /root/hosts $AHOME/hosts \
- && chown $AUSER:$AGROUP $AHOME/hosts \
+ && chown root:$AGROUP $AHOME/hosts \
  && rm createuser.sh
 
 # Setup user SSH keys
