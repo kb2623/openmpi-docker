@@ -41,7 +41,7 @@ RUN chmod 700 /etc/ssh \
  && chmod 700 /root/.ssh \
  && chown root:root /root/.ssh
 
-
+# Create skel dir for adduser
 RUN mkdir -p /etc/skel
 ADD .zshrc /etc/skel
 ADD .profile /etc/skel
@@ -66,10 +66,9 @@ RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OPENMPI_VE
  && rm openmpi-$OPENMPI_VERSION.tar.bz2 \
  && rm -rf openmpi-$OPENMPI_VERSION
 
-# Additional helper programs
+# Additional helper programs for MPI
 ADD mpicopy /tmp 
 ADD mpirbuild /tmp 
-
 RUN mv /tmp/mpicopy $USPACE_APPS_BIN \
  && chmod a+x $USPACE_APPS_BIN/mpicopy \
  && mv /tmp/mpirbuild $USPACE_APPS_BIN \
