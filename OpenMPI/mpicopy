@@ -23,21 +23,12 @@ function fHCutLine {
 	echo $1 | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f$2
 }
 
-function fHCutFile {
-	if [ $# -lt 3 ]; then exit 1; fi
-	line=$(cat $1 | head -$(($2+1)) | tail -1)
-	fHCutLine $line $3
-}
-
 # Main ----------------------------------------------------------------------------------
 user=$(whoami)
 cat $HOSTS_FILE | while read temp; do
 	tnname=$(fHCutLine $temp 2)
+	if [ $tnname = $HOSTNAME ]; then continue; fi
 	echo "Sending to ${user}@${tnname}"
-	if [ -f $DATA ]; then
-		scp $DATA $user@$tnname:$REMOTE_PATH
-	elif [ -d $DATA ]; then
-		scp -r $DATA $user@$tnname:$REMOTE_PATH
-	fi
+	scp -r $DATA $user@$tnname:$REMOTE_PATH
 done
 

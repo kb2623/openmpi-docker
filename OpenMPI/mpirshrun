@@ -9,13 +9,8 @@ if [ $# -lt 2 ]; then
 	exit 1
 fi
 
-DATA=$1
-BUILD_COMMAND=$2
-REMOTE_PATH=$(pwd)
-
-if [ $# -ge 3 ]; then
-	REMOTE_PATH=$3
-fi
+HOSTS_FILE=$1
+REMOTE_COMMAND=$2
 
 # Helper funcions -----------------------------------------------------------------------
 function fHCutLine {
@@ -23,22 +18,13 @@ function fHCutLine {
 	echo $1 | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f$2
 }
 
-function fHCutFile {
-	if [ $# -lt 3 ]; then exit 1; fi
-	line=$(cat $1 | head -$(($2+1)) | tail -1)
-	fHCutLine $line $3
-}
-
 # Main ----------------------------------------------------------------------------------
 user=$(whoami)
-cat /root/hosts | while read temp; do
+cat $HOSTS_FILE | while read temp; do
 	tnname=$(fHCutLine $temp 2)
-	echo "Sending to ${user}@${tnname}"
-	if [ -f $DATA ]; then
-		scp $DATA $user@$tnname:$REMOTE_PATH
-	elif [ -d $DATA ]; then
-		scp -r $DATA $user@$tnname:$REMOTE_PATH
-	fi
+	if [ $tnname = $HOSTNAME ]; then continue; fi
+	echo "Runing on ${tnname}"
+	ssh $user@$tnname $REMOTE_COMMAND
 done
 
 # TODO run a command on remote servers
