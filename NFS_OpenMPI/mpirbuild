@@ -1,19 +1,20 @@
 #!/bin/zsh
 
 # This script will copy the passed paramter to all remove nodes
-# CALL mpicopy [Path to File or Dir] [Remote path]
+# CALL mpicopy [Path to File or Dir] [Command for build project] [Remote path]
 
 # Parameters ----------------------------------------------------------------------------
-if [ $# -lt 1 ]; then 
-	echo Need 1 arguments
+if [ $# -lt 2 ]; then 
+	echo Need 2 arguments
 	exit 1
 fi
 
 DATA=$1
+BUILD_COMMAND=$2
 REMOTE_PATH=$(pwd)
 
-if [ $# -ge 2 ]; then
-	REMOTE_PATH=$2
+if [ $# -ge 3 ]; then
+	REMOTE_PATH=$3
 fi
 
 # Helper funcions -----------------------------------------------------------------------
@@ -40,3 +41,4 @@ cat /root/hosts | while read temp; do
 	fi
 done
 
+# TODO run a command on remote servers
