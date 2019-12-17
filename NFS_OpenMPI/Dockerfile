@@ -17,7 +17,7 @@ WORKDIR /root
 
 # Update the system and install programs
 RUN apk update \
- && apk add zsh bash tmux git build-base perl linux-headers nfs-utils openssh \
+ && apk add zsh bash tmux git build-base perl linux-headers openssh \
  && rm -rf /var/cache/apk/*
 
 # SSH configuration and keys
@@ -89,12 +89,14 @@ ENV NFS_DATA_DIR=/mnt/nfs/nfs-data
 USER root
 WORKDIR /root
 
-ADD dinit.zsh $USPACE_APPS_BIN 
-ADD setup-nfs_server.sh /root
+ADD dinit /tmp 
+ADD mpicopy /tmp 
 ADD createuser.sh /root
 
-RUN chmod a+x $USPACE_APPS_BIN/dinit.zsh \
- && chmod a+x setup-nfs_server.sh \
+RUN mv /tmp/dinit $USPACE_APPS_BIN \
+ && mv /tmp/mpicopy $USPACE_APPS_BIN \
+ && chmod a+x $USPACE_APPS_BIN/dinit \
+ && chmod a+x $USPACE_APPS_BIN/mpicopy \
  && chmod a+x createuser.sh
 
 # NFS server
@@ -104,9 +106,9 @@ RUN ./setup-nfs_server.sh $NODE_ID $NFS_DATA_DIR \
 # Create user
 RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME \
  && echo "AllowUsers ${AUSER}" >> /etc/ssh/sshd_config \
- && ln /root/hosts $AHOME/hosts \
+ && chmod 444 /root/hosts \
+ && ln -s /root/hosts $AHOME/hosts \
  && chown $AUSER:$AGROUP $AHOME/hosts \
- && chmod a+r $AHOME/hosts \
  && rm createuser.sh
 
 # Setup user SSH keys
@@ -133,17 +135,12 @@ RUN mkdir -p /mnt/data \
  && ln -s /mnt/data $AHOME/data \
  && chown $AUSER:$AGROUP $AHOME/data
 
-# Set paramters for daemon.zsh sript
-RUN echo "/root/hosts ${NODE_ID} ${AUSER} ${AGROUP} ${WORD_DIR}" > /root/params
-
 ## EntryPoint ########################################################################
 
 USER root
 WORKDIR /root
 VOLUME mnt/data
 EXPOSE 22
-EXPOSE 2049
-CMD ["/root/params"]
-ENTRYPOINT ["dinit.zsh"]
+ENTRYPOINT ["dinit"]
 
 # vim: tabstop=1 expandtab shiftwidth=1 softtabstop=1
