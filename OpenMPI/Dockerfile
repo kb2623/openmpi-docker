@@ -106,8 +106,8 @@ RUN mv /tmp/dinit $USPACE_APPS_BIN \
 # Create user
 RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME \
  && echo "AllowUsers ${AUSER}" >> /etc/ssh/sshd_config \
- && ln -s /root/hosts $AHOME/hosts \
- && chown root:$AGROUP $AHOME/hosts \
+ && cp /root/hosts $AHOME/hosts \
+ && chown $AUSER:$AGROUP $AHOME/hosts \
  && rm createuser.sh
 
 # Setup user SSH keys
