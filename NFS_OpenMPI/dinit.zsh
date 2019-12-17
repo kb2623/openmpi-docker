@@ -52,7 +52,7 @@ function run_sshd {
 }
 
 function run_nfsd_server {
-	$RPCBIND -w
+	$RPCBIND -w -f
 	$RPCINFO
 	if $EXPORTFS -rv; then
 		$EXPORTFS
@@ -60,10 +60,10 @@ function run_nfsd_server {
 		echo "Export validation failed, exiting..."
 		exit 1
 	fi
-	nohup $RPC_MOUNTD -V 4 &
-	nohup $RPC_IDMAPD &
+	nohup $RPC_MOUNTD -V 4 -N 2 -N 3 &
+	nohup $RPC_IDMAPD -p /var/lib/nfs/rpc_pipefs &
 	nohup $RPC_SVCGSSD &
-	nohup $RPC_NFSD -u -t -V 4 -p 2049 8 &
+	nohup $RPC_NFSD -u -t -V 4 -N 2 -N 3 -p 2049 8 &
 }
 
 # Type of Nodes ---------------------------------------------------------------------------------------------------
@@ -76,7 +76,7 @@ function run_master {
 
 function run_node {
 	run_sshd
-	nohup $RPC_IDMAPD &
+	nohup $RPC_IDMAPD -C &
 	nohup $RPC_GSSD -M -D &
 	run_mound_nfs
 }
