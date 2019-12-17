@@ -27,8 +27,8 @@ done
 
 command="docker run --name=node${NODE_ID}_mpi"
 command+=" --network=${NETWORK_NAME}"
-command+=" --ip=$(funHosts ${NODE_ID} 1)"
-command+=" --hostname=$(funHosts ${NODE_ID} 2)"
+command+=" --ip="$(fHCutFile $HOSTS_FILE $NODE_ID 1)
+command+=" --hostname="$(fHCutFile $HOSTS_FILE $NODE_ID 2)
 command+=" ${hosts}"
 command+=" -p ${SSH_PORT}:22"
 command+=" -v ${MPI_DATA_VOLUME}:/mnt/data"
