@@ -11,6 +11,7 @@ ARG OPENMPI_VERSION=4.0.2
 ARG NO_PROC_MAKE=2
 
 ENV USPACE_APPS=/usr/local
+ENV USPACE_APPS_BIN=/usr/local/bin
 
 USER root
 WORKDIR /root
@@ -40,13 +41,11 @@ RUN chmod 700 /etc/ssh \
  && chmod 700 /root/.ssh \
  && chown root:root /root/.ssh
 
-ADD hosts /root 
 
 RUN mkdir -p /etc/skel
 ADD .zshrc /etc/skel
 ADD .profile /etc/skel
 ADD .bashrc /etc/skel
-
 # Fix file privilages
 RUN chmod a+rx hosts \
  && chmod g+w /etc/passwd
@@ -67,6 +66,15 @@ RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OPENMPI_VE
  && rm openmpi-$OPENMPI_VERSION.tar.bz2 \
  && rm -rf openmpi-$OPENMPI_VERSION
 
+# Additional helper programs
+ADD mpicopy /tmp 
+ADD mpirbuild /tmp 
+
+RUN mv /tmp/mpicopy $USPACE_APPS_BIN \
+ && chmod a+x $USPACE_APPS_BIN/mpicopy \
+ && mv /tmp/mpirbuild $USPACE_APPS_BIN \
+ && chmod a+x $USPACE_APPS_BIN/mpirbuild
+
 ## STAGE 1 ###########################################################################
 
 FROM nfs4_openmpi_node_base
@@ -83,26 +91,23 @@ ARG AGROUP_ID=1000
 ARG AHOME=/home/$AUSER
 ARG WORD_DIR=$AHOME/mpidir
 
-ENV USPACE_APPS_BIN=/usr/local/bin
-ENV NFS_DATA_DIR=/mnt/nfs/nfs-data
-
 USER root
 WORKDIR /root
 
-ADD dinit /tmp 
-ADD mpicopy /tmp 
-ADD createuser.sh /root
+# Add hosts file
+ADD hosts /root 
+RUN chmod 444 /root/hosts
 
+# Add aditional sripts
+ADD dinit /tmp 
+ADD createuser.sh /root
 RUN mv /tmp/dinit $USPACE_APPS_BIN \
- && mv /tmp/mpicopy $USPACE_APPS_BIN \
  && chmod a+x $USPACE_APPS_BIN/dinit \
- && chmod a+x $USPACE_APPS_BIN/mpicopy \
  && chmod a+x createuser.sh
 
 # Create user
 RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME \
  && echo "AllowUsers ${AUSER}" >> /etc/ssh/sshd_config \
- && chmod 444 /root/hosts \
  && ln -s /root/hosts $AHOME/hosts \
  && chown $AUSER:$AGROUP $AHOME/hosts \
  && rm createuser.sh
