@@ -1,6 +1,6 @@
 DOCKER_NAME:=openmpi_alpine
 DOCKER_TAG:=latest
-DOCKER_VOLUME_SRC:=/tmp/${DOCKER_NAME}_${DOCKER_NAME}
+DOCKER_VOLUME_SRC=/tmp/${DOCKER_NAME}_${DOCKER_NAME}
 
 NODE_ID:=0
 HOSTS_FILE:=hosts
@@ -92,7 +92,7 @@ build: ${HOSTS_FILE} sshkeys
 	
 run: ${HOSTS_FILE}
 	-chmod a+x run_helper.sh
-	./run_helper.sh ${NODE_ID} ${NETWORK_NAME} ${HOSTS_FILE} ${SSH_PORT} ${MPI_DATA_VOLUME} ${DOCKER_NAME} ${DOCKER_TAG}
+	./run_helper.sh ${NODE_ID} ${NETWORK_NAME} ${HOSTS_FILE} ${SSH_PORT} ${DOCKER_VOLUME_SRC} ${DOCKER_NAME} ${DOCKER_TAG}
 
 logs:
 	docker logs node${NODE_ID}_mpi
