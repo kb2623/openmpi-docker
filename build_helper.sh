@@ -8,7 +8,7 @@ fi
 OPERATION=$1
 
 if [ $OPERATION -eq 0 ]; then
-	rm -f NFS_OpenMPI/ssh_host_* NFS_OpenMPI/authorized_keys NFS_OpenMPI/known_hosts NFS_OpenMPI/hosts
+	rm -f OpenMPI/ssh_host_* OpenMPI/authorized_keys OpenMPI/known_hosts OpenMPI/hosts
 	exit 0
 fi
 
@@ -26,18 +26,18 @@ source helper.sh
 
 nname=$(fHCutFile $HOSTS_FILE $NODE_ID 2)
 # Host SSH keys
-cp -f sshkeys/$SSH_KEY.rsa.$nname NFS_OpenMPI/ssh_host_rsa_key
-cp -f sshkeys/$SSH_KEY.rsa.$nname.pub NFS_OpenMPI/ssh_host_rsa_key.pub
-cp -f sshkeys/$SSH_KEY.dsa.$nname NFS_OpenMPI/ssh_host_dsa_key
-cp -f sshkeys/$SSH_KEY.dsa.$nname.pub NFS_OpenMPI/ssh_host_dsa_key.pub
-cp -f sshkeys/$SSH_KEY.ecdsa.$nname NFS_OpenMPI/ssh_host_ecdsa_key
-cp -f sshkeys/$SSH_KEY.ecdsa.$nname.pub NFS_OpenMPI/ssh_host_ecdsa_key.pub
-cp -f sshkeys/$SSH_KEY.ed25519.$nname NFS_OpenMPI/ssh_host_ed25519_key
-cp -f sshkeys/$SSH_KEY.ed25519.$nname.pub NFS_OpenMPI/ssh_host_ed25519_key.pub
+cp -f sshkeys/$SSH_KEY.rsa.$nname OpenMPI/ssh_host_rsa_key
+cp -f sshkeys/$SSH_KEY.rsa.$nname.pub OpenMPI/ssh_host_rsa_key.pub
+cp -f sshkeys/$SSH_KEY.dsa.$nname OpenMPI/ssh_host_dsa_key
+cp -f sshkeys/$SSH_KEY.dsa.$nname.pub OpenMPI/ssh_host_dsa_key.pub
+cp -f sshkeys/$SSH_KEY.ecdsa.$nname OpenMPI/ssh_host_ecdsa_key
+cp -f sshkeys/$SSH_KEY.ecdsa.$nname.pub OpenMPI/ssh_host_ecdsa_key.pub
+cp -f sshkeys/$SSH_KEY.ed25519.$nname OpenMPI/ssh_host_ed25519_key
+cp -f sshkeys/$SSH_KEY.ed25519.$nname.pub OpenMPI/ssh_host_ed25519_key.pub
 
 # User SSH key
-cp -f sshkeys/$SSH_KEY.$nname.$AUSER NFS_OpenMPI/id_key
-cp -f sshkeys/$SSH_KEY.$nname.$AUSER.pub NFS_OpenMPI/id_key.pub
+cp -f sshkeys/$SSH_KEY.$nname.$AUSER OpenMPI/id_key
+cp -f sshkeys/$SSH_KEY.$nname.$AUSER.pub OpenMPI/id_key.pub
 
 # Generate known_hosts and authorized_keys files
 knownHosts=""
@@ -47,5 +47,5 @@ cat ${HOSTS_FILE} | while read temp; do
 	autorizedHosts+=$(cut -d' ' -f1,2 sshkeys/$SSH_KEY.$tnname.$AUSER.pub)' '$AUSER'@'$tnname'\n'
 	knownHosts+=$tnname,$(fHCutLine $temp 1)' '$(cut -d' ' -f1,2 sshkeys/$SSH_KEY.ecdsa.$tnname.pub)'\n'
 done
-echo $autorizedHosts > NFS_OpenMPI/authorized_keys
-echo $knownHosts > NFS_OpenMPI/known_hosts
+echo $autorizedHosts > OpenMPI/authorized_keys
+echo $knownHosts > OpenMPI/known_hosts

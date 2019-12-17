@@ -1,4 +1,4 @@
-DOCKER_NAME:=nfs_mpi_alpine
+DOCKER_NAME:=openmpi_alpine
 DOCKER_TAG:=latest
 
 NODE_ID:=0
@@ -65,10 +65,10 @@ clean_sshkey: sshkeys
 ## Final ##############################################################################
 
 build: ${HOSTS_FILE} sshkeys
-	cp ${HOSTS_FILE} NFS_OpenMPI/hosts
+	cp -f ${HOSTS_FILE} OpenMPI/hosts
 	-chmod a+x build_helper.sh
 	./build_helper.sh 1 ${NODE_ID} ${MPI_USER} ${SSH_KEY} ${HOSTS_FILE}
-	-chmod -R 755 NFS_OpenMPI
+	-chmod -R 755 OpenMPI
 	-docker build \
 		-t ${DOCKER_NAME}:${DOCKER_TAG} \
 		--build-arg NODE_ID=${NODE_ID} \
@@ -77,7 +77,7 @@ build: ${HOSTS_FILE} sshkeys
 		--build-arg AGROUP=${MPI_GROUP} \
 		--build-arg AGROUP_ID=${MPI_GROUP_ID} \
 		--build-arg OPENMPI_VERSION=${OPENMPI_VERSION} \
-		NFS_OpenMPI
+		OpenMPI
 	./build_helper.sh 0
 	
 run: ${HOSTS_FILE}

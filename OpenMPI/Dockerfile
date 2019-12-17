@@ -1,10 +1,10 @@
 ## STAGE 0 ###########################################################################
 
 ARG BASE_CONTAINER=alpine:3.10
-FROM $BASE_CONTAINER AS nfs4_openmpi_node_base
+FROM $BASE_CONTAINER AS openmpi_node_base
 
 LABEL maintainer="Klemen Berkovic <roxor@gmail.com>"
-LABEL description="Alpine computing Node for OpenMPI with NFS server base image"
+LABEL description="Alpine computing Node for OpenMPI base image"
 LABEL source="https://github.com/kb2623/openmpi-docker"
 
 ARG OPENMPI_VERSION=4.0.2
@@ -77,10 +77,10 @@ RUN mv /tmp/mpicopy $USPACE_APPS_BIN \
 
 ## STAGE 1 ###########################################################################
 
-FROM nfs4_openmpi_node_base
+FROM openmpi_node_base
 
 LABEL maintainer="Klemen Berkovic <roxor@gmail.com>"
-LABEL description="Alpine computing Node for OpenMPI with NFS server final image"
+LABEL description="Alpine computing Node for OpenMPI final image"
 LABEL source="https://github.com/kb2623/openmpi-docker"
 
 ARG NODE_ID=0
