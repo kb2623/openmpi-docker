@@ -18,7 +18,7 @@ WORKDIR /root
 
 # Update the system and install programs
 RUN apk update \
- && apk add zsh bash tmux git build-base perl linux-headers openssh \
+ && apk add zsh bash vim tmux git build-base perl linux-headers openssh \
  && rm -rf /var/cache/apk/*
 
 # SSH configuration and keys

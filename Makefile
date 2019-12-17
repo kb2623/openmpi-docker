@@ -30,6 +30,8 @@ MPI_DATA_VOLUME:=/home/mpiuser
 
 # User for exec command
 EXEC_USER:=${MPI_USER}
+# User working dir
+EXEC_WORKINGDIR:=${AHOME}
 # Shell: /bin/zsh /bin/bash /bin/ash /bin/sh
 EXEC_SHELL:=/bin/zsh
 
@@ -91,7 +93,7 @@ start:
 	docker start node${NODE_ID}_mpi
 
 exec:
-	docker exec -it -u ${EXEC_USER} node${NODE_ID}_mpi ${EXEC_SHELL}
+	docker exec -it -u ${EXEC_USER} -w ${EXEC_WORKINGDIR} node${NODE_ID}_mpi ${EXEC_SHELL}
 
 stop:
 	docker stop node${NODE_ID}_mpi
