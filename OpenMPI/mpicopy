@@ -1,19 +1,20 @@
 #!/bin/zsh
 
 # This script will copy the passed paramter to all remove nodes
-# CALL mpicopy [Path to File or Dir] [Remote path]
+# CALL mpicopy [Path to hostfile] [Path to File or Dir] [Remote path]
 
 # Parameters ----------------------------------------------------------------------------
-if [ $# -lt 1 ]; then 
-	echo Need 1 arguments
+if [ $# -lt 2 ]; then 
+	echo Need 2 arguments
 	exit 1
 fi
 
-DATA=$1
+HOSTS_FILE=$1
+DATA=$2
 REMOTE_PATH=$(pwd)
 
-if [ $# -ge 2 ]; then
-	REMOTE_PATH=$2
+if [ $# -ge 3 ]; then
+	REMOTE_PATH=$3
 fi
 
 # Helper funcions -----------------------------------------------------------------------
@@ -30,7 +31,7 @@ function fHCutFile {
 
 # Main ----------------------------------------------------------------------------------
 user=$(whoami)
-cat /root/hosts | while read temp; do
+cat $HOSTS_FILE | while read temp; do
 	tnname=$(fHCutLine $temp 2)
 	echo "Sending to ${user}@${tnname}"
 	if [ -f $DATA ]; then
