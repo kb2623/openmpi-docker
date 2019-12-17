@@ -133,7 +133,7 @@ RUN mkdir -p $AHOME/.ssh \
 RUN mkdir -p /mnt/data \
  && chmod a+rw /mnt/data \
  && ln -s /mnt/data $AHOME/data \
- && chown $AUSER:$AGROUP $AHOME/data
+ && chown -R $AUSER:$AGROUP $AHOME/data
 
 ## EntryPoint ########################################################################
 

@@ -1,5 +1,6 @@
 DOCKER_NAME:=openmpi_alpine
 DOCKER_TAG:=latest
+DOCKER_VOLUME_SRC:=/tmp/${DOCKER_NAME}_${DOCKER_NAME}
 
 NODE_ID:=0
 HOSTS_FILE:=hosts
@@ -25,13 +26,11 @@ MPI_USER:=mpiuser
 MPI_USER_ID:=1001
 MPI_GROUP:=mpiusers
 MPI_GROUP_ID:=1001
-# For NFS dir
-MPI_DATA_VOLUME:=/home/mpiuser
 
 # User for exec command
 EXEC_USER:=${MPI_USER}
 # User working dir
-EXEC_WORKINGDIR:=${AHOME}
+EXEC_WORKINGDIR:=/home/${MPI_USER}
 # Shell: /bin/zsh /bin/bash /bin/ash /bin/sh
 EXEC_SHELL:=/bin/zsh
 
@@ -39,6 +38,15 @@ all:
 	-make net
 	-make build
 	-make run
+
+## Network ############################################################################
+
+volume:
+	mkdir -p ${DOCKER_VOLUME_SRC}
+	chown 101:101 ${DOCKER_VOLUME_SRC}
+
+clean_volume: ${DOCKER_VOLUME_SRC}
+	rm -rf ${DOCKER_VOLUME_SRC}
 
 ## Network ############################################################################
 

@@ -12,7 +12,7 @@ NODE_ID=$1
 NETWORK_NAME=$2
 HOSTS_FILE=$3
 SSH_PORT=$4
-MPI_DATA_VOLUME=$5
+DOCKER_VOLUME_SRC=$5
 DOCKER_NAME=$6
 DOCKER_TAG=$7
 
@@ -31,7 +31,7 @@ command+=" --ip="$(fHCutFile $HOSTS_FILE $NODE_ID 1)
 command+=" --hostname="$(fHCutFile $HOSTS_FILE $NODE_ID 2)
 command+=" ${hosts}"
 command+=" -p ${SSH_PORT}:22"
-command+=" -v ${MPI_DATA_VOLUME}:/mnt/data"
+command+=" -v ${DOCKER_VOLUME_SRC}:/mnt/data"
 command+=" -d ${DOCKER_NAME}:${DOCKER_TAG}"
 
 eval $command
