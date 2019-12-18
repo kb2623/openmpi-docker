@@ -9,17 +9,48 @@ LABEL source="https://github.com/kb2623/openmpi-docker"
 
 ARG OPENMPI_VERSION=4.0.2
 ARG NO_PROC_MAKE=2
+ARG USPACE_APPS=/usr/local
 
-ENV USPACE_APPS=/usr/local
-ENV USPACE_APPS_BIN=/usr/local/bin
+ENV USPACE_APPS_BIN=$USPACE_APPS/bin
+ENV USPACE_APPS_LIB=$USPACE_APPS/lib
 
 USER root
 WORKDIR /root
+
+# Create skel dir for adduser
+RUN mkdir -p /etc/skel
+ADD .zshrc /etc/skel
+ADD .profile /etc/skel
+ADD .bashrc /etc/skel
+# Add configurations to root user
+RUN cp -f /etc/skel/.bashrc /root/.bashrc \
+ && cp -f /etc/skel/.zshrc /root/.zshrc \
+ && cp -f /etc/skel/.profile /root/.profile
 
 # Update the system and install programs
 RUN apk update \
  && apk add zsh bash vim tmux git build-base perl linux-headers openssh \
  && rm -rf /var/cache/apk/*
+ 
+# Install OpenMPI
+RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OPENMPI_VERSION.tar.bz2 \
+ && tar -xvf openmpi-$OPENMPI_VERSION.tar.bz2 \
+ && cd openmpi-$OPENMPI_VERSION \
+ && ./configure --prefix=$USPACE_APPS \
+ && make -j $NO_PROC_MAKE \
+ && make install \
+ && cd .. \
+ && rm openmpi-$OPENMPI_VERSION.tar.bz2 \
+ && rm -rf openmpi-$OPENMPI_VERSION \
+ && echo -e "\nexport LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:${USPACE_APPS_LIB}/lib/\n" >> /etc/skel/.profile
+
+# Additional helper programs for MPI
+ADD mpicopy /tmp 
+ADD mpirshrun /tmp 
+RUN mv /tmp/mpicopy $USPACE_APPS_BIN \
+ && chmod a+x $USPACE_APPS_BIN/mpicopy \
+ && mv /tmp/mpirshrun $USPACE_APPS_BIN \
+ && chmod a+x $USPACE_APPS_BIN/mpirshrun
 
 # SSH configuration and keys
 ADD sshd_config /etc/ssh/
@@ -40,38 +71,6 @@ RUN chmod 700 /etc/ssh \
  && mkdir -p /root/.ssh \
  && chmod 700 /root/.ssh \
  && chown root:root /root/.ssh
-
-# Create skel dir for adduser
-RUN mkdir -p /etc/skel
-ADD .zshrc /etc/skel
-ADD .profile /etc/skel
-ADD .bashrc /etc/skel
-# Fix file privilages
-RUN chmod g+w /etc/passwd
-
-# Add configurations to root user
-RUN cp -f /etc/skel/.bashrc /root/.bashrc \
- && cp -f /etc/skel/.zshrc /root/.zshrc \
- && cp -f /etc/skel/.profile /root/.profile
-
-# Install OpenMPI
-RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OPENMPI_VERSION.tar.bz2 \
- && tar -xvf openmpi-$OPENMPI_VERSION.tar.bz2 \
- && cd openmpi-$OPENMPI_VERSION \
- && ./configure --prefix=$USPACE_APPS \
- && make -j $NO_PROC_MAKE \
- && make install \
- && cd .. \
- && rm openmpi-$OPENMPI_VERSION.tar.bz2 \
- && rm -rf openmpi-$OPENMPI_VERSION
-
-# Additional helper programs for MPI
-ADD mpicopy /tmp 
-ADD mpirshrun /tmp 
-RUN mv /tmp/mpicopy $USPACE_APPS_BIN \
- && chmod a+x $USPACE_APPS_BIN/mpicopy \
- && mv /tmp/mpirshrun $USPACE_APPS_BIN \
- && chmod a+x $USPACE_APPS_BIN/mpirshrun
 
 ## STAGE 1 ###########################################################################
 
