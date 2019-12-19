@@ -20,10 +20,11 @@ fHCutLine() {
 
 # Main ----------------------------------------------------------------------------------
 user=$(whoami)
-cat $HOSTS_FILE | while read temp; do
-	tnname=$(fHCutLine $temp 2)
-	if [ $tnname = $HOSTNAME ]; then continue; fi
+
+while IFS= read -r line; do
+	tnname=$(fHCutLine "${line}" 2)
+	if [ ${tnname} = ${HOSTNAME} ]; then continue; fi
 	echo "Runing on ${tnname}"
-	ssh $user@$tnname $REMOTE_COMMAND
-done
+	ssh ${user}@${tnname} ${REMOTE_COMMAND}
+done < ${HOSTS_FILE}
 

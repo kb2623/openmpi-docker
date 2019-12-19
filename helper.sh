@@ -10,7 +10,7 @@ fHCutLine() {
 fHCutFile() {
 	if [ $# -lt 3 ]; then exit 1; fi
 	line=$(cat $1 | head -$(($2+1)) | tail -1)
-	fHCutLine $line $3
+	fHCutLine "$line" $3
 }
 
 # ------------------------------------------------------------------------------------

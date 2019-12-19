@@ -17,22 +17,23 @@ DOCKER_NAME=$6
 DOCKER_TAG=$7
 
 # Helper funcions -----------------------------------------------------------------------
-source helper.sh
+source ./helper.sh
 
 # Main ----------------------------------------------------------------------------------
 hosts=""
-cat $HOSTS_FILE | while read temp; do
-	hosts+="--add-host "$(fHCutLine $temp 2)":"$(fHCutLine $temp 1)" "
-done
+
+while IFS= read -r line; do
+	hosts+="--add-host "$(fHCutLine "${line}" 2)":"$(fHCutLine "${line}" 1)" "
+done < ${HOSTS_FILE}
 
 command="docker run --name=node${NODE_ID}_mpi"
 command+=" --network=${NETWORK_NAME}"
-command+=" --ip="$(fHCutFile $HOSTS_FILE $NODE_ID 1)
-command+=" --hostname="$(fHCutFile $HOSTS_FILE $NODE_ID 2)
+command+=" --ip="$(fHCutFile ${HOSTS_FILE} ${NODE_ID} 1)
+command+=" --hostname="$(fHCutFile ${HOSTS_FILE} ${NODE_ID} 2)
 command+=" ${hosts}"
 command+=" -p ${SSH_PORT}:22"
 command+=" -v ${DOCKER_VOLUME_SRC}:/mnt/data"
 command+=" -d ${DOCKER_NAME}:${DOCKER_TAG}"
 
-eval $command
+eval ${command}
 

@@ -6,7 +6,7 @@ readonly SSH_DAEMON='/usr/sbin/sshd'
 
 # Services ---------------------------------------------------------------------------
 run_sshd() {
-	nohup $SSH_DAEMON -D -e -f $SSH_CONFIG &
+	nohup ${SSH_DAEMON} -D -e -f ${SSH_CONFIG} &
 }
 
 # Main -------------------------------------------------------------------------------
