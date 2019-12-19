@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 
 # This script will copy the passed paramter to all remove nodes
 # CALL mpicopy [Path to File or Dir] [Command for build project] [Remote path]
@@ -13,7 +13,7 @@ HOSTS_FILE=$1
 REMOTE_COMMAND=$2
 
 # Helper funcions -----------------------------------------------------------------------
-function fHCutLine {
+fHCutLine() {
 	if [ $# -lt 2 ]; then exit 1; fi
 	echo $1 | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f$2
 }
@@ -27,4 +27,3 @@ cat $HOSTS_FILE | while read temp; do
 	ssh $user@$tnname $REMOTE_COMMAND
 done
 
-# TODO run a command on remote servers

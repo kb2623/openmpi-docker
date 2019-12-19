@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 
 # Generates a command to run docker containter
 

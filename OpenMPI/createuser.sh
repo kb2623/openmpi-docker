@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 
 # This script creates a user for runing jupyter lab
 # First script checks if group exists based on GID on GROUP if that is true the the group is deleted
@@ -7,6 +7,11 @@
 # Fhour user is created based on UID and USER and added to a group based on GID and home is created in HOME
 # Fix skeleten is copyed if skeleton won't work based on user add and the owneship is set to user and group
 # CALL: creeateuser.sh USER UID GROUP GID HOME
+
+if [ $# -lt 5 ]; then 
+	echo Need 5 arguments
+	exit 1
+fi
 
 aUSER=$1
 aUID=$2

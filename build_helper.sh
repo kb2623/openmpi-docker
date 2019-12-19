@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 
 if [ $# -lt 1 ]; then 
 	echo Need 1 arguments

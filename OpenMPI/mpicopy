@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 
 # This script will copy the passed paramter to all remove nodes
 # CALL mpicopy [Path to hostfile] [Path to File or Dir] [Remote path]
@@ -18,7 +18,7 @@ if [ $# -ge 3 ]; then
 fi
 
 # Helper funcions -----------------------------------------------------------------------
-function fHCutLine {
+fHCutLine() {
 	if [ $# -lt 2 ]; then exit 1; fi
 	echo $1 | tr '\t' ' ' | tr -s ' ' | cut -d' ' -f$2
 }
