@@ -36,7 +36,7 @@ cp -f sshkeys/${SSH_KEY}.ed25519.${nname} OpenMPI/ssh_host_ed25519_key
 cp -f sshkeys/${SSH_KEY}.ed25519.${nname}.pub OpenMPI/ssh_host_ed25519_key.pub
 
 # User SSH key
-cp -f sshkeys/${SSH_KEY}.${nname}.${AUSER}OpenMPI/id_key
+cp -f sshkeys/${SSH_KEY}.${nname}.${AUSER} OpenMPI/id_key
 cp -f sshkeys/${SSH_KEY}.${nname}.${AUSER}.pub OpenMPI/id_key.pub
 
 # Generate known_hosts and authorized_keys files
