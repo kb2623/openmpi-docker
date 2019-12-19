@@ -49,6 +49,8 @@ while IFS= read -r line; do
 	knownHosts+=${tnname},$(fHCutLine "${line}" 1)' '$(cut -d' ' -f1,2 sshkeys/${SSH_KEY}.ecdsa.${tnname}.pub)'\n'
 done < ${HOSTS_FILE}
 
-echo ${autorizedHosts} > OpenMPI/authorized_keys
-echo ${knownHosts} > OpenMPI/known_hosts
+echo -e ${autorizedHosts} > OpenMPI/authorized_keys
+echo -e ${knownHosts} > OpenMPI/known_hosts
+
+exit 1
 
