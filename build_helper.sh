@@ -52,5 +52,3 @@ done < ${HOSTS_FILE}
 echo -e ${autorizedHosts} > OpenMPI/authorized_keys
 echo -e ${knownHosts} > OpenMPI/known_hosts
 
-exit 1
-
