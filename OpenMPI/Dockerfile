@@ -22,10 +22,12 @@ RUN mkdir -p /etc/skel
 ADD .zshrc /etc/skel
 ADD .profile /etc/skel
 ADD .bashrc /etc/skel
+ADD .tmux.conf /etc/skel
 # Add configurations to root user
 RUN cp -f /etc/skel/.bashrc /root/.bashrc \
  && cp -f /etc/skel/.zshrc /root/.zshrc \
- && cp -f /etc/skel/.profile /root/.profile
+ && cp -f /etc/skel/.profile /root/.profile \
+ && cp -f /etc/skel/.tmux.conf /root/.tmux.conf
 
 # Update the system and install programs
 RUN apk update \
