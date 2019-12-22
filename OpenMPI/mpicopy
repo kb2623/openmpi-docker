@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # This script will copy the passed paramter to all remove nodes
 # CALL mpicopy [Path to hostfile] [Path to File or Dir] [Remote path]

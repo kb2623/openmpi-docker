@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Generates a command to run docker containter
 
