@@ -1,49 +1,40 @@
 #!/bin/bash
 
 # This script will copy the passed paramter to all remove nodes
-# CALL mpicopy [Path to hostfile] [Path to File or Dir] [Remote path]
+# CALL mpirunsh [hostsfile] [Shell command]
 
 printHelp() {
 	echo -e 'Program for copying mpi programs to other nodes.\n'
 	echo Usage:
-	echo -e '\tmpicopy [OPTIONS] [HOSTSFILE] [directory or file]\n'
+	echo -e '\tmpirunsh [OPTIONS] [HOSTSFILE] [Shell command]\n'
 	echo Hostsfile:
 	echo -e '\tA file with node names of IP addresses of the nodes\n'
 	echo Options:
-	echo -e '\t -h\t --help\t\t\t Print this message'
-	echo -e '\t -rp\t --remotePath\t[PATH]\t Remote path to copy to'
+	echo -e '\t -h\t --helpt\t\t\t Print this message'
 	echo -e '\n'
 }
 
 # Parameters ----------------------------------------------------------------------------
 HELP=0
 HOSTS_FILE=""
-DATA=""
-REMOTE_PATH=$(pwd)
+REMOTE_COMMAND=""
 
 while [[ "$#" -gt 0 ]]; do case $1 in
   -h|--help) HELP=1;;
-  -rp|--remotePath) REMOTE_PATH=$2; shift;;
-  *) HOSTS_FILE=$1; DATA=$2; shift;;
+  *) HOSTS_FILE=$1; REMOTE_COMMAND=$2; shift;;
 esac; shift; done
 
-echo $HOSTS_FILE $DATA $REMOTE_PATH
-
-if [ $HELP -eq 1 ]; then
+if [ $HELP -eq 1 ]; then 
 	printHelp
 	exit 0
 fi
-if [ "$HOSTS_FILE" = "" ]; then 
+if [ "$HOSTS_FILE" = "" ] || [ "$REMOTE_COMMAND" = "" ]; then 
 	printHelp
 	exit 1
 fi
 if [ ! -f $HOSTS_FILE ]; then
 	echo $HOSTS_FILE does not exit!!!
 	exit 1
-fi
-if  [ ! -f $DATA ] && [ ! -d $DATA ]; then
-	echo $DATA does not exists!!!
-	exit 2
 fi
 
 # Helper funcions -----------------------------------------------------------------------
@@ -58,7 +49,7 @@ user=$(whoami)
 while IFS= read -r line; do
 	tnname=$(fHCutLine "${line}" 2)
 	if [ ${tnname} = ${HOSTNAME} ]; then continue; fi
-	echo "Sending to ${user}@${tnname}"
-	scp -r ${DATA} ${user}@${tnname}:${REMOTE_PATH}
+	echo "Runing on ${tnname}"
+	ssh ${user}@${tnname} ${REMOTE_COMMAND}
 done < ${HOSTS_FILE}
 

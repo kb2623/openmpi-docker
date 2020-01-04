@@ -48,11 +48,11 @@ RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OPENMPI_VE
 
 # Additional helper programs for MPI
 ADD mpicopy /tmp 
-ADD mpirshrun /tmp 
+ADD mpirunsh /tmp 
 RUN mv /tmp/mpicopy $USPACE_APPS_BIN \
  && chmod a+x $USPACE_APPS_BIN/mpicopy \
- && mv /tmp/mpirshrun $USPACE_APPS_BIN \
- && chmod a+x $USPACE_APPS_BIN/mpirshrun
+ && mv /tmp/mpirunsh $USPACE_APPS_BIN \
+ && chmod a+x $USPACE_APPS_BIN/mpirunsh
 
 # SSH configuration and keys
 ADD sshd_config /etc/ssh/
