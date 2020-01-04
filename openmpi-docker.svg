@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="184.7515mm"
+   height="187.96431mm"
+   viewBox="0 0 184.7515 187.96431"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.4 5da689c313, 2019-01-14"
+   sodipodi:docname="openmpi-docker.svg">
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient955">
+      <stop
+         style="stop-color:#6300c6;stop-opacity:1;"
+         offset="0"
+         id="stop951" />
+      <stop
+         style="stop-color:#6300c6;stop-opacity:0;"
+         offset="1"
+         id="stop953" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient937">
+      <stop
+         style="stop-color:#80247c;stop-opacity:1;"
+         offset="0"
+         id="stop933" />
+      <stop
+         style="stop-color:#80247c;stop-opacity:0;"
+         offset="1"
+         id="stop935" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient919">
+      <stop
+         style="stop-color:#417436;stop-opacity:1;"
+         offset="0"
+         id="stop915" />
+      <stop
+         style="stop-color:#417436;stop-opacity:0;"
+         offset="1"
+         id="stop917" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient883">
+      <stop
+         style="stop-color:#9369c1;stop-opacity:1;"
+         offset="0"
+         id="stop879" />
+      <stop
+         style="stop-color:#9369c1;stop-opacity:0;"
+         offset="1"
+         id="stop881" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient883"
+       id="linearGradient885"
+       x1="42.431477"
+       y1="159.05841"
+       x2="85.581299"
+       y2="159.05841"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient919"
+       id="linearGradient921"
+       x1="116.18246"
+       y1="73.491913"
+       x2="140.25334"
+       y2="73.491913"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient937"
+       id="linearGradient939"
+       x1="153.19341"
+       y1="88.718498"
+       x2="171.49202"
+       y2="88.718498"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-11.761207,-28.223122)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient955"
+       id="linearGradient957"
+       x1="96.254745"
+       y1="99.092789"
+       x2="119.00271"
+       y2="99.092789"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="343.83321"
+     inkscape:cy="297.07119"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:snap-bbox="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:snap-text-baseline="true"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     fit-margin-left="1"
+     fit-margin-right="1"
+     fit-margin-bottom="1"
+     fit-margin-top="1"
+     inkscape:window-width="1918"
+     inkscape:window-height="1174"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-9.9613094,-10.061009)">
+    <rect
+       style="fill:#0182ac;fill-opacity:1;stroke-width:0.26458332"
+       id="rect815"
+       width="182.7515"
+       height="121.89732"
+       x="10.961309"
+       y="11.061009"
+       ry="10.205359"
+       rx="10.205359" />
+    <rect
+       style="fill:#014cac;fill-opacity:1;stroke-width:0.26458332"
+       id="rect817"
+       width="68.224701"
+       height="22.678566"
+       x="30.049109"
+       y="121.95921"
+       rx="5.2916584"
+       ry="5.2916622" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';letter-spacing:0px;word-spacing:0px;fill:#65cff8;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="35.198467"
+       y="137.03252"
+       id="text821"><tspan
+         sodipodi:role="line"
+         id="tspan819"
+         x="35.198467"
+         y="137.03252"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#65cff8;fill-opacity:1;stroke-width:0.26458332">SSH =&gt; 22</tspan></text>
+    <rect
+       style="fill:#65cff8;fill-opacity:1;stroke-width:0.26458332"
+       id="rect823"
+       width="181.23958"
+       height="23.434523"
+       x="11.339286"
+       y="173.59079"
+       rx="5.2916665"
+       ry="5.2916665" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="83.908501"
+       y="189.09076"
+       id="text827"><tspan
+         sodipodi:role="line"
+         id="tspan825"
+         x="83.908501"
+         y="189.09076"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';stroke-width:0.26458332">Iternet</tspan></text>
+    <path
+       style="fill:#9c4c54;fill-opacity:1;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 53.520723,151.73901 10.62396,-6.94901 10.356696,6.94901 h -5.078121 v 13.8312 h 5.078121 l -10.356696,7.75081 -10.62396,-7.75081 h 5.545841 v -13.8312 z"
+       id="path873"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';letter-spacing:0px;word-spacing:0px;fill:#932d4c;fill-opacity:1;stroke:#00777c;stroke-width:0.26458332;stroke-opacity:1"
+       x="74.107086"
+       y="161.94559"
+       id="text877"><tspan
+         sodipodi:role="line"
+         id="tspan875"
+         x="74.107086"
+         y="161.94559"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#932d4c;fill-opacity:1;stroke:#00777c;stroke-width:0.26458332;stroke-opacity:1">macvlan</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';letter-spacing:0px;word-spacing:0px;fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+       x="21.381563"
+       y="29.997736"
+       id="text889"><tspan
+         sodipodi:role="line"
+         id="tspan887"
+         x="21.381563"
+         y="29.997736"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1">mpirun</tspan><tspan
+         sodipodi:role="line"
+         x="21.381563"
+         y="43.226902"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+         id="tspan891">mpiexec</tspan><tspan
+         sodipodi:role="line"
+         x="21.381563"
+         y="56.45607"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+         id="tspan893">mpicc</tspan><tspan
+         sodipodi:role="line"
+         x="21.381563"
+         y="69.685234"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+         id="tspan895">mpicxx</tspan><tspan
+         sodipodi:role="line"
+         x="21.381563"
+         y="82.914398"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+         id="tspan899">mpifort</tspan><tspan
+         sodipodi:role="line"
+         x="21.381563"
+         y="96.14357"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+         id="tspan903">mpicopy</tspan><tspan
+         sodipodi:role="line"
+         x="21.381563"
+         y="109.37273"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+         id="tspan905">mpirunsh</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#417436;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+       x="97.472801"
+       y="30.799553"
+       id="text909"><tspan
+         sodipodi:role="line"
+         id="tspan907"
+         x="97.472801"
+         y="30.799553"
+         style="fill:#417436;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1">bash</tspan><tspan
+         sodipodi:role="line"
+         x="97.472801"
+         y="44.028721"
+         style="fill:#417436;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+         id="tspan911">ash</tspan><tspan
+         sodipodi:role="line"
+         x="97.472801"
+         y="57.257885"
+         style="fill:#417436;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+         id="tspan913">zsh</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#c98d00;fill-opacity:1;stroke:#809f2d;stroke-width:0.26458332;stroke-opacity:1"
+       x="146.40855"
+       y="57.901215"
+       id="text925"><tspan
+         sodipodi:role="line"
+         id="tspan923"
+         x="146.40855"
+         y="57.901215"
+         style="fill:#c98d00;fill-opacity:1;stroke:#809f2d;stroke-width:0.26458332;stroke-opacity:1">vim</tspan><tspan
+         sodipodi:role="line"
+         x="146.40855"
+         y="71.130379"
+         style="fill:#c98d00;fill-opacity:1;stroke:#809f2d;stroke-width:0.26458332;stroke-opacity:1"
+         id="tspan929">vi</tspan><tspan
+         sodipodi:role="line"
+         x="146.40855"
+         y="84.35955"
+         style="fill:#c98d00;fill-opacity:1;stroke:#809f2d;stroke-width:0.26458332;stroke-opacity:1"
+         id="tspan947">git</tspan><tspan
+         sodipodi:role="line"
+         x="146.40855"
+         y="97.588715"
+         style="fill:#c98d00;fill-opacity:1;stroke:#809f2d;stroke-width:0.26458332;stroke-opacity:1"
+         id="tspan949">tmux</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#6300c6;fill-opacity:1;stroke:#8013ec;stroke-width:0.26458332;stroke-opacity:1"
+       x="95.670799"
+       y="94.341141"
+       id="text943"><tspan
+         sodipodi:role="line"
+         id="tspan941"
+         x="95.670799"
+         y="94.341141"
+         style="fill:#6300c6;fill-opacity:1;stroke:#8013ec;stroke-width:0.26458332;stroke-opacity:1">gcc</tspan><tspan
+         sodipodi:role="line"
+         x="95.670799"
+         y="107.5703"
+         style="fill:#6300c6;fill-opacity:1;stroke:#8013ec;stroke-width:0.26458332;stroke-opacity:1"
+         id="tspan945">g++</tspan></text>
+  </g>
+</svg>
