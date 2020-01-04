@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -vx
 
 if [ $# -lt 1 ]; then 
 	echo Need 1 arguments
@@ -27,7 +27,8 @@ source ./helper.sh
 
 mkdir sshkeys
 while IFS= read -r line; do
-	nname=$(fHCutLine ${line} 2)
+	nname=$(fHCutLine "${line}" 2)
+	echo $nname
 	ssh-keygen -t rsa -N '' -C $(echo 'root@'${nname}) -f sshkeys/${SSH_KEY}.rsa.${nname}
 	ssh-keygen -t dsa -N '' -C $(echo 'root@'${nname}) -f sshkeys/${SSH_KEY}.dsa.${nname}
 	ssh-keygen -t ecdsa -N '' -C $(echo 'root@'${nname}) -f sshkeys/${SSH_KEY}.ecdsa.${nname}
