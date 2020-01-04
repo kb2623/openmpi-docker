@@ -50,6 +50,8 @@ while IFS= read -r line; do
 	tnname=$(fHCutLine "${line}" 2)
 	if [ ${tnname} = ${HOSTNAME} ]; then continue; fi
 	echo "Runing on ${tnname}"
-	ssh ${user}@${tnname} ${REMOTE_COMMAND}
+	ssh ${user}@${tnname} ${REMOTE_COMMAND} &
 done < ${HOSTS_FILE}
 
+wait
+echo 'Sending done!!!'
