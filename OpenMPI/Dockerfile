@@ -31,7 +31,7 @@ RUN cp -f /etc/skel/.bashrc /root/.bashrc \
 
 # Update the system and install programs
 RUN apk update \
- && apk add zsh bash vim tmux git build-base perl linux-headers openssh \
+ && apk add zsh bash vim tmux git build-base gdb gcc g++ gfortran perl linux-headers openssh \
  && rm -rf /var/cache/apk/*
  
 # Install OpenMPI
