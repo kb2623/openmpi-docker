@@ -6,11 +6,35 @@
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    id="svg8"
    version="1.1"
    viewBox="0 0 184.7515 187.96431"
    height="187.96431mm"
-   width="184.7515mm">
+   width="184.7515mm"
+   sodipodi:docname="openmpi-docker.svg"
+   inkscape:version="0.92.4 5da689c313, 2019-01-14">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1918"
+     inkscape:window-height="1174"
+     id="namedview52"
+     showgrid="false"
+     inkscape:zoom="0.93960233"
+     inkscape:cx="279.03896"
+     inkscape:cy="343.44063"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
   <defs
      id="defs2">
     <linearGradient
@@ -99,7 +123,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -130,7 +154,7 @@
        x="35.198467"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';letter-spacing:0px;word-spacing:0px;fill:#65cff8;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#65cff8;fill-opacity:1;stroke-width:0.26458332"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#65cff8;fill-opacity:1;stroke-width:0.26458332;"
          y="137.03252"
          x="35.198467"
          id="tspan819">SSH =&gt; 22</tspan></text>
@@ -149,7 +173,7 @@
        x="83.908501"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';stroke-width:0.26458332"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;stroke-width:0.26458332;"
          y="189.09076"
          x="83.908501"
          id="tspan825">Iternet</tspan></text>
@@ -163,7 +187,7 @@
        x="74.107086"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';letter-spacing:0px;word-spacing:0px;fill:#932d4c;fill-opacity:1;stroke:#00777c;stroke-width:0.26458332;stroke-opacity:1"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#932d4c;fill-opacity:1;stroke:#00777c;stroke-width:0.26458332;stroke-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#932d4c;fill-opacity:1;stroke:#00777c;stroke-width:0.26458332;stroke-opacity:1;"
          y="161.94559"
          x="74.107086"
          id="tspan875">macvlan</tspan></text>
@@ -173,32 +197,32 @@
        x="21.381563"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';letter-spacing:0px;word-spacing:0px;fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1;"
          y="29.997736"
          x="21.381563"
          id="tspan887">mpirun</tspan><tspan
          id="tspan891"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1;"
          y="43.226902"
          x="21.381563">mpiexec</tspan><tspan
          id="tspan893"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1;"
          y="56.45607"
          x="21.381563">mpicc</tspan><tspan
          id="tspan895"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1;"
          y="69.685234"
          x="21.381563">mpicxx</tspan><tspan
          id="tspan899"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1;"
          y="82.914398"
          x="21.381563">mpifort</tspan><tspan
          id="tspan903"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1;"
          y="96.14357"
          x="21.381563">mpicopy</tspan><tspan
          id="tspan905"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1;"
          y="109.37273"
          x="21.381563">mpirunsh</tspan></text>
     <text
