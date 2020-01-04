@@ -1,4 +1,5 @@
 # Custome OpenMPI build for docker
+![image one](openmpi-docker.svg)
 
 ## Hosts
 ### Example of Hosts file
