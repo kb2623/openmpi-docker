@@ -15,7 +15,7 @@ You have to have a `hosts` file for make to run.
 You have to have a SSL key for make to run.
 
 Use make file with task in order:
-1. `make sslkey`
+1. `make sshkey`
 2. `make build`
 3. `make run`
 
