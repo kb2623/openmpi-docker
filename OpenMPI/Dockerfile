@@ -23,11 +23,6 @@ ADD .zshrc /etc/skel
 ADD .profile /etc/skel
 ADD .bashrc /etc/skel
 ADD .tmux.conf /etc/skel
-# Add configurations to root user
-RUN cp -f /etc/skel/.bashrc /root/.bashrc \
- && cp -f /etc/skel/.zshrc /root/.zshrc \
- && cp -f /etc/skel/.profile /root/.profile \
- && cp -f /etc/skel/.tmux.conf /root/.tmux.conf
 
 # Update the system and install programs
 RUN apk update \
@@ -55,6 +50,7 @@ RUN mv /tmp/mpicopy $USPACE_APPS_BIN \
  && chmod a+x $USPACE_APPS_BIN/mpirunsh
 
 # SSH configuration and keys
+# FIXME remove add to volume and create a links
 ADD sshd_config /etc/ssh/
 ADD ssh_host_rsa_key /etc/ssh/
 ADD ssh_host_rsa_key.pub /etc/ssh/
@@ -66,6 +62,7 @@ ADD ssh_host_ed25519_key /etc/ssh/
 ADD ssh_host_ed25519_key.pub /etc/ssh/
 
 # Fix SSH premissions
+# FIXME remove fis in run sript sript
 RUN chmod 700 /etc/ssh \
  && chmod 600 /etc/ssh/sshd_config \
  && chmod 600 /etc/ssh/ssh_host* \
@@ -113,6 +110,7 @@ RUN ./createuser.sh $AUSER $AUSER_ID $AGROUP $AGROUP_ID $AHOME \
  && rm createuser.sh
 
 # Setup user SSH keys
+# FIXME remove replace with link to volume
 ADD id_key /tmp
 ADD id_key.pub /tmp
 ADD authorized_keys /tmp
