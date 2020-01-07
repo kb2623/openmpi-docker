@@ -59,6 +59,8 @@ while IFS= read -r line; do
 	tnname=$(fHCutLine "${line}" 2)
 	if [ ${tnname} = ${HOSTNAME} ]; then continue; fi
 	echo "Sending to ${user}@${tnname}"
-	scp -r ${DATA} ${user}@${tnname}:${REMOTE_PATH}
+	scp -r ${DATA} ${user}@${tnname}:${REMOTE_PATH} &
 done < ${HOSTS_FILE}
 
+wait
+echo 'Sending done!!!'

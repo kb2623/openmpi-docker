@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 184.7515 187.96431"
+   height="187.96431mm"
+   width="184.7515mm"
+   sodipodi:docname="openmpi-docker.svg"
+   inkscape:version="0.92.4 5da689c313, 2019-01-14">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1918"
+     inkscape:window-height="1174"
+     id="namedview52"
+     showgrid="false"
+     inkscape:zoom="0.93960233"
+     inkscape:cx="279.03896"
+     inkscape:cy="343.44063"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <linearGradient
+       id="linearGradient955">
+      <stop
+         id="stop951"
+         offset="0"
+         style="stop-color:#6300c6;stop-opacity:1;" />
+      <stop
+         id="stop953"
+         offset="1"
+         style="stop-color:#6300c6;stop-opacity:0;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient937">
+      <stop
+         id="stop933"
+         offset="0"
+         style="stop-color:#80247c;stop-opacity:1;" />
+      <stop
+         id="stop935"
+         offset="1"
+         style="stop-color:#80247c;stop-opacity:0;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient919">
+      <stop
+         id="stop915"
+         offset="0"
+         style="stop-color:#417436;stop-opacity:1;" />
+      <stop
+         id="stop917"
+         offset="1"
+         style="stop-color:#417436;stop-opacity:0;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient883">
+      <stop
+         id="stop879"
+         offset="0"
+         style="stop-color:#9369c1;stop-opacity:1;" />
+      <stop
+         id="stop881"
+         offset="1"
+         style="stop-color:#9369c1;stop-opacity:0;" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       y2="159.05841"
+       x2="85.581299"
+       y1="159.05841"
+       x1="42.431477"
+       id="linearGradient885"
+       xlink:href="#linearGradient883" />
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       y2="73.491913"
+       x2="140.25334"
+       y1="73.491913"
+       x1="116.18246"
+       id="linearGradient921"
+       xlink:href="#linearGradient919" />
+    <linearGradient
+       gradientTransform="translate(-11.761207,-28.223122)"
+       gradientUnits="userSpaceOnUse"
+       y2="88.718498"
+       x2="171.49202"
+       y1="88.718498"
+       x1="153.19341"
+       id="linearGradient939"
+       xlink:href="#linearGradient937" />
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       y2="99.092789"
+       x2="119.00271"
+       y1="99.092789"
+       x1="96.254745"
+       id="linearGradient957"
+       xlink:href="#linearGradient955" />
+  </defs>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(-9.9613094,-10.061009)"
+     id="layer1">
+    <rect
+       rx="10.205359"
+       ry="10.205359"
+       y="11.061009"
+       x="10.961309"
+       height="121.89732"
+       width="182.7515"
+       id="rect815"
+       style="fill:#0182ac;fill-opacity:1;stroke-width:0.26458332" />
+    <rect
+       ry="5.2916622"
+       rx="5.2916584"
+       y="121.95921"
+       x="30.049109"
+       height="22.678566"
+       width="68.224701"
+       id="rect817"
+       style="fill:#014cac;fill-opacity:1;stroke-width:0.26458332" />
+    <text
+       id="text821"
+       y="137.03252"
+       x="35.198467"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';letter-spacing:0px;word-spacing:0px;fill:#65cff8;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#65cff8;fill-opacity:1;stroke-width:0.26458332;"
+         y="137.03252"
+         x="35.198467"
+         id="tspan819">SSH =&gt; 22</tspan></text>
+    <rect
+       ry="5.2916665"
+       rx="5.2916665"
+       y="173.59079"
+       x="11.339286"
+       height="23.434523"
+       width="181.23958"
+       id="rect823"
+       style="fill:#65cff8;fill-opacity:1;stroke-width:0.26458332" />
+    <text
+       id="text827"
+       y="189.09076"
+       x="83.908501"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;stroke-width:0.26458332;"
+         y="189.09076"
+         x="83.908501"
+         id="tspan825">Iternet</tspan></text>
+    <path
+       id="path873"
+       d="m 53.520723,151.73901 10.62396,-6.94901 10.356696,6.94901 h -5.078121 v 13.8312 h 5.078121 l -10.356696,7.75081 -10.62396,-7.75081 h 5.545841 v -13.8312 z"
+       style="fill:#9c4c54;fill-opacity:1;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <text
+       id="text877"
+       y="161.94559"
+       x="74.107086"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';letter-spacing:0px;word-spacing:0px;fill:#932d4c;fill-opacity:1;stroke:#00777c;stroke-width:0.26458332;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#932d4c;fill-opacity:1;stroke:#00777c;stroke-width:0.26458332;stroke-opacity:1;"
+         y="161.94559"
+         x="74.107086"
+         id="tspan875">macvlan</tspan></text>
+    <text
+       id="text889"
+       y="29.997736"
+       x="21.381563"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Fira Code';-inkscape-font-specification:'Fira Code';letter-spacing:0px;word-spacing:0px;fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1;"
+         y="29.997736"
+         x="21.381563"
+         id="tspan887">mpirun</tspan><tspan
+         id="tspan891"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1;"
+         y="43.226902"
+         x="21.381563">mpiexec</tspan><tspan
+         id="tspan893"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1;"
+         y="56.45607"
+         x="21.381563">mpicc</tspan><tspan
+         id="tspan895"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1;"
+         y="69.685234"
+         x="21.381563">mpicxx</tspan><tspan
+         id="tspan899"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1;"
+         y="82.914398"
+         x="21.381563">mpifort</tspan><tspan
+         id="tspan903"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1;"
+         y="96.14357"
+         x="21.381563">mpicopy</tspan><tspan
+         id="tspan905"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#395e00;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1;"
+         y="109.37273"
+         x="21.381563">mpirunsh</tspan></text>
+    <text
+       id="text909"
+       y="30.799553"
+       x="97.472801"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#417436;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="fill:#417436;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+         y="30.799553"
+         x="97.472801"
+         id="tspan907">bash</tspan><tspan
+         id="tspan911"
+         style="fill:#417436;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+         y="44.028721"
+         x="97.472801">ash</tspan><tspan
+         id="tspan913"
+         style="fill:#417436;fill-opacity:1;stroke:#80247c;stroke-width:0.26458332;stroke-opacity:1"
+         y="57.257885"
+         x="97.472801">zsh</tspan></text>
+    <text
+       id="text925"
+       y="57.901215"
+       x="146.40855"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#c98d00;fill-opacity:1;stroke:#809f2d;stroke-width:0.26458332;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="fill:#c98d00;fill-opacity:1;stroke:#809f2d;stroke-width:0.26458332;stroke-opacity:1"
+         y="57.901215"
+         x="146.40855"
+         id="tspan923">vim</tspan><tspan
+         id="tspan929"
+         style="fill:#c98d00;fill-opacity:1;stroke:#809f2d;stroke-width:0.26458332;stroke-opacity:1"
+         y="71.130379"
+         x="146.40855">vi</tspan><tspan
+         id="tspan947"
+         style="fill:#c98d00;fill-opacity:1;stroke:#809f2d;stroke-width:0.26458332;stroke-opacity:1"
+         y="84.35955"
+         x="146.40855">git</tspan><tspan
+         id="tspan949"
+         style="fill:#c98d00;fill-opacity:1;stroke:#809f2d;stroke-width:0.26458332;stroke-opacity:1"
+         y="97.588715"
+         x="146.40855">tmux</tspan></text>
+    <text
+       id="text943"
+       y="94.341141"
+       x="95.670799"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#6300c6;fill-opacity:1;stroke:#8013ec;stroke-width:0.26458332;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="fill:#6300c6;fill-opacity:1;stroke:#8013ec;stroke-width:0.26458332;stroke-opacity:1"
+         y="94.341141"
+         x="95.670799"
+         id="tspan941">gcc</tspan><tspan
+         id="tspan945"
+         style="fill:#6300c6;fill-opacity:1;stroke:#8013ec;stroke-width:0.26458332;stroke-opacity:1"
+         y="107.5703"
+         x="95.670799">g++</tspan></text>
+  </g>
+</svg>
