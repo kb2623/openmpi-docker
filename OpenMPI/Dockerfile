@@ -140,6 +140,7 @@ USER root
 WORKDIR /root
 VOLUME mnt/data
 EXPOSE 22
+EXPOSE 2049
 ENTRYPOINT ["dinit"]
 
 # vim: tabstop=1 expandtab shiftwidth=1 softtabstop=1
