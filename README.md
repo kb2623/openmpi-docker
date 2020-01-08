@@ -22,3 +22,9 @@ Use make file with task in order:
 ## Uninstall
 Use make file with task in order:
 1. `make clean`
+
+## NFS Server settings
+```
+sudo chown -R nobody:nogroup [NFS dir]
+sudo chmod -R 2777 [NFS dir]
+```
