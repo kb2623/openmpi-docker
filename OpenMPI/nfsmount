@@ -22,7 +22,7 @@ HELP=0
 
 while [[ $# -gt 0 ]]; do case $1 in
   -h|--help) HELP=1;;
-  -rp|--remotePath) SERVER_DIR=$2; shift;;
+  -sp|--serverPath) SERVER_DIR=$2; shift;;
   *) echo $1; SERVER_ADR=$1; LOCAL_DIR=$2; shift;;
 esac; shift; done
 
@@ -30,14 +30,14 @@ if [[ ${HELP} -eq 1 ]]; then
 	printHelp
 	exit 0
 fi
-if [[ "${SERVER_ADR}" = "" ]] || [[ "${LOCAL_DIR}" = "" ]]; then
+if [ "${SERVER_ADR}" == "" ] || [ "${LOCAL_DIR}" == "" ]; then
 	printHelp
 	exit 1
 fi
 
 # MAIN -----------------------------------------------------------------------------------
 /sbin/rpcbind start
-if [[ "${SERVER_DIR}" = "" ]]; then
+if [ "${SERVER_DIR}" == "" ]; then
 	mount ${SERVER_ADR} ${LOCAL_DIR}
 else
 	mount ${SERVER_ADR}:${SERVER_DIR} ${LOCAL_DIR}
