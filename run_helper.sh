@@ -3,8 +3,8 @@
 # Generates a command to run docker containter
 
 # Parameters ----------------------------------------------------------------------------
-if [ $# -lt 7 ]; then 
-	echo Need 7 arguments
+if [ $# -lt 8 ]; then 
+	echo Need 8 arguments
 	exit 1
 fi
 
@@ -13,8 +13,9 @@ NETWORK_NAME=$2
 HOSTS_FILE=$3
 SSH_PORT=$4
 DOCKER_VOLUME_SRC=$5
-DOCKER_NAME=$6
-DOCKER_TAG=$7
+NFS_VOL_NAME=$6
+DOCKER_NAME=$7
+DOCKER_TAG=$8
 
 # Helper funcions -----------------------------------------------------------------------
 source ./helper.sh
@@ -37,7 +38,7 @@ command+=" -p ${SSH_PORT}:22"
 command+=" -p 111:111"
 command+=" -p 2049:2049"
 command+=" -v ${DOCKER_VOLUME_SRC}:/mnt/data"
-command+=" -v ${DOCKER_NAME}-${DOCKER_TAG}-nfs_volume:/mnt/nfs"
+command+=" -v ${NFS_VOL_NAME}:/mnt/nfs"
 command+=" -d ${DOCKER_NAME}:${DOCKER_TAG}"
 
 eval ${command}
