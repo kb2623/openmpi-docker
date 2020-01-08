@@ -33,6 +33,7 @@ command+=" --hostname="$(fHCutFile ${HOSTS_FILE} ${NODE_ID} 2)
 command+=" --cap-add SYS_ADMIN"
 command+=" ${hosts}"
 command+=" -p ${SSH_PORT}:22"
+command+=" -p 111:111"
 command+=" -p 2049:2049"
 command+=" -v ${DOCKER_VOLUME_SRC}:/mnt/data"
 command+=" -d ${DOCKER_NAME}:${DOCKER_TAG}"
