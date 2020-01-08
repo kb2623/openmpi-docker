@@ -1,4 +1,4 @@
-#!/bin/bash -vx
+#!/bin/bash
 
 if [ $# -lt 1 ]; then 
 	echo Need 1 arguments
