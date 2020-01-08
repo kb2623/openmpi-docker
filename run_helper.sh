@@ -31,11 +31,13 @@ command+=" --network=${NETWORK_NAME}"
 command+=" --ip="$(fHCutFile ${HOSTS_FILE} ${NODE_ID} 1)
 command+=" --hostname="$(fHCutFile ${HOSTS_FILE} ${NODE_ID} 2)
 command+=" ${hosts}"
-command+=" --cap-add SYS_ADMIN"
+# command+=" --cap-add SYS_ADMIN" # If some bugs enable
+# command+=" --privileged=true"   # If some bugs enable
 command+=" -p ${SSH_PORT}:22"
 command+=" -p 111:111"
 command+=" -p 2049:2049"
 command+=" -v ${DOCKER_VOLUME_SRC}:/mnt/data"
+command+=" -v ${DOCKER_NAME}-${DOCKER_TAG}-nfs_volume:/mnt/nfs"
 command+=" -d ${DOCKER_NAME}:${DOCKER_TAG}"
 
 eval ${command}

@@ -34,6 +34,11 @@ EXEC_WORKINGDIR:=/home/${MPI_USER}
 # Shell: /bin/zsh /bin/bash /bin/ash /bin/sh
 EXEC_SHELL:=/bin/zsh
 
+# NFS
+NFS_SERVER:=164.8.230.33
+NFS_SERVER_DIR:=/mnt/shared
+
+
 all:
 	-make net
 	-make build
@@ -45,8 +50,18 @@ volume:
 	mkdir -p ${DOCKER_VOLUME_SRC}
 	chown 101:101 ${DOCKER_VOLUME_SRC}
 
+nfs_volume:
+	docker volume create \
+		--opt type=nfs \
+		--opt device=:${NFS_SERVER_DIR} \
+		--opt o=addr=${NFS_SERVER},rw \
+		${DOCKER_NAME}-${DOCKER_TAG}-nfs_volume
+
 clean_volume: ${DOCKER_VOLUME_SRC}
 	rm -rf ${DOCKER_VOLUME_SRC}
+
+clean_nfs_volume:
+	docker volume rm ${DOCKER_NAME}-${DOCKER_TAG}-nfs_volume
 
 ## Network ############################################################################
 
