@@ -26,7 +26,7 @@ ADD .tmux.conf /etc/skel
 
 # Update the system and install programs
 RUN apk update \
- && apk add zsh bash vim tmux git build-base gdb gcc g++ gfortran perl make cmake linux-headers openssh \
+ && apk add zsh bash vim tmux git build-base gdb gcc g++ gfortran perl make cmake linux-headers openssh nfs-utils \
  && rm -rf /var/cache/apk/*
  
 # Install OpenMPI
