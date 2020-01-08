@@ -30,8 +30,8 @@ command="docker run --name=node${NODE_ID}_mpi"
 command+=" --network=${NETWORK_NAME}"
 command+=" --ip="$(fHCutFile ${HOSTS_FILE} ${NODE_ID} 1)
 command+=" --hostname="$(fHCutFile ${HOSTS_FILE} ${NODE_ID} 2)
-command+=" --cap-add SYS_ADMIN"
 command+=" ${hosts}"
+command+=" --cap-add SYS_ADMIN"
 command+=" -p ${SSH_PORT}:22"
 command+=" -p 111:111"
 command+=" -p 2049:2049"

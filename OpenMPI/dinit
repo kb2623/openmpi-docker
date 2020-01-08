@@ -4,17 +4,5 @@
 readonly SSH_CONFIG='/etc/ssh/sshd_config'
 readonly SSH_DAEMON='/usr/sbin/sshd'
 
-# Services ---------------------------------------------------------------------------
-run_sshd() {
-	nohup ${SSH_DAEMON} -D -e -f ${SSH_CONFIG} &
-}
-
-# Main -------------------------------------------------------------------------------
-run_sshd
-
-# main loop
-while true; do
-	echo "Press [CTRL+C] to stop.."
-   sleep 1000
-done
+${SSH_DAEMON} -D -e -f ${SSH_CONFIG}
 
