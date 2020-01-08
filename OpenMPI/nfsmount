@@ -1,0 +1,44 @@
+#!/bin/bash
+
+printHelp() {
+	echo -e 'Program for copying mpi programs to other nodes.\n'
+	echo USAGE:
+	echo -e '\tnfsmount [OPTIONS] [SERVER_ADDRESS] [LOCAL_DIR]\n'
+	echo Server addres:
+	echo -e '\tAn IP or host name of NFS server\n'
+	echo Local dir:
+	echo -e '\tA path tho local dir for mounting\n'
+	echo Options:
+	echo -e '\t -h\t --help\t\t\t Print this message'
+	echo -e '\t -sp\t --serverPath\t[PATH]\t Remote path to NFS dir'
+	echo -e '\n'
+}
+
+# Parameters ----------------------------------------------------------------------------
+SERVER_ADR=""
+SERVER_DIR=""
+LOCAL_DIR=""
+HELP=0
+
+while [[ $# -gt 0 ]]; do case $1 in
+  -h|--help) HELP=1;;
+  -rp|--remotePath) SERVER_DIR=$2; shift;;
+  *) echo $1; SERVER_ADR=$1; LOCAL_DIR=$2; shift;;
+esac; shift; done
+
+if [[ ${HELP} -eq 1 ]]; then
+	printHelp
+	exit 0
+fi
+if [[ "${SERVER_ADR}" = "" ]] || [[ "${LOCAL_DIR}" = "" ]]; then
+	printHelp
+	exit 1
+fi
+
+# MAIN -----------------------------------------------------------------------------------
+/sbin/rpcbind start
+if [[ "${SERVER_DIR}" = "" ]]; then
+	mount ${SERVER_ADR} ${LOCAL_DIR}
+else
+	mount ${SERVER_ADR}:${SERVER_DIR} ${LOCAL_DIR}
+fi

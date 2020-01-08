@@ -30,6 +30,7 @@ command="docker run --name=node${NODE_ID}_mpi"
 command+=" --network=${NETWORK_NAME}"
 command+=" --ip="$(fHCutFile ${HOSTS_FILE} ${NODE_ID} 1)
 command+=" --hostname="$(fHCutFile ${HOSTS_FILE} ${NODE_ID} 2)
+command+=" --cap-add SYS_ADMIN"
 command+=" ${hosts}"
 command+=" -p ${SSH_PORT}:22"
 command+=" -v ${DOCKER_VOLUME_SRC}:/mnt/data"

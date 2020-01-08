@@ -5,7 +5,7 @@
 
 printHelp() {
 	echo -e 'Program for copying mpi programs to other nodes.\n'
-	echo Usage:
+	echo USAGE:
 	echo -e '\tmpicopy [OPTIONS] [HOSTSFILE] [directory or file]\n'
 	echo Hostsfile:
 	echo -e '\tA file with node names of IP addresses of the nodes\n'
@@ -26,8 +26,6 @@ while [[ "$#" -gt 0 ]]; do case $1 in
   -rp|--remotePath) REMOTE_PATH=$2; shift;;
   *) HOSTS_FILE=$1; DATA=$2; shift;;
 esac; shift; done
-
-echo $HOSTS_FILE $DATA $REMOTE_PATH
 
 if [ $HELP -eq 1 ]; then
 	printHelp

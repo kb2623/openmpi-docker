@@ -5,7 +5,7 @@
 
 printHelp() {
 	echo -e 'Program for copying mpi programs to other nodes.\n'
-	echo Usage:
+	echo USAGE:
 	echo -e '\tmpirunsh [OPTIONS] [HOSTSFILE] [Shell command]\n'
 	echo Hostsfile:
 	echo -e '\tA file with node names of IP addresses of the nodes\n'
@@ -19,21 +19,21 @@ HELP=0
 HOSTS_FILE=""
 REMOTE_COMMAND=""
 
-while [[ "$#" -gt 0 ]]; do case $1 in
+while [[ $# -gt 0 ]]; do case $1 in
   -h|--help) HELP=1;;
   *) HOSTS_FILE=$1; REMOTE_COMMAND=$2; shift;;
 esac; shift; done
 
-if [ $HELP -eq 1 ]; then 
+if [ ${HELP} -eq 1 ]; then 
 	printHelp
 	exit 0
 fi
-if [ "$HOSTS_FILE" = "" ] || [ "$REMOTE_COMMAND" = "" ]; then 
+if [ "${HOSTS_FILE}" = "" ] || [ "${REMOTE_COMMAND}" = "" ]; then 
 	printHelp
 	exit 1
 fi
-if [ ! -f $HOSTS_FILE ]; then
-	echo $HOSTS_FILE does not exit!!!
+if [ ! -f ${HOSTS_FILE} ]; then
+	echo ${HOSTS_FILE} does not exit!!!
 	exit 1
 fi
 
@@ -54,4 +54,4 @@ while IFS= read -r line; do
 done < ${HOSTS_FILE}
 
 wait
-echo 'Sending done!!!'
+echo Sending done!!!
