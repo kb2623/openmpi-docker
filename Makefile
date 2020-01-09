@@ -37,7 +37,7 @@ EXEC_SHELL:=/bin/zsh
 # NFS
 NFS_SERVER:=164.8.230.33
 NFS_SHARE:=/mnt/shared
-NFS_OPTS:=rw
+NFS_OPTS:=rw,vers=4
 NFS_VOL_NAME:=${DOCKER_NAME}-${DOCKER_TAG}-nfs_volume
 
 all:
