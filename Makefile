@@ -107,7 +107,7 @@ build: ${HOSTS_FILE} sshkeys
 	./build_helper.sh 0
 	
 create: ${HOSTS_FILE}
-	-chmod a+x run_helper.sh
+	-chmod a+x create_helper.sh
 	./create_helper.sh ${NODE_ID} ${NETWORK_NAME} ${HOSTS_FILE} ${SSH_PORT} ${DOCKER_VOLUME_SRC} ${NFS_VOL_NAME} ${DOCKER_NAME} ${DOCKER_TAG}
 
 logs:
