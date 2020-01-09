@@ -37,7 +37,7 @@ command+=" ${hosts}"
 command+=" -p ${SSH_PORT}:22"
 command+=" -v ${DOCKER_VOLUME_SRC}:/mnt/data"
 command+=" -v ${NFS_VOL_NAME}:/mnt/nfs"
-command+=" -d ${DOCKER_NAME}:${DOCKER_TAG}"
+command+=" ${DOCKER_NAME}:${DOCKER_TAG}"
 
 eval ${command}
 
