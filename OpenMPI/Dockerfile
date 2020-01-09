@@ -130,15 +130,16 @@ RUN mkdir -p /mnt/data \
  && chmod a+rw /mnt/data \
  && ln -s /mnt/data $AHOME/data \
  && chown -R $AUSER:$AGROUP $AHOME/data
-RUN mkdir -p /mnt/nfs \
- && ln -s /mnt/nfs $AHOME/nfs
+## Not working problem
+# RUN mkdir -p /mnt/nfs \
+#  && ln -s /mnt/nfs $AHOME/nfs
 
 ## EntryPoint ########################################################################
 
 USER root
 WORKDIR /root
 VOLUME mnt/data
-VOLUME mnt/nfs
+# VOLUME mnt/nfs # Currently not working
 EXPOSE 22
 ENTRYPOINT ["dinit"]
 
