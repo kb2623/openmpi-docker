@@ -117,7 +117,7 @@ start:
 	docker start ${DOCKER_NAME}-${DOCKER_TAG}-node${NODE_ID}_mpi
 
 exec:
-	docker exec -it -u ${EXEC_USER} -w ${EXEC_WORKINGDIR} node${NODE_ID}_mpi ${EXEC_SHELL}
+	docker exec -it -u ${EXEC_USER} -w ${EXEC_WORKINGDIR} ${DOCKER_NAME}-${DOCKER_TAG}-node${NODE_ID}_mpi ${EXEC_SHELL}
 
 stop:
 	docker stop ${DOCKER_NAME}-${DOCKER_TAG}-node${NODE_ID}_mpi
