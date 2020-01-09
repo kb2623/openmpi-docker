@@ -131,6 +131,7 @@ RUN mkdir -p /mnt/data \
  && ln -s /mnt/data $AHOME/data \
  && chown -R $AUSER:$AGROUP $AHOME/data
 RUN mkdir -p /mnt/nfs
+ && ln -s /mnt/nfs $AHOME/nfs
 
 ## EntryPoint ########################################################################
 

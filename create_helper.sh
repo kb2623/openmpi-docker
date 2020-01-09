@@ -27,7 +27,7 @@ while IFS= read -r line; do
 	hosts+="--add-host "$(fHCutLine "${line}" 2)":"$(fHCutLine "${line}" 1)" "
 done < ${HOSTS_FILE}
 
-command="docker run --name=node${NODE_ID}_mpi"
+command="docker create --name=${DOCKER_NAME}-${DOCKER_TAG}-node${NODE_ID}_mpi"
 command+=" --network=${NETWORK_NAME}"
 command+=" --ip="$(fHCutFile ${HOSTS_FILE} ${NODE_ID} 1)
 command+=" --hostname="$(fHCutFile ${HOSTS_FILE} ${NODE_ID} 2)
@@ -35,8 +35,6 @@ command+=" ${hosts}"
 # command+=" --cap-add SYS_ADMIN" # If some bugs enable
 # command+=" --privileged=true"   # If some bugs enable
 command+=" -p ${SSH_PORT}:22"
-command+=" -p 111:111"
-command+=" -p 2049:2049"
 command+=" -v ${DOCKER_VOLUME_SRC}:/mnt/data"
 command+=" -v ${NFS_VOL_NAME}:/mnt/nfs"
 command+=" -d ${DOCKER_NAME}:${DOCKER_TAG}"

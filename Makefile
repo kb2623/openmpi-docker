@@ -37,7 +37,7 @@ EXEC_SHELL:=/bin/zsh
 # NFS
 NFS_SERVER:=164.8.230.33
 NFS_SHARE:=/mnt/shared
-NFS_OPTS:=rw,vers=4
+NFS_OPTS:=rw,vers=4,nfsvers=4
 NFS_VOL_NAME:=${DOCKER_NAME}-${DOCKER_TAG}-nfs_volume
 
 all:
@@ -49,7 +49,7 @@ all:
 
 volume:
 	mkdir -p ${DOCKER_VOLUME_SRC}
-	chown 101:101 ${DOCKER_VOLUME_SRC}
+	chown ${MPI_USER_ID}:${MPI_GROUP_ID} ${DOCKER_VOLUME_SRC}
 
 nfs_volume:
 	docker volume create --driver local \
@@ -106,25 +106,25 @@ build: ${HOSTS_FILE} sshkeys
 		OpenMPI
 	./build_helper.sh 0
 	
-run: ${HOSTS_FILE}
+create: ${HOSTS_FILE}
 	-chmod a+x run_helper.sh
-	./run_helper.sh ${NODE_ID} ${NETWORK_NAME} ${HOSTS_FILE} ${SSH_PORT} ${DOCKER_VOLUME_SRC} ${NFS_VOL_NAME} ${DOCKER_NAME} ${DOCKER_TAG}
+	./create_helper.sh ${NODE_ID} ${NETWORK_NAME} ${HOSTS_FILE} ${SSH_PORT} ${DOCKER_VOLUME_SRC} ${NFS_VOL_NAME} ${DOCKER_NAME} ${DOCKER_TAG}
 
 logs:
-	docker logs node${NODE_ID}_mpi
+	docker logs ${DOCKER_NAME}-${DOCKER_TAG}-node${NODE_ID}_mpi
 
 start:
-	docker start node${NODE_ID}_mpi
+	docker start ${DOCKER_NAME}-${DOCKER_TAG}-node${NODE_ID}_mpi
 
 exec:
 	docker exec -it -u ${EXEC_USER} -w ${EXEC_WORKINGDIR} node${NODE_ID}_mpi ${EXEC_SHELL}
 
 stop:
-	docker stop node${NODE_ID}_mpi
+	docker stop ${DOCKER_NAME}-${DOCKER_TAG}-node${NODE_ID}_mpi
 
 remove:
 	-make stop
-	docker container rm node${NODE_ID}_mpi
+	docker container rm ${DOCKER_NAME}-${DOCKER_TAG}-node${NODE_ID}_mpi
 	
 clean: 
 	-make remove
