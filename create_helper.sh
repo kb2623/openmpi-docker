@@ -36,7 +36,7 @@ command+=" ${hosts}"
 # command+=" --privileged=true"   # If some bugs enable
 command+=" -p ${SSH_PORT}:22"
 command+=" -v ${DOCKER_VOLUME_SRC}:/mnt/data"
-command+=" -v ${NFS_VOL_NAME}:/mnt/nfs"
+# command+=" -v ${NFS_VOL_NAME}:/mnt/nfs" # Currently not working
 command+=" ${DOCKER_NAME}:${DOCKER_TAG}"
 
 eval ${command}

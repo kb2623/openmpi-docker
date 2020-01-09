@@ -51,15 +51,15 @@ volume:
 	mkdir -p ${DOCKER_VOLUME_SRC}
 	chown ${MPI_USER_ID}:${MPI_GROUP_ID} ${DOCKER_VOLUME_SRC}
 
+clean_volume: ${DOCKER_VOLUME_SRC}
+	rm -rf ${DOCKER_VOLUME_SRC}
+
 nfs_volume:
 	docker volume create --driver local \
 		--opt type=nfs \
 		--opt o=addr=${NFS_SERVER},${NFS_OPTS} \
 		--opt device=:${NFS_SHARE} \
 		${NFS_VOL_NAME}
-
-clean_volume: ${DOCKER_VOLUME_SRC}
-	rm -rf ${DOCKER_VOLUME_SRC}
 
 clean_nfs_volume:
 	docker volume rm ${NFS_VOL_NAME}
