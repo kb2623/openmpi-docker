@@ -23,7 +23,7 @@ SSH_KEY=$4
 SSH_ALGO=$5
 HOSTS_FILE=$6
 
-source ./helper.sh
+source helper.sh
 
 mkdir sshkeys
 while IFS= read -r line; do

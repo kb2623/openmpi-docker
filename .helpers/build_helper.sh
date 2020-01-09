@@ -22,7 +22,7 @@ AUSER=$3
 SSH_KEY=$4
 HOSTS_FILE=$5
 
-source ./helper.sh
+source helper.sh
 
 nname=$(fHCutFile ${HOSTS_FILE} ${NODE_ID} 2)
 # Host SSH keys

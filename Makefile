@@ -1,3 +1,6 @@
+SHELL:=/bin/bash # Set default shell
+PATH:=.helpers:$(PATH) # Add .helpers sripts
+
 DOCKER_NAME:=openmpi_alpine
 DOCKER_TAG:=latest
 DOCKER_VOLUME_SRC=/tmp/${DOCKER_NAME}_${DOCKER_NAME}
@@ -43,7 +46,8 @@ NFS_VOL_NAME:=${DOCKER_NAME}-${DOCKER_TAG}-nfs_volume
 all:
 	-make net
 	-make build
-	-make run
+	-make create
+	-make start
 
 ## Volumens ###########################################################################
 
@@ -80,20 +84,17 @@ clean_net:
 ## SSL ################################################################################
 
 sshkey: ${HOSTS_FILE}
-	-chmod a+x sshkey_helper.sh
-	./sshkey_helper.sh 1 ${NODE_ID} ${MPI_USER} ${SSH_KEY} ${SSH_ALGO} ${HOSTS_FILE}
+	sshkey_helper.sh 1 ${NODE_ID} ${MPI_USER} ${SSH_KEY} ${SSH_ALGO} ${HOSTS_FILE}
 	chmod -R 755 sshkeys
 
 clean_sshkey: sshkeys
-	-chmod a+x sshkey_helper.sh
-	./sshkey_helper.sh 0
+	sshkey_helper.sh 0
 
 ## Final ##############################################################################
 
 build: ${HOSTS_FILE} sshkeys
 	cp -f ${HOSTS_FILE} OpenMPI/hosts
-	-chmod a+x build_helper.sh
-	./build_helper.sh 1 ${NODE_ID} ${MPI_USER} ${SSH_KEY} ${HOSTS_FILE}
+	build_helper.sh 1 ${NODE_ID} ${MPI_USER} ${SSH_KEY} ${HOSTS_FILE}
 	-chmod -R 755 OpenMPI
 	-docker build \
 		-t ${DOCKER_NAME}:${DOCKER_TAG} \
@@ -104,11 +105,10 @@ build: ${HOSTS_FILE} sshkeys
 		--build-arg AGROUP_ID=${MPI_GROUP_ID} \
 		--build-arg OPENMPI_VERSION=${OPENMPI_VERSION} \
 		OpenMPI
-	./build_helper.sh 0
+	build_helper.sh 0
 	
 create: ${HOSTS_FILE}
-	-chmod a+x create_helper.sh
-	./create_helper.sh ${NODE_ID} ${NETWORK_NAME} ${HOSTS_FILE} ${SSH_PORT} ${DOCKER_VOLUME_SRC} ${NFS_VOL_NAME} ${DOCKER_NAME} ${DOCKER_TAG}
+	create_helper.sh ${NODE_ID} ${NETWORK_NAME} ${HOSTS_FILE} ${SSH_PORT} ${DOCKER_VOLUME_SRC} ${NFS_VOL_NAME} ${DOCKER_NAME} ${DOCKER_TAG}
 
 logs:
 	docker logs ${DOCKER_NAME}-${DOCKER_TAG}-node${NODE_ID}_mpi
@@ -131,8 +131,3 @@ clean:
 	-docker image rm ${DOCKER_NAME}:${DOCKER_TAG}
 	-make clean_net
 
-test_nfs:
-	docker volume create --driver local \
-		--opt type=nfs --opt o=addr=${NFS_SERVER},${NFS_OPTS} \
-		--opt device=:${NFS_SHARE} ${NFS_VOL_NAME}
-	docker run --rm -v ${NFS_VOL_NAME}:${NFS_LOCAL_MNT} busybox ls ${NFS_LOCAL_MNT}
