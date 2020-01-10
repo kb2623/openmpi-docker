@@ -39,7 +39,7 @@ RUN wget https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OPENMPI_VE
  && cd .. \
  && rm openmpi-$OPENMPI_VERSION.tar.bz2 \
  && rm -rf openmpi-$OPENMPI_VERSION \
- && echo -e "\nexport LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:${USPACE_APPS_LIB}/lib/\n" >> /etc/skel/.profile
+ && echo -e "\nexport LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:${USPACE_APPS_LIB}\n" >> /etc/skel/.profile
 
 # Additional helper programs for MPI
 ADD mpicopy /tmp 
