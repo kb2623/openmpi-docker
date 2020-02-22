@@ -1,6 +1,9 @@
 # Custome OpenMPI build for docker
 ![image one](openmpi-docker.svg)
 
+* [OpenMPI](https://www.open-mpi.org/)
+* [OpenMPI GitHub](https://github.com/open-mpi/ompi)
+
 ## Hosts
 ### Example of Hosts file
 ```
