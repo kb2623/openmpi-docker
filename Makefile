@@ -1,5 +1,5 @@
+export PATH:=$(shell pwd)/.helpers:$(PATH) # Add .helpers sripts
 SHELL:=/bin/bash # Set default shell
-PATH:=.helpers:$(PATH) # Add .helpers sripts
 
 DOCKER_NAME:=openmpi_alpine
 DOCKER_TAG:=latest
